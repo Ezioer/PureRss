@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zxq.purerss.data.RssFeedRepository
+import com.zxq.purerss.data.entity.RssFeed
 import com.zxq.purerss.data.entity.table.RSSFeedEntity
 import kotlinx.coroutines.launch
 
@@ -13,7 +14,7 @@ import kotlinx.coroutines.launch
  *  fun
  */
 class SaveDBRssViewModel(private val repository: RssFeedRepository): ViewModel(){
-    val poetryList = MutableLiveData<List<RSSFeedEntity>>()
+    val poetryList = MutableLiveData<MutableList<RSSFeedEntity>>()
     val insertComplete = MutableLiveData<Boolean>()
     fun getList(){
         launch({
