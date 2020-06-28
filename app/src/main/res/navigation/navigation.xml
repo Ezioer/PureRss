@@ -22,9 +22,42 @@
         android:label="fragment_mainpage"
         tools:layout="@layout/fragment_news">
         <action
-            android:id="@+id/action_home_to_detail"
+            android:id="@+id/action_mainpage_to_list"
+            app:destination="@id/feedlist"
+            app:exitAnim="@null" />
+        <action
+            android:id="@+id/action_mainpage_to_type"
+            app:destination="@id/type"
+            app:exitAnim="@null" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/feedlist"
+        android:name="com.zxq.purerss.ui.feedlist.FeedListFragment"
+        android:label="fragment_feedlist"
+        tools:layout="@layout/fragment_feedlist">
+        <action
+            android:id="@+id/action_list_to_detail"
             app:destination="@id/detail"
             app:exitAnim="@null" />
+        <argument
+            android:name="feedinfo"
+            app:argType="com.zxq.purerss.data.entity.RssFeedInfo"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/type"
+        android:name="com.zxq.purerss.ui.type.FragmentType"
+        android:label="fragment_type"
+        tools:layout="@layout/fragment_type">
+        <action
+            android:id="@+id/action_list_to_detail"
+            app:destination="@id/detail"
+            app:exitAnim="@null" />
+        <argument
+            android:name="type"
+            app:argType="integer"/>
     </fragment>
 
     <fragment

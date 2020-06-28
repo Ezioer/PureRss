@@ -9,6 +9,7 @@ import com.zxq.purerss.ui.chooserss.SaveDBRssModelFactory
 import com.zxq.purerss.ui.feedlist.FeedListModelFactory
 import com.zxq.purerss.ui.home.FeedContentListFactory
 import com.zxq.purerss.ui.mainpage.MainPageModelFactory
+import com.zxq.purerss.ui.type.TypeModelFactory
 
 /**
  * Created by xiaoqing.zhou
@@ -49,6 +50,13 @@ object InjectorUtil {
     )
 
     fun getFeedsListFactory(fragment: Fragment) = FeedListModelFactory(
+        RssFeedRepository.getInstance(
+            DataBase.getInstance(fragment.requireContext()
+            ).feedDao(),DataBase.getInstance(fragment.requireContext()).itemDao()
+        )
+    )
+
+    fun getTypeFactory(fragment: Fragment) = TypeModelFactory(
         RssFeedRepository.getInstance(
             DataBase.getInstance(fragment.requireContext()
             ).feedDao(),DataBase.getInstance(fragment.requireContext()).itemDao()

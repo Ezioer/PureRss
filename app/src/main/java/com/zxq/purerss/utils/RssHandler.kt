@@ -55,7 +55,7 @@ internal class RssHandler : DefaultHandler() {
             }
             RSS_DESCRIPTION -> {
                 if (currentFlag == RSS_DESCRIPTION){
-                    if (text.isPicUrl() &&rssItem!!.albumPic.isNotEmpty()){
+                    if (text.isPicUrl() && rssItem!!.albumPic.isNullOrEmpty()){
                         rssItem?.albumPic = text
                     }
                     rssItem?.description = rssItem?.description+text

@@ -15,7 +15,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:onClick="@{(v) -> clickHandle.onClick(v, item)}"
-        android:background="?android:selectableItemBackgroundBorderless"
+        android:background="?android:selectableItemBackground"
         android:layout_width="match_parent"
         android:layout_height="48dp">
 

@@ -1,4 +1,4 @@
-package com.zxq.purerss.ui.feedlist
+package com.zxq.purerss.ui.type
 
 import android.view.View
 import androidx.databinding.DataBindingUtil
@@ -14,7 +14,7 @@ import com.zxq.purerss.listener.ItemClickListener
  *  on 2020/6/28
  *  fun
  */
-class FeedListAdapter(private val onClick: ItemClickListener): BaseQuickAdapter<RssItem,BaseViewHolder>(R.layout.item_content_list) {
+class TypeAdapter(private val onClick: ItemClickListener): BaseQuickAdapter<RssItem,BaseViewHolder>(R.layout.item_content_list) {
 
     override fun onItemViewHolderCreated(viewHolder: BaseViewHolder, viewType: Int) {
         DataBindingUtil.bind<ItemContentListBinding>(viewHolder.itemView)
@@ -28,4 +28,6 @@ class FeedListAdapter(private val onClick: ItemClickListener): BaseQuickAdapter<
         binding?.clickHandle = onClick
         binding?.executePendingBindings()
     }
+
+
 }

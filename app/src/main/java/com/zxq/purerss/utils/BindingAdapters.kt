@@ -23,12 +23,28 @@ import android.view.WindowInsets
 import android.widget.ImageView
 import androidx.core.view.updateLayoutParams
 import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
 import com.google.android.material.elevation.ElevationOverlayProvider
+import com.zxq.purerss.R
+
 
 /**
  * Alter the background color as if this view had the given elevation. We don't want to actually
  * use elevation as the design calls for no shadow.
  */
+
+@BindingAdapter("app:imageUrl")
+fun loadImage(
+    imageView: ImageView,
+    url: String?
+): Unit {
+    Glide.with(imageView.context)
+        .load(url)
+        .placeholder(R.drawable.desk)
+        .error(R.drawable.desk)
+        .into(imageView)
+}
+
 @BindingAdapter("elevationOverlay")
 fun View.bindElevationOverlay(previousElevation: Float, elevation: Float) {
     if (previousElevation == elevation) return
