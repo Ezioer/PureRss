@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/mainpage">
+
+    <fragment
+        android:id="@+id/chooserssfragment"
+        android:name="com.zxq.purerss.ui.chooserss.ChooseRssFragment"
+        android:label="fragment_chooserss"
+        tools:layout="@layout/fragment_chooserss">
+        <action
+            android:id="@+id/action_choose_to_home"
+            app:destination="@id/mainpage"
+            app:popUpTo="@id/mainpage" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/mainpage"
+        android:name="com.zxq.purerss.ui.mainpage.MainPageFragment"
+        android:label="fragment_mainpage"
+        tools:layout="@layout/fragment_news">
+        <action
+            android:id="@+id/action_home_to_detail"
+            app:destination="@id/detail"
+            app:exitAnim="@null" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detail"
+        android:name="com.zxq.purerss.ui.detail.DetailFragment"
+        android:label="detail"
+        tools:layout="@layout/fragment_detail">
+        <argument
+            android:name="itemcontent"
+            app:argType="com.zxq.purerss.data.entity.RssItemInfo"/>
+    </fragment>
+</navigation>

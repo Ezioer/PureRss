@@ -1,0 +1,42 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/view_color</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+<!--        <item name="android:statusBarColor">@android:color/transparent</item>-->
+
+        <item name="bottomAppBarStyle">@style/Widget.MaterialComponents.BottomAppBar.PrimarySurface</item>
+        <item name="bottomSheetStyle">@style/Widget.MaterialComponents.BottomSheet.Modal</item>
+        <item name="navigationViewStyle">@style/Widget.Reply.NavigationView</item>
+
+        <!--Material type attributes-->
+        <item name="textAppearanceHeadline1">@style/TextAppearance.Owl.Headline1</item>
+        <item name="textAppearanceHeadline2">@style/TextAppearance.Owl.Headline2</item>
+        <item name="textAppearanceHeadline3">@style/TextAppearance.Owl.Headline3</item>
+        <item name="textAppearanceHeadline4">@style/TextAppearance.Owl.Headline4</item>
+        <item name="textAppearanceHeadline5">@style/TextAppearance.Owl.Headline5</item>
+        <item name="textAppearanceHeadline6">@style/TextAppearance.Owl.Headline6</item>
+        <item name="textAppearanceSubtitle1">@style/TextAppearance.Owl.Subtitle1</item>
+        <item name="textAppearanceSubtitle2">@style/TextAppearance.Owl.Subtitle2</item>
+        <item name="textAppearanceBody1">@style/TextAppearance.Owl.Body1</item>
+        <item name="textAppearanceBody2">@style/TextAppearance.Owl.Body2</item>
+        <item name="textAppearanceButton">@style/TextAppearance.Owl.Button</item>
+        <item name="textAppearanceCaption">@style/TextAppearance.Owl.Caption</item>
+        <item name="textAppearanceOverline">@style/TextAppearance.Owl.Overline</item>
+    </style>
+
+
+    <style name="Widget.Reply.NavigationView" parent="Widget.MaterialComponents.NavigationView">
+        <!--Remove any scrim insets applied by NavigationView for system bars-->
+        <item name="insetForeground">@android:color/transparent</item>
+        <!--Set the background color of NavigationView-->
+        <item name="android:background">@android:color/transparent</item>
+        <item name="elevation">0dp</item>
+        <item name="itemTextAppearance">?attr/textAppearanceBody2</item>
+        <item name="itemTextColor">@color/color_on_surface_emphasis_medium</item>
+        <item name="itemIconTint">@color/color_on_surface_emphasis_medium</item>
+    </style>
+</resources>

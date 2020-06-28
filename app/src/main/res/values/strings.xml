@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">PureRss</string>
+    <string name="app_bar_search">搜索</string>
+    <string name="app_bar_textsize">字体</string>
+    <string name="app_bar_save">保存</string>
+    <string name="app_bar_share">分享</string>
+    <string name="choose_your_rss">选择你感兴趣的rss源</string>
+
+    <string name="news">订阅</string>
+    <string name="mine">我的</string>
+
+    <string name="readed">已读</string>
+    <string name="laterread">稍后阅读</string>
+    <string name="collect">收藏</string>
+    <string name="add">添加</string>
+    <string name="search">搜索</string>
+</resources>

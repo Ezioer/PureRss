@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.zxq.purerss.data.entity.table.RSSFeedEntity" />
+        <variable
+            name="clickHandle"
+            type="com.zxq.purerss.ui.mainpage.MainPageAdapter.FeedClick" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:onClick="@{(v) -> clickHandle.onClick(v, item)}"
+        android:background="?android:selectableItemBackground"
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+
+        <TextView
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:id="@+id/tv_feedtitle"
+            tools:text= "少数派"
+            android:textColor="@color/white"
+            android:text="@{item.feedTitle}"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            app:layout_constraintRight_toLeftOf="@id/iv_itemmore"
+            android:layout_width="0dp"
+            android:layout_height="48dp"/>
+        <ImageView
+            android:id="@+id/iv_itemmore"
+            android:paddingLeft="15dp"
+            android:paddingRight="20dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_feedtitle"
+            android:src="@drawable/icon_main_more"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
