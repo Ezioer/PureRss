@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             app:fabAlignmentMode="center"
-            app:navigationIcon="@drawable/ic_add_white_24dp"
+            app:navigationIcon="@drawable/ic_arrow_back_white_24dp"
             app:menu="@menu/bottom_app_bar_detail_menu"
             app:fabCradleRoundedCornerRadius="32dp"
             app:fabCradleMargin="8dp"

@@ -24,6 +24,8 @@ import android.widget.ImageView
 import androidx.core.view.updateLayoutParams
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.elevation.ElevationOverlayProvider
 import com.zxq.purerss.R
 
@@ -40,8 +42,9 @@ fun loadImage(
 ): Unit {
     Glide.with(imageView.context)
         .load(url)
-        .placeholder(R.drawable.desk)
-        .error(R.drawable.desk)
+        .placeholder(R.drawable.default_two)
+        .error(R.drawable.default_two)
+        .transition(DrawableTransitionOptions.withCrossFade())
         .into(imageView)
 }
 

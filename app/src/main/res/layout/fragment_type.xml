@@ -29,11 +29,10 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:menu="@menu/menu_topbar"
-                    app:navigationIcon="@drawable/icon_mysetting" />
+                    app:navigationIcon="@drawable/ic_arrow_back_black_24dp" />
 
                 <TextView
-                    android:id="@+id/app_name"
+                    android:id="@+id/page_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -56,7 +55,7 @@
                     android:paddingLeft="8dp"
                     android:text="@string/search"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/app_name" />
+                    app:layout_constraintTop_toBottomOf="@id/page_type" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
