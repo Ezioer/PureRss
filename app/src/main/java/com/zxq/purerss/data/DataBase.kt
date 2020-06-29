@@ -7,8 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.zxq.purerss.data.dao.FeedDao
 import com.zxq.purerss.data.dao.ItemDao
-import com.zxq.purerss.data.entity.table.RSSFeedEntity
-import com.zxq.purerss.data.entity.table.RSSItemEntity
+import com.zxq.purerss.data.entity.table.*
 
 /**
  *  created by xiaoqing.zhou
@@ -16,7 +15,7 @@ import com.zxq.purerss.data.entity.table.RSSItemEntity
  *  fun
  */
 @Database(
-    entities = [RSSFeedEntity::class, RSSItemEntity::class],
+    entities = [RSSFeedEntity::class, RSSItemEntity::class,RSSLaterEntity::class,RSSReadedEntity::class,RSSCollectEntity::class],
     version = 1,
     exportSchema = false
 )

@@ -57,7 +57,7 @@ class ChooseRssAdapter(private var context: Context): ListAdapter<RSSFeedEntity,
                 onChooseClick = onClick
                 Glide.with(feedImage)
                     .asBitmap()
-                    .load(R.drawable.desk)
+                    .load(R.drawable.default_two)
                     .placeholder(R.drawable.course_image_placeholder)
                     .into(
                         TopicThumbnailTarget(

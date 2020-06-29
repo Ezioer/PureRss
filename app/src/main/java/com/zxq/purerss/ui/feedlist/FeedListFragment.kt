@@ -10,11 +10,13 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.zxq.purerss.data.entity.RssFeedInfo
 import com.zxq.purerss.data.entity.RssItem
 import com.zxq.purerss.data.entity.RssItemInfo
 import com.zxq.purerss.databinding.FragmentFeedlistBinding
 import com.zxq.purerss.listener.ItemClickListener
+import com.zxq.purerss.listener.ItemDiffCallback
 import com.zxq.purerss.utils.InjectorUtil
 
 /**
@@ -39,28 +41,30 @@ class FeedListFragment: Fragment() {
             feedinfo = mInfo
             val onClick = object: ItemClickListener{
                 override fun onClick(view: View, rss: RssItem) {
+                    viewM.readed(rss)
                     val action = FeedListFragmentDirections.actionListToDetail(RssItemInfo(rss.title,rss.link,rss.description,rss.pubdate,rss.author,1L,rss.title))
                     findNavController().navigate(action)
                 }
             }
             viewM.getFeedsList(mInfo!!.link,mInfo!!.id)
-            val adapter = FeedListAdapter(onClick)
-            recyclerview.adapter = adapter
-            adapter.setDiffCallback(ItemDiffCallback())
+            val mAdapter = FeedListAdapter(onClick)
+            mAdapter.setOnLaterListener(object: FeedListAdapter.OnLaterListener{
+                override fun later(item: RssItem) {
+                    viewM.later(item)
+                }
+            })
+
+            mAdapter.setOnCollectListener(object: FeedListAdapter.OnCollectListener{
+                override fun collect(item: RssItem) {
+                    viewM.collectItem(item)
+                }
+            })
+            recyclerview.adapter = mAdapter
+            mAdapter.setDiffCallback(ItemDiffCallback())
             viewM.feedsList.observe(this@FeedListFragment, Observer {
-                adapter.setDiffNewData(it)
+                mAdapter.setDiffNewData(it)
             })
         }
         return binding.root
-    }
-}
-
-private class ItemDiffCallback: DiffUtil.ItemCallback<RssItem>(){
-    override fun areItemsTheSame(oldItem: RssItem, newItem: RssItem): Boolean {
-        return oldItem.title == newItem.title
-    }
-
-    override fun areContentsTheSame(oldItem: RssItem, newItem: RssItem): Boolean {
-        return oldItem == newItem
     }
 }

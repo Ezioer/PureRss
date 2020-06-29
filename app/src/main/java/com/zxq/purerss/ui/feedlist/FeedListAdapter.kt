@@ -1,6 +1,5 @@
 package com.zxq.purerss.ui.feedlist
 
-import android.view.View
 import androidx.databinding.DataBindingUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
@@ -19,13 +18,38 @@ class FeedListAdapter(private val onClick: ItemClickListener): BaseQuickAdapter<
     override fun onItemViewHolderCreated(viewHolder: BaseViewHolder, viewType: Int) {
         DataBindingUtil.bind<ItemContentListBinding>(viewHolder.itemView)
     }
+
     override fun convert(holder: BaseViewHolder, item: RssItem) {
-        if (item == null){
+        if (item == null) {
             return
         }
         val binding = holder.getBinding<ItemContentListBinding>()
+        binding?.collect?.setOnClickListener {
+            onCollectListener?.collect(item)
+        }
+        binding?.later?.setOnClickListener {
+            onLaterListener?.later(item)
+        }
         binding?.item = item
         binding?.clickHandle = onClick
         binding?.executePendingBindings()
+    }
+
+    private var onCollectListener: OnCollectListener? = null
+    fun setOnCollectListener(l: OnCollectListener) {
+        onCollectListener = l
+    }
+
+    interface OnCollectListener {
+        fun collect(item: RssItem)
+    }
+
+    private var onLaterListener: OnLaterListener? = null
+    fun setOnLaterListener(l: OnLaterListener) {
+        onLaterListener = l
+    }
+
+    interface OnLaterListener {
+        fun later(item: RssItem)
     }
 }
