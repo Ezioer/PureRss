@@ -57,11 +57,37 @@ class RssFeedRepository private constructor(private val feedDao: FeedDao,private
     }
 
     suspend fun laterItem(item: RssItem) = withContext(Dispatchers.IO){
-        itemDao.insertLater(RSSLaterEntity(item.title,item.link,item.description,item.author,item.pubdate,item.albumPic,0L,""))
+        if (itemDao.laterIsExist(item.title) == null) {
+            itemDao.insertLater(
+                RSSLaterEntity(
+                    item.title,
+                    item.link,
+                    item.description,
+                    item.author,
+                    item.pubdate,
+                    item.albumPic,
+                    0L,
+                    ""
+                )
+            )
+        }
     }
 
-    suspend fun readedItem(item: RssItem) = withContext(Dispatchers.IO){
-        itemDao.insertReaded(RSSReadedEntity(item.title,item.link,item.description,item.author,item.pubdate,item.albumPic,0L,""))
+    suspend fun readedItem(item: RssItem) = withContext(Dispatchers.IO) {
+        if (itemDao.readedIsExist(item.title) == null) {
+            itemDao.insertReaded(
+                RSSReadedEntity(
+                    item.title,
+                    item.link,
+                    item.description,
+                    item.author,
+                    item.pubdate,
+                    item.albumPic,
+                    0L,
+                    ""
+                )
+            )
+        }
     }
 
     suspend fun saveContent2DB(feed: RssFeed,id: Long) = withContext(Dispatchers.IO){

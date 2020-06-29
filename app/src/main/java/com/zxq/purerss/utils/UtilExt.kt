@@ -169,6 +169,8 @@ fun EditText.addOnAfterChange(afterChange: (Editable?) -> Unit) {
 fun String.isPicUrl(): Boolean {
     return (this.startsWith("https") || this.startsWith("http")) && (this.endsWith("png") || this.endsWith(
         "jpeg"
-    ) || this.contains("jpeg") || this.endsWith("webp")
+    ) || this.contains("jpeg") || this.contains("png") || this.contains("webp") || this.contains("jpg") || this.endsWith(
+        "webp"
+    )
             || this.endsWith("gif"))
 }

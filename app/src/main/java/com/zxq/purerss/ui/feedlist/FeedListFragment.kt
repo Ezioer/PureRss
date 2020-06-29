@@ -9,8 +9,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ItemTouchHelper
 import com.zxq.purerss.data.entity.RssFeedInfo
 import com.zxq.purerss.data.entity.RssItem
 import com.zxq.purerss.data.entity.RssItemInfo
@@ -46,7 +44,8 @@ class FeedListFragment: Fragment() {
                     findNavController().navigate(action)
                 }
             }
-            viewM.getFeedsList(mInfo!!.link,mInfo!!.id)
+            toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
+            viewM.getFeedsList(mInfo!!.link, mInfo!!.id)
             val mAdapter = FeedListAdapter(onClick)
             mAdapter.setOnLaterListener(object: FeedListAdapter.OnLaterListener{
                 override fun later(item: RssItem) {

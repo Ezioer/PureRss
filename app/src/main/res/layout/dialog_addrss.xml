@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <EditText
+        android:id="@+id/et_search"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:hint="@string/rsslink"
+        android:background="@drawable/bg_search"
+        android:paddingLeft="20dp"
+        android:gravity="center_vertical"
+        app:layout_constraintRight_toLeftOf="@id/button"
+        android:layout_marginRight="10dp"
+        android:drawablePadding="8dp"
+        android:layout_width="0dp"
+        android:layout_height="40dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button"
+        android:text="@string/parse"
+        android:gravity="center"
+        android:background="@drawable/bg_search"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/et_search"
+        app:layout_constraintBottom_toBottomOf="@id/et_search"
+        android:layout_width="60dp"
+        android:layout_height="40dp" />
+
+    <TextView
+        android:id="@+id/app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="少数派"
+        android:layout_marginTop="20dp"
+        android:text="@{feedinfo.title}"
+        android:textAppearance="@style/TextAppearance.Owl.Headline4"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_search" />
+
+    <TextView
+        android:id="@+id/app_des"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:ellipsize="end"
+        tools:text="分享数字生活"
+        android:text="@{feedinfo.description}"
+        android:textAppearance="@style/TextAppearance.Owl.Subtitle1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/app_name" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:clipChildren="false"
+        app:layout_constraintTop_toBottomOf="@+id/app_des"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+</androidx.constraintlayout.widget.ConstraintLayout>

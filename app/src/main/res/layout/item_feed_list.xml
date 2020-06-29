@@ -26,6 +26,7 @@
             tools:text= "少数派"
             android:text="@{item.feedTitle}"
             android:gravity="center_vertical"
+            android:textAppearance="@style/TextAppearance.Owl.Subtitle1"
             android:paddingLeft="20dp"
             android:layout_width="match_parent"
             android:layout_height="48dp"/>

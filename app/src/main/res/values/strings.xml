@@ -13,5 +13,9 @@
     <string name="laterread">稍后读</string>
     <string name="collect">收藏</string>
     <string name="add">添加</string>
+    <string name="remove">移出</string>
     <string name="search">搜索</string>
+
+    <string name="rsslink">输入rss源地址</string>
+    <string name="parse">解析</string>
 </resources>

@@ -11,7 +11,7 @@
 
         <variable
             name="clickHandle"
-            type="com.zxq.purerss.listener.ItemClickListener" />
+            type="com.zxq.purerss.listener.ItemTypeClickListener" />
     </data>
 
     <com.zxq.purerss.widget.SwipeMenuLayout
@@ -35,7 +35,7 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:paddingRight="10dp"
-                android:text="@{item.title}"
+                android:text="@{item.itemTitle}"
                 android:textAppearance="@style/TextAppearance.Owl.Headline7"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/iv_pic"
@@ -47,7 +47,7 @@
                 android:layout_width="120dp"
                 android:layout_height="100dp"
                 android:scaleType="centerCrop"
-                app:imageUrl="@{item.albumPic}"
+                app:imageUrl="@{item.itemPic}"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -59,7 +59,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:paddingRight="10dp"
-                android:text='@{"by   "+item.author+"/"+item.pubdate}'
+                android:text='@{"by   "+item.itemAuthor+"/"+item.itemDate}'
                 android:textAppearance="@style/TextAppearance.Owl.Subtitle2"
                 app:layout_constraintBottom_toTopOf="@id/view_line"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -76,17 +76,11 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/collect"
-            android:text="@string/collect"
+            android:id="@+id/remove"
+            android:text="@string/remove"
             android:background="@color/c_008f68"
             android:layout_width="80dp"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/later"
-            android:text="@string/laterread"
-            android:background="@color/c_008f68"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"/>
     </com.zxq.purerss.widget.SwipeMenuLayout>
 </layout>

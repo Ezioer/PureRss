@@ -7,6 +7,7 @@ import com.zxq.purerss.R
 import com.zxq.purerss.data.entity.RssItem
 import com.zxq.purerss.databinding.ItemContentListBinding
 import com.zxq.purerss.listener.ItemClickListener
+import com.zxq.purerss.widget.SwipeMenuLayout
 
 /**
  *  created by xiaoqing.zhou
@@ -25,9 +26,11 @@ class FeedListAdapter(private val onClick: ItemClickListener): BaseQuickAdapter<
         }
         val binding = holder.getBinding<ItemContentListBinding>()
         binding?.collect?.setOnClickListener {
+            (binding.root as SwipeMenuLayout).smoothClose()
             onCollectListener?.collect(item)
         }
         binding?.later?.setOnClickListener {
+            (binding.root as SwipeMenuLayout).smoothClose()
             onLaterListener?.later(item)
         }
         binding?.item = item

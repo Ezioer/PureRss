@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.zxq.purerss.App
 import com.zxq.purerss.data.entity.RssItemInfo
@@ -29,6 +30,7 @@ class DetailFragment : Fragment() {
             mRssItemInfo = arg.itemcontent
             lifecycleOwner = this@DetailFragment
             info = mRssItemInfo
+            bottomAppBar.setNavigationOnClickListener { findNavController().navigateUp() }
             tvContent.text = Html.fromHtml(
                 mRssItemInfo?.description,
                 MImageGetter(tvContent, App.instance!!.applicationContext),

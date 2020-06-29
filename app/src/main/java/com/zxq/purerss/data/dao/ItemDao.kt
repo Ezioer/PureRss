@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.zxq.purerss.data.entity.RssItem
 import com.zxq.purerss.data.entity.table.RSSCollectEntity
 import com.zxq.purerss.data.entity.table.RSSItemEntity
 import com.zxq.purerss.data.entity.table.RSSLaterEntity
@@ -32,8 +31,14 @@ interface ItemDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertReaded(rssReadedEntity: RSSReadedEntity)
 
+    @Query("select * from rssreaded where item_title =:title")
+    fun readedIsExist(title: String): RSSReadedEntity
+
     @Query("select * from rssreaded")
     fun selectAllReaded(): MutableList<RSSReadedEntity>
+
+    @Query("select * from rssreaded where item_title like '%' || :key || '%' or feed_title like '%' || :key || '%' ")
+    fun searchReaded(key: String): MutableList<RSSReadedEntity>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertCollect(rssReadedEntity: RSSCollectEntity)
@@ -41,9 +46,18 @@ interface ItemDao {
     @Query("select * from rsscollect")
     fun selectAllCollect(): MutableList<RSSCollectEntity>
 
+    @Query("select * from rsscollect where item_title like '%' || :key || '%' or feed_title like '%' || :key || '%' ")
+    fun searchCollect(key: String): MutableList<RSSCollectEntity>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertLater(rssReadedEntity: RSSLaterEntity)
 
+    @Query("select * from rsslater where item_title =:title")
+    fun laterIsExist(title: String): RSSLaterEntity
+
     @Query("select * from rsslater")
     fun selectAllLater(): MutableList<RSSLaterEntity>
+
+    @Query("select * from rsslater where item_title like '%' || :key || '%' or feed_title like '%' || :key || '%' ")
+    fun searchLater(key: String): MutableList<RSSLaterEntity>
 }

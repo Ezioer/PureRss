@@ -9,11 +9,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.zxq.purerss.data.entity.RssItem
 import com.zxq.purerss.data.entity.RssItemInfo
+import com.zxq.purerss.data.entity.table.RSSItemEntity
 import com.zxq.purerss.databinding.FragmentTypeBinding
-import com.zxq.purerss.listener.ItemClickListener
-import com.zxq.purerss.listener.ItemDiffCallback
+import com.zxq.purerss.listener.ItemTypeClickListener
 import com.zxq.purerss.listener.ItemTypeDiffCallback
 import com.zxq.purerss.ui.feedlist.FeedListFragmentDirections
 import com.zxq.purerss.utils.InjectorUtil
@@ -42,14 +41,30 @@ class FragmentType: Fragment() {
                     pageType.text = "稍后阅读"
                 }
             }
+            toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
             viewM.getFeedsList(type)
-            val onClick = object: ItemClickListener {
-                override fun onClick(view: View, rss: RssItem) {
-                    val action = FeedListFragmentDirections.actionListToDetail(RssItemInfo(rss.title,rss.link,rss.description,rss.pubdate,rss.author,1L,rss.title))
+            val onClick = object : ItemTypeClickListener {
+                override fun onClick(view: View, rss: RSSItemEntity) {
+                    val action = FeedListFragmentDirections.actionListToDetail(
+                        RssItemInfo(
+                            rss.itemTitle,
+                            rss.itemLink,
+                            rss.itemDesc,
+                            rss.itemDate,
+                            rss.itemAuthor,
+                            rss.itemFeed,
+                            rss.feedTitle
+                        )
+                    )
                     findNavController().navigate(action)
                 }
             }
             val adapter = TypeAdapter(onClick)
+            adapter.setOnRemoveListener(object : TypeAdapter.OnRemoveListener {
+                override fun onRemove(item: RSSItemEntity) {
+                    adapter.data.remove(item)
+                }
+            })
             recyclerview.adapter = adapter
             adapter.setDiffCallback(ItemTypeDiffCallback())
             viewM.feedsList.observe(this@FragmentType, Observer {
