@@ -16,7 +16,6 @@
 
 package  com.zxq.purerss.utils
 
-import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
@@ -28,7 +27,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.elevation.ElevationOverlayProvider
 import com.zxq.purerss.R
-import jp.wasabeef.glide.transformations.BlurTransformation
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 
 
 /**
@@ -45,7 +44,7 @@ fun loadImage(
         .load(url)
         .placeholder(R.drawable.default_two)
         .error(R.drawable.default_two)
-        .apply(RequestOptions.bitmapTransform(BlurTransformation(25, 3)))
+        .apply(RequestOptions.bitmapTransform(RoundedCornersTransformation(22, 3)))
         .transition(DrawableTransitionOptions.withCrossFade())
         .into(imageView)
 }

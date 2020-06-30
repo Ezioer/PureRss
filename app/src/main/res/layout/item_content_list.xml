@@ -77,6 +77,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/collect"
+            app:backgroundTint="@color/c_008f68"
             android:text="@string/collect"
             android:background="@color/c_008f68"
             android:layout_width="80dp"
@@ -84,6 +85,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/later"
+            app:backgroundTint="@color/c_008f68"
             android:text="@string/laterread"
             android:background="@color/c_008f68"
             android:layout_width="80dp"
