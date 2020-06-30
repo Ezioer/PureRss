@@ -23,6 +23,41 @@ class RssFeedRepository private constructor(private val feedDao: FeedDao,private
         }
     }
 
+    suspend fun removeItem(id: Long,type: Int) = withContext(Dispatchers.IO){
+        if (type == 1){
+            itemDao.removeReaded(id)
+        } else if (type == 2){
+            itemDao.removeCollect(id)
+        } else {
+            itemDao.removeReaded(id)
+        }
+    }
+
+    suspend fun searchItem(key: String,type: Int): MutableList<RSSItemEntity> = withContext(Dispatchers.IO){
+        val result = mutableListOf<RSSItemEntity>()
+        if (type == 1){
+            val list = itemDao.searchReaded(key)
+            for (item in list){
+                result.add(RSSItemEntity(item.itemTitle,item.itemLink,item.itemDesc,item.itemAuthor,item.itemDate,item.itemPic,item.itemFeed,item.feedTitle))
+            }
+        } else if (type == 2){
+            val list = itemDao.searchCollect(key)
+            for (item in list){
+                result.add(RSSItemEntity(item.itemTitle,item.itemLink,item.itemDesc,item.itemAuthor,item.itemDate,item.itemPic,item.itemFeed,item.feedTitle))
+            }
+        } else {
+            val list = itemDao.searchLater(key)
+            for (item in list){
+                result.add(RSSItemEntity(item.itemTitle,item.itemLink,item.itemDesc,item.itemAuthor,item.itemDate,item.itemPic,item.itemFeed,item.feedTitle))
+            }
+        }
+        result
+    }
+
+    suspend fun searchFeeds(key: String): MutableList<RSSFeedEntity> = withContext(Dispatchers.IO){
+        feedDao.searchFeeds(key)
+    }
+
     suspend fun getRssListFromDb(): MutableList<RSSFeedEntity> = withContext(Dispatchers.IO){
         feedDao.getFeedsFromDb()
     }

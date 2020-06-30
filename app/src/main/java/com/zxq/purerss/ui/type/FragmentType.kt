@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -14,6 +15,7 @@ import com.zxq.purerss.data.entity.table.RSSItemEntity
 import com.zxq.purerss.databinding.FragmentTypeBinding
 import com.zxq.purerss.listener.ItemTypeClickListener
 import com.zxq.purerss.listener.ItemTypeDiffCallback
+import com.zxq.purerss.ui.dialog.SearchItemDialog
 import com.zxq.purerss.ui.feedlist.FeedListFragmentDirections
 import com.zxq.purerss.utils.InjectorUtil
 
@@ -41,6 +43,9 @@ class FragmentType: Fragment() {
                     pageType.text = "稍后阅读"
                 }
             }
+            tvSearch.setOnClickListener {
+                showSearchDialog()
+            }
             toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
             viewM.getFeedsList(type)
             val onClick = object : ItemTypeClickListener {
@@ -63,6 +68,7 @@ class FragmentType: Fragment() {
             adapter.setOnRemoveListener(object : TypeAdapter.OnRemoveListener {
                 override fun onRemove(item: RSSItemEntity) {
                     adapter.data.remove(item)
+                    viewM.removeItem(item.itemId,type)
                 }
             })
             recyclerview.adapter = adapter
@@ -72,5 +78,15 @@ class FragmentType: Fragment() {
             })
         }
         return binding.root
+    }
+
+    private var mSearchDialog: SearchItemDialog? = null
+    private fun showSearchDialog() {
+        if (mSearchDialog == null){
+            mSearchDialog = SearchItemDialog(context!!,viewM,this@FragmentType,type)
+        }
+
+        mSearchDialog?.show()
+        mSearchDialog?.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
     }
 }

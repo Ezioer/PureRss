@@ -40,6 +40,9 @@ interface ItemDao {
     @Query("select * from rssreaded where item_title like '%' || :key || '%' or feed_title like '%' || :key || '%' ")
     fun searchReaded(key: String): MutableList<RSSReadedEntity>
 
+    @Query("delete  from rssreaded where item_id =:id")
+    fun removeReaded(id: Long)
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertCollect(rssReadedEntity: RSSCollectEntity)
 
@@ -48,6 +51,9 @@ interface ItemDao {
 
     @Query("select * from rsscollect where item_title like '%' || :key || '%' or feed_title like '%' || :key || '%' ")
     fun searchCollect(key: String): MutableList<RSSCollectEntity>
+
+    @Query("delete  from rsscollect where item_id =:id")
+    fun removeCollect(id: Long)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertLater(rssReadedEntity: RSSLaterEntity)
@@ -60,4 +66,7 @@ interface ItemDao {
 
     @Query("select * from rsslater where item_title like '%' || :key || '%' or feed_title like '%' || :key || '%' ")
     fun searchLater(key: String): MutableList<RSSLaterEntity>
+
+    @Query("delete  from rsslater where item_id =:id")
+    fun removeLater(id: Long)
 }

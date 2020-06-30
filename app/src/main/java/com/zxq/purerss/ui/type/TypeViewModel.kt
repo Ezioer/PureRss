@@ -20,7 +20,7 @@ import kotlinx.coroutines.withContext
 class TypeViewModel(private val repository: RssFeedRepository): ViewModel() {
 
     val feedsList =MutableLiveData<MutableList<RSSItemEntity>>()
-
+    val itemList = MutableLiveData<MutableList<RSSItemEntity>>()
     fun getFeedsList(type: Int){
         launch({
             val result = repository.getRssListFromDb(type)
@@ -29,6 +29,24 @@ class TypeViewModel(private val repository: RssFeedRepository): ViewModel() {
 
         })
     }
+
+    fun searchItem(key: String,type: Int){
+        launch({
+            val result = repository.searchItem(key,type)
+            itemList.value = result
+        },{
+
+        })
+    }
+
+    fun removeItem(id: Long,type: Int){
+        launch({
+            val result = repository.removeItem(id,type)
+        },{
+
+        })
+    }
+
     private fun launch(block: suspend () -> Unit, error: suspend (Throwable) -> Unit) =
         viewModelScope.launch {
             try {

@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp"
+        android:background="@drawable/bg_dialog">
+
+        <TextView
+            android:id="@+id/tv_bg"
+            android:textColor="@color/c_2a4a66"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="10dp"
+            android:text="@string/theme"
+            android:textAppearance="@style/TextAppearance.Owl.Subtitle2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/ll_theme"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_bg">
+
+            <View
+                android:id="@+id/view_c_one"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_r_one_n" />
+            <!-- <View
+                 android:layout_marginRight="20dp"
+                 android:background="@drawable/bg_r_two_n"
+                 android:id="@+id/view_c_two"
+                 android:layout_width="0dp"
+                 android:layout_weight="1"
+                 android:layout_height="40dp"/>-->
+            <View
+                android:id="@+id/view_c_three"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_r_three_n" />
+
+            <View
+                android:id="@+id/view_c_four"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_r_four_n" />
+            <!-- <View
+                 android:layout_marginRight="20dp"
+                 android:background="@drawable/bg_r_five_n"
+                 android:id="@+id/view_c_five"
+                 android:layout_width="0dp"
+                 android:layout_weight="1"
+                 android:layout_height="40dp"/>-->
+            <View
+                android:id="@+id/view_c_six"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_r_six_n" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_textsize"
+            android:layout_width="0dp"
+            android:textColor="@color/c_2a4a66"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="10dp"
+            android:text="@string/textsize"
+            android:textAppearance="@style/TextAppearance.Owl.Subtitle2"
+            app:layout_constraintLeft_toLeftOf="@id/ll_textsize"
+            app:layout_constraintRight_toRightOf="@id/ll_textsize"
+            app:layout_constraintTop_toBottomOf="@id/ll_theme" />
+
+        <LinearLayout
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintHorizontal_weight="1.5"
+            android:id="@+id/ll_textsize"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/ll_textstyle"
+            app:layout_constraintTop_toBottomOf="@id/tv_textsize"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_width="0dp"
+            android:layout_height="50dp">
+
+            <ImageView
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:src="@drawable/decrease_font_64px"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+            <SeekBar
+                android:id="@+id/sb_fontsize"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:max="5"
+                android:progress="2" />
+
+            <ImageView
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:src="@drawable/increase_font_64px"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_textstyle"
+            android:textColor="@color/c_2a4a66"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/textstyle"
+            android:textAppearance="@style/TextAppearance.Owl.Subtitle2"
+            app:layout_constraintLeft_toLeftOf="@id/ll_textstyle"
+            app:layout_constraintRight_toRightOf="@id/ll_textstyle"
+            app:layout_constraintTop_toBottomOf="@id/ll_theme" />
+
+        <LinearLayout
+            android:id="@+id/ll_textstyle"
+            android:orientation="horizontal"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintLeft_toRightOf="@id/ll_textsize"
+            app:layout_constraintRight_toLeftOf="@id/ll_texttspa"
+            app:layout_constraintTop_toBottomOf="@id/tv_textstyle"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp">
+
+            <ImageView
+                android:background="@drawable/bg_tv_unselect"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_marginTop="5dp"
+                android:id="@+id/iv_italic"
+                android:src="@drawable/italic_48px"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+            <ImageView
+                android:background="@drawable/bg_tv_unselect"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:id="@+id/iv_bold"
+                android:src="@drawable/bold_48px"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_textspa"
+            android:textColor="@color/c_2a4a66"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="10dp"
+            android:text="@string/textspac"
+            android:textAppearance="@style/TextAppearance.Owl.Subtitle2"
+            app:layout_constraintLeft_toLeftOf="@id/ll_texttspa"
+            app:layout_constraintRight_toRightOf="@id/ll_texttspa"
+            app:layout_constraintTop_toBottomOf="@id/ll_theme" />
+
+        <LinearLayout
+            android:id="@+id/ll_texttspa"
+            app:layout_constraintHorizontal_weight="1"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:gravity="center_horizontal"
+            android:paddingRight="10dp"
+            app:layout_constraintLeft_toRightOf="@id/ll_textstyle"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_textspa"
+            android:layout_width="0dp"
+            android:layout_height="50dp">
+
+            <TextView
+                android:text="2"
+                android:id="@+id/tv_spac"
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+            <SeekBar
+                android:id="@+id/sb_textspac"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:max="2"
+                android:progress="2" />
+
+            <ImageView
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:id="@+id/iv_textspac"
+                android:src="@drawable/text_height_64px"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <TextView
+            android:textColor="@color/c_2a4a66"
+            android:id="@+id/tv_font"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="10dp"
+            android:text="@string/font"
+            android:textAppearance="@style/TextAppearance.Owl.Subtitle2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_textsize" />
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_tv_unselect"
+            android:text="PureRss"
+            android:textStyle="bold"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/tv_font_two"
+            android:gravity="center_vertical"
+            app:layout_constraintTop_toBottomOf="@id/tv_font"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/black_color"
+            android:id="@+id/tv_font_one"
+            android:textSize="22sp"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            android:layout_width="0dp"
+            android:layout_height="60dp" />
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:text="PureRss"
+            android:textStyle="bold"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:background="@drawable/bg_tv_unselect"
+            app:layout_constraintLeft_toRightOf="@id/tv_font_one"
+            app:layout_constraintRight_toLeftOf="@id/tv_font_three"
+            android:gravity="center_vertical"
+            app:layout_constraintTop_toBottomOf="@id/tv_font"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/black_color"
+            android:id="@+id/tv_font_two"
+            android:textSize="22sp"
+            app:layout_constraintHorizontal_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="60dp" />
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_tv_unselect"
+            android:text="PureRss"
+            android:textStyle="bold"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            app:layout_constraintLeft_toRightOf="@id/tv_font_two"
+            app:layout_constraintRight_toRightOf="parent"
+            android:gravity="center_vertical"
+            app:layout_constraintTop_toBottomOf="@id/tv_font"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/black_color"
+            android:layout_marginRight="10dp"
+            android:id="@+id/tv_font_three"
+            android:textSize="22sp"
+            app:layout_constraintHorizontal_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="60dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

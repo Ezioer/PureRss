@@ -16,24 +16,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menu_textsize"
-        android:icon="@drawable/ic_search"
-        app:showAsAction="ifRoom"
-        android:title="@string/app_bar_textsize"/>
-
+        android:id="@+id/menu_readsetting"
+        android:icon="@drawable/ic_text_fields_black_24dp"
+        app:showAsAction="always"
+        android:title="@string/readsetting"/>
+    <item
+        android:id="@+id/menu_share"
+        android:icon="@drawable/ic_share_black_24dp"
+        app:showAsAction="always"
+        android:title="@string/app_bar_share"/>
     <item
         android:id="@+id/menu_save"
         android:icon="@drawable/ic_search"
-        app:showAsAction="ifRoom"
-        android:title="@string/app_bar_save"/>
+        app:showAsAction="never"
+        android:title="@string/collect"/>
     <item
-        android:id="@+id/menu_share"
+        android:id="@+id/menu_unread"
         android:icon="@drawable/ic_search"
-        app:showAsAction="ifRoom"
-        android:title="@string/app_bar_share"/>
-    <item
-        android:id="@+id/menu_search"
-        android:icon="@drawable/ic_search"
-        app:showAsAction="ifRoom"
-        android:title="@string/app_bar_search"/>
+        app:showAsAction="never"
+        android:title="@string/unread"/>
 </menu>

@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 class MainPageViewModel(private val repository: RssFeedRepository): ViewModel() {
 
     val feedsList =MutableLiveData<MutableList<RSSFeedEntity>>()
+    val searchFeedsList = MutableLiveData<MutableList<RSSFeedEntity>>()
 
     fun getFeedsList(){
         launch({
@@ -24,6 +25,16 @@ class MainPageViewModel(private val repository: RssFeedRepository): ViewModel() 
 
         })
     }
+
+    fun serachFeeds(key: String){
+        launch({
+            val result = repository.searchFeeds(key)
+            searchFeedsList.value = result
+        },{
+
+        })
+    }
+
     private fun launch(block: suspend () -> Unit, error: suspend (Throwable) -> Unit) =
         viewModelScope.launch {
             try {

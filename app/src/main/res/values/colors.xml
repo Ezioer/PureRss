@@ -8,6 +8,21 @@
     <color name="white">#ffffff</color>
     <color name="view_color">#ffffff</color>
     <color name="root_color">#efefef</color>
+    <color name="black_color">#282832</color>
+    <color name="c_666">#666666</color>
 
     <color name="c_008f68">#008f68</color>
+
+
+    <color name="c_r_one">#e8e8e8</color>
+    <color name="c_r_two">#dfd6c5</color>
+    <color name="c_r_three">#d0bd8a</color>
+    <color name="c_r_four">#a5cda4</color>
+    <color name="c_r_five">#364f70</color>
+    <color name="c_r_six">#000000</color>
+    <color name="c_ff8932">#ff8932</color>
+
+
+    <color name="c_2a4a66">#2a4a66</color>
+
 </resources>

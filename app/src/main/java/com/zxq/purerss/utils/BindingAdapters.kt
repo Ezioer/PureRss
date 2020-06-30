@@ -28,6 +28,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.elevation.ElevationOverlayProvider
 import com.zxq.purerss.R
+import jp.wasabeef.glide.transformations.BlurTransformation
 
 
 /**
@@ -44,6 +45,7 @@ fun loadImage(
         .load(url)
         .placeholder(R.drawable.default_two)
         .error(R.drawable.default_two)
+        .apply(RequestOptions.bitmapTransform(BlurTransformation(25, 3)))
         .transition(DrawableTransitionOptions.withCrossFade())
         .into(imageView)
 }

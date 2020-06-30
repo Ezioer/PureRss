@@ -6,6 +6,7 @@ import androidx.navigation.Navigation
 import com.zxq.liferiver.util.StatusBarUtil
 import com.zxq.purerss.R
 import com.zxq.purerss.databinding.ActivityMainBinding
+import com.zxq.purerss.utils.ViewUtils
 import com.zxq.purerss.utils.contentView
 import com.zxq.purerss.utils.getSpValue
 
@@ -15,6 +16,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        ViewUtils.settranslucent(this)
         if (getSpValue("nightmodel", 0) != 1) {
             StatusBarUtil.StatusBarLightMode(this)
         }

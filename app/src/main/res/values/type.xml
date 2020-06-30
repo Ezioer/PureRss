@@ -50,8 +50,7 @@
   <style name="TextAppearance.Owl.Headline7" parent="TextAppearance.MaterialComponents.Headline6">
     <item name="fontFamily">@font/work_sans_medium</item>
     <item name="android:textStyle">bold</item>
-    <item name="lineHeight">24sp</item>
-    <item name="android:textSize">18sp</item>
+    <item name="android:textSize">16sp</item>
   </style>
 
   <style name="TextAppearance.Owl.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">

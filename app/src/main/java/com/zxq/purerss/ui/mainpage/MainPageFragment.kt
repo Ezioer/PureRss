@@ -1,9 +1,11 @@
 package com.zxq.purerss.ui.mainpage
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -15,8 +17,10 @@ import com.zxq.purerss.R
 import com.zxq.purerss.data.entity.RssFeedInfo
 import com.zxq.purerss.data.entity.table.RSSFeedEntity
 import com.zxq.purerss.databinding.FragmentNewsBinding
+import com.zxq.purerss.listener.RssDiffCallback
+import com.zxq.purerss.ui.dialog.SearchFeedsDialog
+import com.zxq.purerss.ui.setting.SettingActivity
 import com.zxq.purerss.utils.InjectorUtil
-import kotlinx.android.synthetic.main.header_news.*
 
 /**
  *  created by xiaoqing.zhou
@@ -40,6 +44,16 @@ class MainPageFragment: Fragment() {
                     findNavController().navigate(action)
                 }
             }
+            toolbar.setNavigationOnClickListener { startActivity(Intent(activity,SettingActivity::class.java)) }
+            toolbar.setOnMenuItemClickListener {
+                if (it.itemId == R.id.addfeed){
+
+                }
+                true
+            }
+            tvSearch.setOnClickListener {
+                popSearchDialog()
+            }
             mainViewModel.getFeedsList()
             val adapter = MainPageAdapter(onClick)
             recyclerview.adapter = adapter
@@ -50,6 +64,15 @@ class MainPageFragment: Fragment() {
             })
         }
         return binding.root
+    }
+
+    private var mSearchDialog: SearchFeedsDialog? = null
+    private fun popSearchDialog() {
+        if (mSearchDialog == null){
+            mSearchDialog = SearchFeedsDialog(context!!,mainViewModel,this@MainPageFragment)
+        }
+        mSearchDialog?.show()
+        mSearchDialog?.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
     }
 
     private fun getHeaderView(): View {
@@ -66,15 +89,5 @@ class MainPageFragment: Fragment() {
     private fun onTypeClick(i: Int) {
         val action = MainPageFragmentDirections.actionMainpageToType(i)
         findNavController().navigate(action)
-    }
-}
-
-private class RssDiffCallback: DiffUtil.ItemCallback<RSSFeedEntity>(){
-    override fun areItemsTheSame(oldItem: RSSFeedEntity, newItem: RSSFeedEntity): Boolean {
-        return oldItem.feedId == newItem.feedId
-    }
-
-    override fun areContentsTheSame(oldItem: RSSFeedEntity, newItem: RSSFeedEntity): Boolean {
-        return oldItem == newItem
     }
 }

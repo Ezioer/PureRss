@@ -4,72 +4,85 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="info"
             type="com.zxq.purerss.data.entity.RssItemInfo" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:layout_width="match_parent"
         android:id="@+id/coordinator_layout"
-        android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutFullscreen="@{true}">
 
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:paddingTop="20dp"
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                    tools:text="这是一个测试的文本"
-                    android:text="@{info.title}"
-                    android:id="@+id/tv_title"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    android:layout_margin="10dp"
-                    android:textAppearance="@style/TextAppearance.Owl.Headline5"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:text='@{"by   "+info.author+"/"+info.pubdate}'
-                    android:id="@+id/tv_author"
-                    app:layout_constraintTop_toBottomOf="@id/tv_title"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    tools:text="by  ceshi / 2020/15:34"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="20dp"
-                    android:textAppearance="@style/TextAppearance.Owl.Subtitle2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:layout_marginTop="40dp"
-                    android:padding="15dp"
-                    android:id="@+id/tv_content"
-                    android:lineSpacingExtra="10dp"
-                    android:text=""
-                    android:textAppearance="@style/TextAppearance.Owl.Headline6"
-                    app:layout_constraintTop_toBottomOf="@id/tv_author"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_height="match_parent"
+                android:background="@color/c_r_one">
 
-        </androidx.core.widget.NestedScrollView>
-        <com.google.android.material.bottomappbar.BottomAppBar
-            android:id="@+id/bottom_app_bar"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_marginTop="40dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tv_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="@{info.title}"
+                        android:textAppearance="@style/TextAppearance.Owl.Headline5"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="这是一个测试的文本" />
+
+                    <TextView
+                        android:id="@+id/tv_author"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        android:text='@{"by   "+info.author+"/"+info.pubdate}'
+                        android:textAppearance="@style/TextAppearance.Owl.Subtitle2"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_title"
+                        tools:text="by  ceshi / 2020/15:34" />
+
+                    <TextView
+                        android:id="@+id/tv_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="40dp"
+                        android:lineSpacingExtra="10dp"
+                        android:padding="15dp"
+                        android:text=""
+                        android:textSize="16sp"
+                        app:layout_constraintTop_toBottomOf="@id/tv_author" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+            <com.google.android.material.bottomappbar.BottomAppBar
+                android:id="@+id/bottom_app_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:backgroundTint="@color/c_r_one"
+                app:elevation="0dp"
+                app:hideOnScroll="true"
+                app:menu="@menu/bottom_app_bar_detail_menu"
+                app:navigationIcon="@drawable/ic_arrow_back_black_24dp">
+
+            </com.google.android.material.bottomappbar.BottomAppBar>
+
+        <include
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/include_readsetting"
             android:layout_gravity="bottom"
-            app:fabAlignmentMode="center"
-            app:navigationIcon="@drawable/ic_arrow_back_white_24dp"
-            app:menu="@menu/bottom_app_bar_detail_menu"
-            app:fabCradleRoundedCornerRadius="32dp"
-            app:fabCradleMargin="8dp"
-            app:hideOnScroll="true">
-
-        </com.google.android.material.bottomappbar.BottomAppBar>
-
+            layout="@layout/dialog_readsetting"/>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
