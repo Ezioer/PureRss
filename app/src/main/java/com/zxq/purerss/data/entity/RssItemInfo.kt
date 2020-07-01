@@ -15,7 +15,8 @@ class RssItemInfo(
     var pubdate: String = "",
     var author: String = "",
     var feedId: Long,
-    var feedTitle: String
+    var feedTitle: String,
+    var pic: String
 ) : Parcelable {
     constructor(source: Parcel) : this(
         source.readString()?:"",
@@ -24,6 +25,7 @@ class RssItemInfo(
         source.readString()?:"",
         source.readString()?:"",
         source.readLong(),
+        source.readString()?:"",
         source.readString()?:""
     )
 
@@ -37,6 +39,7 @@ class RssItemInfo(
         writeString(author)
         writeLong(feedId)
         writeString(feedTitle)
+        writeString(pic)
     }
 
     companion object {

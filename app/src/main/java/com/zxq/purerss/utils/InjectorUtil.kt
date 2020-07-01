@@ -6,6 +6,7 @@ import com.zxq.purerss.data.DataBase
 import com.zxq.purerss.data.RssFeedRepository
 import com.zxq.purerss.ui.bottomdrawer.AllFeedFactory
 import com.zxq.purerss.ui.chooserss.SaveDBRssModelFactory
+import com.zxq.purerss.ui.detail.DetailModelFactory
 import com.zxq.purerss.ui.feedlist.FeedListModelFactory
 import com.zxq.purerss.ui.home.FeedContentListFactory
 import com.zxq.purerss.ui.mainpage.MainPageModelFactory
@@ -50,6 +51,13 @@ object InjectorUtil {
     )
 
     fun getFeedsListFactory(fragment: Fragment) = FeedListModelFactory(
+        RssFeedRepository.getInstance(
+            DataBase.getInstance(fragment.requireContext()
+            ).feedDao(),DataBase.getInstance(fragment.requireContext()).itemDao()
+        )
+    )
+
+    fun getDetailFactory(fragment: Fragment) = DetailModelFactory(
         RssFeedRepository.getInstance(
             DataBase.getInstance(fragment.requireContext()
             ).feedDao(),DataBase.getInstance(fragment.requireContext()).itemDao()

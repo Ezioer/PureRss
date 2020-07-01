@@ -36,14 +36,6 @@ class FeedListViewModel(private val repository: RssFeedRepository) : ViewModel()
         })
     }
 
-    fun readed(item: RssItem){
-        launch({
-            val result = repository.readedItem(item)
-        },{
-
-        })
-    }
-
     fun getFeedsList(url: String, id: Long) {
         launch({
             val list = repository.getRssItemFromDB(id)

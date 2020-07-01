@@ -1,4 +1,4 @@
-package com.zxq.liferiver.util
+package com.zxq.purerss.utils
 
 import android.app.Activity
 import android.graphics.Color

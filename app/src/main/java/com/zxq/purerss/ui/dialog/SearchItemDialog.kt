@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import com.zxq.purerss.R
 import com.zxq.purerss.data.entity.RssItemInfo
 import com.zxq.purerss.data.entity.table.RSSItemEntity
@@ -17,6 +18,7 @@ import com.zxq.purerss.ui.type.FragmentType
 import com.zxq.purerss.ui.type.TypeAdapter
 import com.zxq.purerss.ui.type.TypeViewModel
 import com.zxq.purerss.utils.KeyBoardUtil
+import com.zxq.purerss.utils.SpringAddItemAnimator
 import com.zxq.purerss.utils.addOnAfterChange
 import kotlinx.android.synthetic.main.dialog_search.*
 
@@ -24,7 +26,8 @@ class SearchItemDialog(
     private val mContext: Context,
     private var mainViewModel: TypeViewModel,
     private var mainPageFragment: FragmentType,
-    private var type: Int
+    private var type: Int,
+    private var onClick: ItemTypeClickListener
 ) : BaseDialog(mContext,Gravity.BOTTOM, R.style.anim_bottom2top,true,1.0,0.5) {
    private lateinit var mView: View
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,8 +42,9 @@ class SearchItemDialog(
         et_search.addOnAfterChange {
             mainViewModel.searchItem(it.toString(),type)
         }
-        val onClick = object: ItemTypeClickListener {
+        /*val onClick = object: ItemTypeClickListener {
             override fun onClick(view: View, rss: RSSItemEntity) {
+                val extra = FragmentNavigatorExtras(view to "rssdetail")
                 val action = FeedListFragmentDirections.actionListToDetail(
                     RssItemInfo(
                         rss.itemTitle,
@@ -52,11 +56,12 @@ class SearchItemDialog(
                         rss.feedTitle
                     )
                 )
-                mView.findNavController().navigate(action)
+                view.findNavController().navigate(action,extra)
             }
-        }
+        }*/
         val adapter = TypeAdapter(onClick)
         recyclerview.adapter = adapter
+        recyclerview.itemAnimator = SpringAddItemAnimator()
         adapter.setDiffCallback(ItemTypeDiffCallback())
         mainViewModel.itemList.observe(mainPageFragment, Observer {
             adapter.setDiffNewData(it)

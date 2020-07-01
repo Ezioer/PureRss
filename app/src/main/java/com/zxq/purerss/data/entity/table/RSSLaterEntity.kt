@@ -11,6 +11,7 @@ import androidx.room.PrimaryKey
  */
 @Entity(tableName = "rsslater")
 data class RSSLaterEntity(
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "item_id") var itemId: Long,
     @ColumnInfo(name = "item_title") var itemTitle: String,
     @ColumnInfo(name = "item_link") var itemLink: String,
     @ColumnInfo(name = "item_desc") var itemDesc: String,
@@ -21,7 +22,5 @@ data class RSSLaterEntity(
     @ColumnInfo(name = "feed_title") var feedTitle: String
 
 ) {
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "item_id")
-    var itemId: Long = 0
+
 }

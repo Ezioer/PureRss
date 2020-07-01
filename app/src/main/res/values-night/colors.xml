@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorPrimary">#1e1d1f</color>
+    <color name="colorPrimaryDark">#1e1d1f</color>
     <color name="colorAccent">#008f68</color>
 
     <color name="deepblue">#344955</color>
     <color name="white">#ffffff</color>
-    <color name="view_color">#ffffff</color>
-    <color name="root_color">#efefef</color>
+    <color name="view_color">#222225</color>
+    <color name="root_color">#201f22</color>
     <color name="black_color">#282832</color>
     <color name="c_666">#666666</color>
 

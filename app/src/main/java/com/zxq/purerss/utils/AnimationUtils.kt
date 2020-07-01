@@ -18,6 +18,8 @@ package com.zxq.purerss.utils
 
 import androidx.annotation.ColorInt
 import androidx.annotation.FloatRange
+import androidx.dynamicanimation.animation.DynamicAnimation
+import androidx.dynamicanimation.animation.SpringAnimation
 import com.google.android.material.animation.ArgbEvaluatorCompat
 import kotlin.math.roundToInt
 
@@ -53,9 +55,9 @@ fun lerp(
         from = 0.0,
         fromInclusive = true,
         to = 1.0,
-        toInclusive = false
+        toInclusive = true
     ) startFraction: Float,
-    @FloatRange(from = 0.0, fromInclusive = false, to = 1.0, toInclusive = true) endFraction: Float,
+    @FloatRange(from = 0.0, fromInclusive = true, to = 1.0, toInclusive = true) endFraction: Float,
     @FloatRange(from = 0.0, fromInclusive = true, to = 1.0, toInclusive = true) fraction: Float
 ): Float {
     if (fraction < startFraction) return startValue
@@ -74,15 +76,81 @@ fun lerp(
         from = 0.0,
         fromInclusive = true,
         to = 1.0,
-        toInclusive = false
+        toInclusive = true
     ) startFraction: Float,
-    @FloatRange(from = 0.0, fromInclusive = false, to = 1.0, toInclusive = true) endFraction: Float,
+    @FloatRange(from = 0.0, fromInclusive = true, to = 1.0, toInclusive = true) endFraction: Float,
     @FloatRange(from = 0.0, fromInclusive = true, to = 1.0, toInclusive = true) fraction: Float
 ): Int {
     if (fraction < startFraction) return startValue
     if (fraction > endFraction) return endValue
 
     return lerp(startValue, endValue, (fraction - startFraction) / (endFraction - startFraction))
+}
+
+/**
+ * Linearly interpolate between two [CornerRounding]s when the fraction is in a given range.
+ */
+fun lerp(
+    startValue: CornerRounding,
+    endValue: CornerRounding,
+    @FloatRange(
+        from = 0.0,
+        fromInclusive = true,
+        to = 1.0,
+        toInclusive = true
+    ) startFraction: Float,
+    @FloatRange(from = 0.0, fromInclusive = true, to = 1.0, toInclusive = true) endFraction: Float,
+    @FloatRange(from = 0.0, fromInclusive = true, to = 1.0, toInclusive = true) fraction: Float
+): CornerRounding {
+    if (fraction < startFraction) return startValue
+    if (fraction > endFraction) return endValue
+
+    return CornerRounding(
+        lerp(
+            startValue.topLeftRadius,
+            endValue.topLeftRadius,
+            startFraction,
+            endFraction,
+            fraction
+        ),
+        lerp(
+            startValue.topRightRadius,
+            endValue.topRightRadius,
+            startFraction,
+            endFraction,
+            fraction
+        ),
+        lerp(
+            startValue.bottomRightRadius,
+            endValue.bottomRightRadius,
+            startFraction,
+            endFraction,
+            fraction
+        ),
+        lerp(
+            startValue.bottomLeftRadius,
+            endValue.bottomLeftRadius,
+            startFraction,
+            endFraction,
+            fraction
+        )
+    )
+}
+
+/**
+ * Linearly interpolate between two colors when the fraction is in a given range.
+ */
+@ColorInt
+fun lerpArgb(
+    @ColorInt startColor: Int,
+    @ColorInt endColor: Int,
+    @FloatRange(from = 0.0, fromInclusive = true, to = 1.0, toInclusive = true) fraction: Float
+): Int {
+    return ArgbEvaluatorCompat.getInstance().evaluate(
+        fraction,
+        startColor,
+        endColor
+    )
 }
 
 /**
@@ -96,40 +164,57 @@ fun lerpArgb(
         from = 0.0,
         fromInclusive = true,
         to = 1.0,
-        toInclusive = false
+        toInclusive = true
     ) startFraction: Float,
-    @FloatRange(from = 0.0, fromInclusive = false, to = 1.0, toInclusive = true) endFraction: Float,
+    @FloatRange(from = 0.0, fromInclusive = true, to = 1.0, toInclusive = true) endFraction: Float,
     @FloatRange(from = 0.0, fromInclusive = true, to = 1.0, toInclusive = true) fraction: Float
 ): Int {
     if (fraction < startFraction) return startColor
     if (fraction > endFraction) return endColor
 
-    return ArgbEvaluatorCompat.getInstance().evaluate(
-        (fraction - startFraction) / (endFraction - startFraction),
+    return lerpArgb(
         startColor,
-        endColor
+        endColor,
+        (fraction - startFraction) / (endFraction - startFraction)
     )
 }
 
 /**
- * Coerce the receiving Float between inputMin and inputMax and linearly interpolate to the
- * outputMin to outputMax scale. This function is able to handle ranges which span negative and
- * positive numbers.
- *
- * This differs from [lerp] as the input values are not required to be between 0 and 1.
+ * A class which adds [DynamicAnimation.OnAnimationEndListener]s to the given `springs` and invokes
+ * `onEnd` when all have finished.
  */
-fun Float.normalize(
-    inputMin: Float,
-    inputMax: Float,
-    outputMin: Float,
-    outputMax: Float
-): Float {
-    if (this < inputMin) {
-        return outputMin
-    } else if (this > inputMax) {
-        return outputMax
-    }
+class MultiSpringEndListener(
+    onEnd: (Boolean) -> Unit,
+    vararg springs: SpringAnimation
+) {
+    private val listeners = ArrayList<DynamicAnimation.OnAnimationEndListener>(springs.size)
 
-    return outputMin * (1 - (this - inputMin) / (inputMax - inputMin)) +
-        outputMax * ((this - inputMin) / (inputMax - inputMin))
+    private var wasCancelled = false
+
+    init {
+        springs.forEach {
+            val listener = object : DynamicAnimation.OnAnimationEndListener {
+                override fun onAnimationEnd(
+                    animation: DynamicAnimation<out DynamicAnimation<*>>?,
+                    canceled: Boolean,
+                    value: Float,
+                    velocity: Float
+                ) {
+                    animation?.removeEndListener(this)
+                    wasCancelled = wasCancelled or canceled
+                    listeners.remove(this)
+                    if (listeners.isEmpty()) {
+                        onEnd(wasCancelled)
+                    }
+                }
+            }
+            it.addEndListener(listener)
+            listeners.add(listener)
+        }
+    }
 }
+
+fun listenForAllSpringsEnd(
+    onEnd: (Boolean) -> Unit,
+    vararg springs: SpringAnimation
+) = MultiSpringEndListener(onEnd, *springs)

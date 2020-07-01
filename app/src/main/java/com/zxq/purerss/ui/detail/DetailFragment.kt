@@ -12,17 +12,21 @@ import android.view.animation.AnimationUtils
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.transition.MaterialContainerTransform
 import com.zxq.purerss.App
 import com.zxq.purerss.R
 import com.zxq.purerss.data.entity.RssItemInfo
 import com.zxq.purerss.databinding.FragmentDetailBinding
+import com.zxq.purerss.utils.InjectorUtil
 import com.zxq.purerss.utils.MImageGetter
 import com.zxq.purerss.utils.getSpValue
 import com.zxq.purerss.utils.putSpValue
 import kotlinx.android.synthetic.main.dialog_readsetting.*
 import kotlinx.android.synthetic.main.fragment_detail.*
+import java.util.concurrent.TimeUnit
 
 /**
  *  created by xiaoqing.zhou
@@ -30,6 +34,9 @@ import kotlinx.android.synthetic.main.fragment_detail.*
  *  fun
  */
 class DetailFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
+    private val mViewModel: DetailViewModel by viewModels {
+        InjectorUtil.getDetailFactory(this)
+    }
     private val arg: DetailFragmentArgs by navArgs()
     private var mRssItemInfo: RssItemInfo? = null
     override fun onCreateView(
@@ -59,8 +66,22 @@ class DetailFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
                 MImageGetter(tvContent, App.instance!!.applicationContext),
                 null
             )
+            mViewModel.readed(mRssItemInfo!!)
         }
-
+        val interp = AnimationUtils.loadInterpolator(
+            context,
+            android.R.interpolator.fast_out_slow_in
+        )
+        sharedElementEnterTransition = MaterialContainerTransform().apply {
+            fadeMode = MaterialContainerTransform.FADE_MODE_CROSS
+            fadeProgressThresholds = MaterialContainerTransform.ProgressThresholds(0.1f,1.0f)
+            duration = 800L
+            interpolator = interp
+        }
+        sharedElementReturnTransition = MaterialContainerTransform().apply {
+            duration = 800L
+            interpolator = interp
+        }
         return bind.root
     }
 
@@ -93,14 +114,20 @@ class DetailFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
         }
         iv_italic.setOnClickListener {
             isItalic = !isItalic
+            isBold = false
             activity?.putSpValue("italic", if (isItalic) 1 else 0)
+            activity?.putSpValue("bold", if (isBold) 1 else 0)
             initItalicBG()
+            iv_bold.setBackgroundResource(if (isBold) R.drawable.bg_selected else R.drawable.bg_tv_unselect)
         }
 
         iv_bold.setOnClickListener {
             isBold = !isBold
+            isItalic = false
+            activity?.putSpValue("italic", if (isItalic) 1 else 0)
             activity?.putSpValue("bold", if (isBold) 1 else 0)
             initBoldBG()
+            iv_italic.setBackgroundResource(if (isItalic) R.drawable.bg_selected else R.drawable.bg_tv_unselect)
         }
 
         sb_textspac.setOnSeekBarChangeListener(this)
@@ -217,16 +244,16 @@ class DetailFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
         }
 
         val f = activity?.getSpValue("font", 0) ?: 0
-        tv_content.typeface = when (f) {
-            0 -> Typeface.create(Typeface.SANS_SERIF, Typeface.NORMAL)
-            1 -> tv_font_two.typeface
-            2 -> tv_font_three.typeface
-            else -> Typeface.create(Typeface.SANS_SERIF, Typeface.NORMAL)
-        }
         changeFontBg(f)
     }
 
     private fun changeFontBg(i: Int) {
+        tv_content.typeface = when (i) {
+            0 -> Typeface.create(Typeface.MONOSPACE, Typeface.NORMAL)
+            1 -> tv_font_two.typeface
+            2 -> tv_font_three.typeface
+            else -> Typeface.create(Typeface.MONOSPACE, Typeface.NORMAL)
+        }
         activity?.putSpValue("font", i)
         for (k in bgFont!!.indices) {
             if (k == i) {

@@ -43,6 +43,9 @@ interface ItemDao {
     @Query("delete  from rssreaded where item_id =:id")
     fun removeReaded(id: Long)
 
+    @Query("delete  from rssreaded where item_title =:title")
+    fun removeReaded(title: String)
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertCollect(rssReadedEntity: RSSCollectEntity)
 

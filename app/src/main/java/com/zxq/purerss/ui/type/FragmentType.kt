@@ -8,8 +8,10 @@ import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.transition.MaterialSharedAxis
 import com.zxq.purerss.data.entity.RssItemInfo
 import com.zxq.purerss.data.entity.table.RSSItemEntity
 import com.zxq.purerss.databinding.FragmentTypeBinding
@@ -18,6 +20,8 @@ import com.zxq.purerss.listener.ItemTypeDiffCallback
 import com.zxq.purerss.ui.dialog.SearchItemDialog
 import com.zxq.purerss.ui.feedlist.FeedListFragmentDirections
 import com.zxq.purerss.utils.InjectorUtil
+import com.zxq.purerss.utils.SpringAddItemAnimator
+import java.util.concurrent.TimeUnit
 
 class FragmentType: Fragment() {
     private val viewM: TypeViewModel by viewModels {
@@ -43,13 +47,15 @@ class FragmentType: Fragment() {
                     pageType.text = "稍后阅读"
                 }
             }
-            tvSearch.setOnClickListener {
-                showSearchDialog()
-            }
+
             toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
             viewM.getFeedsList(type)
             val onClick = object : ItemTypeClickListener {
                 override fun onClick(view: View, rss: RSSItemEntity) {
+                    if (mSearchDialog != null && mSearchDialog!!.isShowing){
+                        mSearchDialog!!.dismiss()
+                    }
+                    val extra = FragmentNavigatorExtras(view to "rssdetail")
                     val action = FeedListFragmentDirections.actionListToDetail(
                         RssItemInfo(
                             rss.itemTitle,
@@ -58,11 +64,15 @@ class FragmentType: Fragment() {
                             rss.itemDate,
                             rss.itemAuthor,
                             rss.itemFeed,
-                            rss.feedTitle
+                            rss.feedTitle,
+                            rss.itemPic
                         )
                     )
-                    findNavController().navigate(action)
+                    findNavController().navigate(action,extra)
                 }
+            }
+            tvSearch.setOnClickListener {
+                showSearchDialog(onClick)
             }
             val adapter = TypeAdapter(onClick)
             adapter.setOnRemoveListener(object : TypeAdapter.OnRemoveListener {
@@ -72,18 +82,29 @@ class FragmentType: Fragment() {
                 }
             })
             recyclerview.adapter = adapter
+            recyclerview.itemAnimator = SpringAddItemAnimator()
             adapter.setDiffCallback(ItemTypeDiffCallback())
             viewM.feedsList.observe(this@FragmentType, Observer {
                 adapter.setDiffNewData(it)
             })
+
+            val a = "abcdefg<img src=\"0001.jpg\"/>hijklmnopq"
+            val b = a.replace("<img[^/>]*/>".toRegex(), "")
+            val c = b
         }
+        postponeEnterTransition(10L, TimeUnit.MILLISECONDS)
+        val forward = MaterialSharedAxis.create(MaterialSharedAxis.Y, true)
+        enterTransition = forward
+
+        val backward = MaterialSharedAxis.create(MaterialSharedAxis.Y, false)
+        returnTransition = backward
         return binding.root
     }
 
     private var mSearchDialog: SearchItemDialog? = null
-    private fun showSearchDialog() {
+    private fun showSearchDialog(onClick: ItemTypeClickListener) {
         if (mSearchDialog == null){
-            mSearchDialog = SearchItemDialog(context!!,viewM,this@FragmentType,type)
+            mSearchDialog = SearchItemDialog(context!!,viewM,this@FragmentType,type,onClick)
         }
 
         mSearchDialog?.show()

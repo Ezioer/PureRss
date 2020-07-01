@@ -13,6 +13,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
+import com.google.android.material.transition.MaterialFadeThrough
+import com.google.android.material.transition.MaterialSharedAxis
 import com.zxq.purerss.R
 import com.zxq.purerss.data.entity.RssFeedInfo
 import com.zxq.purerss.data.entity.table.RSSFeedEntity
@@ -21,6 +23,7 @@ import com.zxq.purerss.listener.RssDiffCallback
 import com.zxq.purerss.ui.dialog.SearchFeedsDialog
 import com.zxq.purerss.ui.setting.SettingActivity
 import com.zxq.purerss.utils.InjectorUtil
+import com.zxq.purerss.utils.SpringAddItemAnimator
 
 /**
  *  created by xiaoqing.zhou
@@ -57,12 +60,18 @@ class MainPageFragment: Fragment() {
             mainViewModel.getFeedsList()
             val adapter = MainPageAdapter(onClick)
             recyclerview.adapter = adapter
+            recyclerview.itemAnimator = SpringAddItemAnimator()
             adapter.setHeaderView(getHeaderView())
             adapter.setDiffCallback(RssDiffCallback())
             mainViewModel.feedsList.observe(this@MainPageFragment, Observer {
                 adapter.setDiffNewData(it)
             })
         }
+        val backward = MaterialSharedAxis.create(MaterialSharedAxis.Y, false)
+        reenterTransition = backward
+
+        val forward = MaterialSharedAxis.create(MaterialSharedAxis.Y, true)
+        exitTransition = forward
         return binding.root
     }
 

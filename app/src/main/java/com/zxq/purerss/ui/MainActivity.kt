@@ -3,9 +3,9 @@ package com.zxq.purerss.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.Navigation
-import com.zxq.liferiver.util.StatusBarUtil
 import com.zxq.purerss.R
 import com.zxq.purerss.databinding.ActivityMainBinding
+import com.zxq.purerss.utils.StatusBarUtil
 import com.zxq.purerss.utils.ViewUtils
 import com.zxq.purerss.utils.contentView
 import com.zxq.purerss.utils.getSpValue

@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.transition.MaterialSharedAxis
 import com.zxq.purerss.data.entity.RssFeedInfo
 import com.zxq.purerss.data.entity.RssItem
 import com.zxq.purerss.data.entity.RssItemInfo
@@ -16,6 +19,8 @@ import com.zxq.purerss.databinding.FragmentFeedlistBinding
 import com.zxq.purerss.listener.ItemClickListener
 import com.zxq.purerss.listener.ItemDiffCallback
 import com.zxq.purerss.utils.InjectorUtil
+import com.zxq.purerss.utils.SpringAddItemAnimator
+import java.util.concurrent.TimeUnit
 
 /**
  *  created by xiaoqing.zhou
@@ -39,9 +44,9 @@ class FeedListFragment: Fragment() {
             feedinfo = mInfo
             val onClick = object: ItemClickListener{
                 override fun onClick(view: View, rss: RssItem) {
-                    viewM.readed(rss)
-                    val action = FeedListFragmentDirections.actionListToDetail(RssItemInfo(rss.title,rss.link,rss.description,rss.pubdate,rss.author,1L,rss.title))
-                    findNavController().navigate(action)
+                    val extra = FragmentNavigatorExtras(view to "rssdetail")
+                    val action = FeedListFragmentDirections.actionListToDetail(RssItemInfo(rss.title,rss.link,rss.description,rss.pubdate,rss.author,1L,rss.title,rss.albumPic))
+                    findNavController().navigate(action,extra)
                 }
             }
             toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
@@ -59,11 +64,18 @@ class FeedListFragment: Fragment() {
                 }
             })
             recyclerview.adapter = mAdapter
+            recyclerview.itemAnimator = SpringAddItemAnimator()
             mAdapter.setDiffCallback(ItemDiffCallback())
             viewM.feedsList.observe(this@FeedListFragment, Observer {
                 mAdapter.setDiffNewData(it)
             })
         }
+        val forward = MaterialSharedAxis.create(MaterialSharedAxis.Y, true)
+        enterTransition = forward
+
+        val backward = MaterialSharedAxis.create(MaterialSharedAxis.Y, false)
+        returnTransition = backward
+        postponeEnterTransition(10L, TimeUnit.MILLISECONDS)
         return binding.root
     }
 }

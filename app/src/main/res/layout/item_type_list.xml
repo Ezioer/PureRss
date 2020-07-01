@@ -21,6 +21,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/rootview"
+            android:transitionName="@{item.itemTitle}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="@{(v) -> clickHandle.onClick(v, item)}"

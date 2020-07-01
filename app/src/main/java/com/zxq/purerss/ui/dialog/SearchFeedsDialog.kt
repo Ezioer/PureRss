@@ -17,6 +17,7 @@ import com.zxq.purerss.ui.mainpage.MainPageFragment
 import com.zxq.purerss.ui.mainpage.MainPageFragmentDirections
 import com.zxq.purerss.ui.mainpage.MainPageViewModel
 import com.zxq.purerss.utils.KeyBoardUtil
+import com.zxq.purerss.utils.SpringAddItemAnimator
 import com.zxq.purerss.utils.addOnAfterChange
 import kotlinx.android.synthetic.main.dialog_search.*
 
@@ -46,6 +47,7 @@ class SearchFeedsDialog(
         }
         val adapter = MainPageAdapter(onClick)
         recyclerview.adapter = adapter
+        recyclerview.itemAnimator = SpringAddItemAnimator()
         adapter.setDiffCallback(RssDiffCallback())
         mainViewModel.searchFeedsList.observe(mainPageFragment, Observer {
             adapter.setDiffNewData(it)
