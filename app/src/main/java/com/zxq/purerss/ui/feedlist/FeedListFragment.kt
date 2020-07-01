@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.dynamicanimation.animation.SpringAnimation
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -68,6 +68,21 @@ class FeedListFragment: Fragment() {
             mAdapter.setDiffCallback(ItemDiffCallback())
             viewM.feedsList.observe(this@FeedListFragment, Observer {
                 mAdapter.setDiffNewData(it)
+            })
+
+            viewM.collectResult.observe(this@FeedListFragment, Observer {
+                if (it == 1) {
+                    Toast.makeText(context, "收藏成功，可在收藏页查看", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(context, "不要重复收藏哦", Toast.LENGTH_SHORT).show()
+                }
+            })
+            viewM.laterResult.observe(this@FeedListFragment, Observer {
+                if (it == 1) {
+                    Toast.makeText(context, "已离线，可在稍后阅读页离线查看", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(context, "不要重复添加哦", Toast.LENGTH_SHORT).show()
+                }
             })
         }
         val forward = MaterialSharedAxis.create(MaterialSharedAxis.Y, true)

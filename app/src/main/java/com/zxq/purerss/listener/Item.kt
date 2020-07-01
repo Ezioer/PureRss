@@ -16,7 +16,7 @@ class ItemDiffCallback : DiffUtil.ItemCallback<RssItem>() {
     }
 
     override fun areContentsTheSame(oldItem: RssItem, newItem: RssItem): Boolean {
-        return oldItem == newItem
+        return oldItem.link == newItem.link
     }
 }
 

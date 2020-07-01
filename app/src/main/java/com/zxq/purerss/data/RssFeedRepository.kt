@@ -78,24 +78,34 @@ class RssFeedRepository private constructor(private val feedDao: FeedDao,private
         } else {
            var list = itemDao.selectAllLater()
             for (item in list){
-                result.add(RSSItemEntity(item.itemId,item.itemTitle,item.itemLink,item.itemDesc,item.itemAuthor,item.itemDate,item.itemPic,item.itemFeed,item.feedTitle))
+                result.add(
+                    RSSItemEntity(
+                        item.itemId,
+                        item.itemTitle,
+                        item.itemLink,
+                        item.itemDesc,
+                        item.itemAuthor,
+                        item.itemDate,
+                        item.itemPic,
+                        item.itemFeed,
+                        item.feedTitle
+                    )
+                )
             }
         }
         result
     }
 
-    suspend fun getRssItemFromDB(id: Long): MutableList<RSSItemEntity> = withContext(Dispatchers.IO){
-        itemDao.selectById(id)
-    }
+    suspend fun getRssItemFromDB(id: Long): MutableList<RSSItemEntity> =
+        withContext(Dispatchers.IO) {
+            itemDao.selectById(id)
+        }
 
-    suspend fun collectItem(item: RssItem) = withContext(Dispatchers.IO){
-        itemDao.insertCollect(RSSCollectEntity(0,item.title,item.link,item.description,item.author,item.pubdate,item.albumPic,0L,""))
-    }
-
-    suspend fun laterItem(item: RssItem) = withContext(Dispatchers.IO){
-        if (itemDao.laterIsExist(item.title) == null) {
-            itemDao.insertLater(
-                RSSLaterEntity(0,
+    suspend fun collectItem(item: RssItem): Int = withContext(Dispatchers.IO) {
+        if (itemDao.collectIsExist(item.title) == null) {
+            itemDao.insertCollect(
+                RSSCollectEntity(
+                    0,
                     item.title,
                     item.link,
                     item.description,
@@ -106,23 +116,75 @@ class RssFeedRepository private constructor(private val feedDao: FeedDao,private
                     ""
                 )
             )
+            1
+        } else {
+            0
         }
+
     }
 
-    suspend fun readedItem(item: RssItemInfo): Int= withContext(Dispatchers.IO) {
-        if (itemDao.readedIsExist(item.title) != null) {
-            itemDao.removeReaded(item.title)
+    suspend fun laterItem(item: RssItem): Int = withContext(Dispatchers.IO) {
+        if (itemDao.laterIsExist(item.title) == null) {
+            itemDao.insertLater(
+                RSSLaterEntity(
+                    0,
+                    item.title,
+                    item.link,
+                    item.description,
+                    item.author,
+                    item.pubdate,
+                    item.albumPic,
+                    0L,
+                    ""
+                )
+            )
             1
         } else {
             0
         }
     }
 
-    suspend fun saveContent2DB(feed: RssFeed,id: Long) = withContext(Dispatchers.IO){
+    suspend fun readedItem(item: RssItemInfo) = withContext(Dispatchers.IO) {
+        if (itemDao.readedIsExist(item.title) == null) {
+            itemDao.insertReaded(
+                RSSReadedEntity(
+                    0,
+                    item.title,
+                    item.link,
+                    item.description,
+                    item.author,
+                    item.pubdate,
+                    item.pic,
+                    0L,
+                    ""
+                )
+            )
+        }
+    }
+
+    suspend fun deleteReaded(title: String) {
+        if (itemDao.readedIsExist(title) != null) {
+            itemDao.removeReaded(title)
+        }
+    }
+
+    suspend fun saveContent2DB(feed: RssFeed, id: Long) = withContext(Dispatchers.IO) {
         val feedTitle = feed.title
-        for (item in feed.items){
-            if (itemDao.isExits(item.link) != null){
-                itemDao.insertOneContent(RSSItemEntity(0,item.title,item.link,item.description,item.author,item.pubdate,item.albumPic,id,feedTitle))
+        for (item in feed.items) {
+            if (itemDao.isExits(item.link) == null) {
+                itemDao.insertOneContent(
+                    RSSItemEntity(
+                        0,
+                        item.title,
+                        item.link,
+                        item.description,
+                        item.author,
+                        item.pubdate,
+                        item.albumPic,
+                        id,
+                        feedTitle
+                    )
+                )
             }
         }
     }

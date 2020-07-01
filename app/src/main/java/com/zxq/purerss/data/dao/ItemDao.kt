@@ -49,6 +49,9 @@ interface ItemDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertCollect(rssReadedEntity: RSSCollectEntity)
 
+    @Query("select * from rsscollect where item_title =:title")
+    fun collectIsExist(title: String): RSSCollectEntity
+
     @Query("select * from rsscollect")
     fun selectAllCollect(): MutableList<RSSCollectEntity>
 

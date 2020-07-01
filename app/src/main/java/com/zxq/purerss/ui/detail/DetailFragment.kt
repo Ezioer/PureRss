@@ -11,8 +11,10 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.SeekBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.transition.MaterialContainerTransform
@@ -26,7 +28,6 @@ import com.zxq.purerss.utils.getSpValue
 import com.zxq.purerss.utils.putSpValue
 import kotlinx.android.synthetic.main.dialog_readsetting.*
 import kotlinx.android.synthetic.main.fragment_detail.*
-import java.util.concurrent.TimeUnit
 
 /**
  *  created by xiaoqing.zhou
@@ -57,6 +58,12 @@ class DetailFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
                     R.id.menu_share -> {
                         share()
                     }
+                    R.id.menu_unread -> {
+                        mViewModel.deleteReaded(mRssItemInfo!!)
+                    }
+                    R.id.menu_collect -> {
+                        mViewModel.collectItem(mRssItemInfo!!)
+                    }
                 }
                 true
             }
@@ -67,6 +74,13 @@ class DetailFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
                 null
             )
             mViewModel.readed(mRssItemInfo!!)
+            mViewModel.collectResult.observe(this@DetailFragment, Observer {
+                if (it == 1) {
+                    Toast.makeText(context, "收藏成功，可在收藏页查看", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(context, "不要重复收藏哦", Toast.LENGTH_SHORT).show()
+                }
+            })
         }
         val interp = AnimationUtils.loadInterpolator(
             context,

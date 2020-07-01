@@ -8,12 +8,11 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.doOnNextLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DiffUtil
-import com.google.android.material.transition.MaterialFadeThrough
 import com.google.android.material.transition.MaterialSharedAxis
 import com.zxq.purerss.R
 import com.zxq.purerss.data.entity.RssFeedInfo
@@ -63,6 +62,9 @@ class MainPageFragment: Fragment() {
             recyclerview.itemAnimator = SpringAddItemAnimator()
             adapter.setHeaderView(getHeaderView())
             adapter.setDiffCallback(RssDiffCallback())
+            recyclerview.doOnNextLayout {
+                adapter.setDiffNewData(mainViewModel.feedsList.value)
+            }
             mainViewModel.feedsList.observe(this@MainPageFragment, Observer {
                 adapter.setDiffNewData(it)
             })

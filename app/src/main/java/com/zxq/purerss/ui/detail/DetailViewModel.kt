@@ -6,12 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.zxq.purerss.data.RssFeedRepository
 import com.zxq.purerss.data.entity.RssItem
 import com.zxq.purerss.data.entity.RssItemInfo
-import com.zxq.purerss.data.entity.table.RSSFeedEntity
-import com.zxq.purerss.utils.RssFeed_SAXParser
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-
 /**
  *  created by xiaoqing.zhou
  *  on 2020/6/28
@@ -19,12 +14,22 @@ import kotlinx.coroutines.withContext
  */
 class DetailViewModel(private val repository: RssFeedRepository) : ViewModel() {
 
-    val feedsList = MutableLiveData<MutableList<RssItem>>()
+    val collectResult = MutableLiveData<Int>()
 
-    fun collectItem(item: RssItem){
+    fun collectItem(item: RssItemInfo) {
         launch({
-            val result = repository.collectItem(item)
-        },{
+            val result = repository.collectItem(
+                RssItem(
+                    item.title,
+                    item.link,
+                    item.description,
+                    item.pubdate,
+                    item.author,
+                    item.pic
+                )
+            )
+            collectResult.value = result
+        }, {
 
         })
     }

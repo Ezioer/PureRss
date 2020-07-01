@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zxq.purerss.data.RssFeedRepository
 import com.zxq.purerss.data.entity.RssItem
-import com.zxq.purerss.data.entity.table.RSSFeedEntity
 import com.zxq.purerss.utils.RssFeed_SAXParser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,18 +18,21 @@ import kotlinx.coroutines.withContext
 class FeedListViewModel(private val repository: RssFeedRepository) : ViewModel() {
 
     val feedsList = MutableLiveData<MutableList<RssItem>>()
-
-    fun collectItem(item: RssItem){
+    val collectResult = MutableLiveData<Int>()
+    val laterResult = MutableLiveData<Int>()
+    fun collectItem(item: RssItem) {
         launch({
             val result = repository.collectItem(item)
-        },{
+            collectResult.value = result
+        }, {
 
         })
     }
 
-    fun later(item: RssItem){
+    fun later(item: RssItem) {
         launch({
             val result = repository.laterItem(item)
+            laterResult.value = result
         },{
 
         })
