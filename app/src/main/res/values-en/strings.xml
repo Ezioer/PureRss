@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PureRss</string>
+    <string name="app_bar_search">Search</string>
+    <string name="app_bar_textsize">Font</string>
+    <string name="app_bar_save">Save</string>
+    <string name="app_bar_share">Share</string>
+    <string name="choose_your_rss">Choose Rss news that interest you</string>
+
+    <string name="news">Rss</string>
+    <string name="mine">Mine</string>
+
+    <string name="readed">Readed</string>
+    <string name="laterread">Later</string>
+    <string name="collect">Collect</string>
+    <string name="add">Add</string>
+    <string name="remove">Remove</string>
+    <string name="search">Search</string>
+    <string name="unread">Mark Unread</string>
+
+    <string name="rsslink">Input Rss Link</string>
+    <string name="parse">Parse</string>
+
+    <string name="setting">Setting</string>
+    <string name="darktheme">DarkTheme</string>
+
+    <string name="readsetting">Reading Setting</string>
+    <string name="theme">Theme</string>
+    <string name="textsize">Font Size</string>
+    <string name="textstyle">Font Style</string>
+    <string name="font">Font</string>
+    <string name="textspac">Text Spac</string>
+
+    <string name="collectsuccess">Successful Collection，Look it in collect page</string>
+    <string name="collectfail">Do not collect again</string>
+    <string name="latersuccess">Downloaded,Look it offline</string>
+    <string name="laterfail">Do not download again</string>
+</resources>

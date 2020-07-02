@@ -14,17 +14,16 @@
         android:background="@drawable/bg_search"
         android:paddingLeft="20dp"
         android:gravity="center_vertical"
-        app:layout_constraintRight_toLeftOf="@id/button"
+        app:layout_constraintRight_toLeftOf="@id/iv_parse"
         android:layout_marginRight="10dp"
         android:drawablePadding="8dp"
         android:layout_width="0dp"
         android:layout_height="40dp" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button"
-        android:text="@string/parse"
+    <ImageView
+        android:id="@+id/iv_parse"
         android:gravity="center"
-        android:background="@drawable/bg_search"
+        android:src="@drawable/rss_52px"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/et_search"
         app:layout_constraintBottom_toBottomOf="@id/et_search"

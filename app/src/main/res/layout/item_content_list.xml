@@ -80,16 +80,20 @@
             android:id="@+id/collect"
             app:backgroundTint="@color/c_008f68"
             android:text="@string/collect"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             android:background="@color/c_008f68"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"/>
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/later"
             app:backgroundTint="@color/c_008f68"
             android:text="@string/laterread"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             android:background="@color/c_008f68"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"/>
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
     </com.zxq.purerss.widget.SwipeMenuLayout>
 </layout>

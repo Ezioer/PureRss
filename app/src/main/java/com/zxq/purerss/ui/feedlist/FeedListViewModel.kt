@@ -38,10 +38,10 @@ class FeedListViewModel(private val repository: RssFeedRepository) : ViewModel()
         })
     }
 
-    fun getFeedsList(url: String, id: Long) {
+    fun getFeedsList(url: String, id: Long, isRefresh: Boolean) {
         launch({
             val list = repository.getRssItemFromDB(id)
-            if (list.isNullOrEmpty()) {
+            if (list.isNullOrEmpty() || isRefresh) {
                 val result = withContext(Dispatchers.IO) {
                     RssFeed_SAXParser().getFeed(url)
                 }

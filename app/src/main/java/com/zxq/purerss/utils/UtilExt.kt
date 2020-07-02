@@ -166,11 +166,16 @@ fun EditText.addOnAfterChange(afterChange: (Editable?) -> Unit) {
     })
 }
 
-fun String.isPicUrl(): Boolean {
-    return (this.startsWith("https") || this.startsWith("http")) && (this.endsWith("png") || this.endsWith(
-        "jpeg"
-    ) || this.contains("jpeg") || this.contains("png") || this.contains("webp") || this.contains("jpg") || this.endsWith(
+fun String.isContainPicUrl(): Boolean {
+    return this.contains("jpeg") || this.contains("png") || this.contains("webp") || this.contains("jpg") || this.contains(
         "webp"
-    )
-            || this.endsWith("gif"))
+    ) || this.contains("gif")
+}
+
+fun String.isPicString(): Boolean {
+    return (this.contains("jpeg") || this.contains("png") || this.contains("webp") || this.contains(
+        "jpg"
+    ) || this.contains(
+        "webp"
+    ) || this.contains("gif")) && (this.startsWith("http") || this.startsWith("https"))
 }

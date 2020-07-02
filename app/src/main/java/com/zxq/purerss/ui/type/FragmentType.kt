@@ -12,6 +12,7 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.transition.MaterialSharedAxis
+import com.zxq.purerss.R
 import com.zxq.purerss.data.entity.RssItemInfo
 import com.zxq.purerss.data.entity.table.RSSItemEntity
 import com.zxq.purerss.databinding.FragmentTypeBinding
@@ -38,13 +39,13 @@ class FragmentType: Fragment() {
             type = args.type
             when (type) {
                 1 -> {
-                    pageType.text = "已读"
+                    pageType.text = getString(R.string.readed)
                 }
                 2 -> {
-                    pageType.text = "收藏"
+                    pageType.text = getString(R.string.collect)
                 }
                 else -> {
-                    pageType.text = "稍后阅读"
+                    pageType.text = getString(R.string.laterread)
                 }
             }
 
@@ -89,8 +90,10 @@ class FragmentType: Fragment() {
             })
 
             val a = "abcdefg<img src=\"0001.jpg\"/>hijklmnopq"
-            val b = a.replace("<img[^/>]*/>".toRegex(), "")
-            val c = b
+            val c =
+                "</p><p></p><figure class=\"img-alt-wap\"><img src=\"http://s1.dgtle.com/dgtle_img/news/2020/07/01/b5016202007011429503756_1800_500.jpeg?imageView2/2/w/600\"></figure><p>新饰面可与"
+            c.split("\"")
+            val b = a.replaceFirst("<img[^/>]*/>".toRegex(), "")
         }
         postponeEnterTransition(10L, TimeUnit.MILLISECONDS)
         val forward = MaterialSharedAxis.create(MaterialSharedAxis.Y, true)

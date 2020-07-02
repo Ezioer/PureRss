@@ -11,7 +11,9 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.DiffUtil
 import com.google.android.material.transition.MaterialSharedAxis
+import com.zxq.purerss.R
 import com.zxq.purerss.data.entity.RssFeedInfo
 import com.zxq.purerss.data.entity.RssItem
 import com.zxq.purerss.data.entity.RssItemInfo
@@ -50,7 +52,7 @@ class FeedListFragment: Fragment() {
                 }
             }
             toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
-            viewM.getFeedsList(mInfo!!.link, mInfo!!.id)
+            viewM.getFeedsList(mInfo!!.link, mInfo!!.id, false)
             val mAdapter = FeedListAdapter(onClick)
             mAdapter.setOnLaterListener(object: FeedListAdapter.OnLaterListener{
                 override fun later(item: RssItem) {
@@ -65,25 +67,31 @@ class FeedListFragment: Fragment() {
             })
             recyclerview.adapter = mAdapter
             recyclerview.itemAnimator = SpringAddItemAnimator()
-            mAdapter.setDiffCallback(ItemDiffCallback())
             viewM.feedsList.observe(this@FeedListFragment, Observer {
-                mAdapter.setDiffNewData(it)
+                val diffResult = DiffUtil.calculateDiff(ItemDiffCallback(mAdapter.data, it))
+                mAdapter.setDiffNewData(diffResult, it)
+                if (refreshlayout.isRefreshing) {
+                    refreshlayout.isRefreshing = false
+                }
             })
 
             viewM.collectResult.observe(this@FeedListFragment, Observer {
                 if (it == 1) {
-                    Toast.makeText(context, "收藏成功，可在收藏页查看", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, R.string.collectsuccess, Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(context, "不要重复收藏哦", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, R.string.collectfail, Toast.LENGTH_SHORT).show()
                 }
             })
             viewM.laterResult.observe(this@FeedListFragment, Observer {
                 if (it == 1) {
-                    Toast.makeText(context, "已离线，可在稍后阅读页离线查看", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, R.string.latersuccess, Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(context, "不要重复添加哦", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, R.string.laterfail, Toast.LENGTH_SHORT).show()
                 }
             })
+            refreshlayout.setOnRefreshListener {
+                viewM.getFeedsList(mInfo!!.link, mInfo!!.id, true)
+            }
         }
         val forward = MaterialSharedAxis.create(MaterialSharedAxis.Y, true)
         enterTransition = forward

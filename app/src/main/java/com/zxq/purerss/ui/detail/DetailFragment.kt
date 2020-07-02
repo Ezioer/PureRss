@@ -76,9 +76,9 @@ class DetailFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
             mViewModel.readed(mRssItemInfo!!)
             mViewModel.collectResult.observe(this@DetailFragment, Observer {
                 if (it == 1) {
-                    Toast.makeText(context, "收藏成功，可在收藏页查看", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, R.string.collectsuccess, Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(context, "不要重复收藏哦", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, R.string.collectfail, Toast.LENGTH_SHORT).show()
                 }
             })
         }

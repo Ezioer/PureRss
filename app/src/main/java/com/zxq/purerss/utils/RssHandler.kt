@@ -55,10 +55,16 @@ internal class RssHandler : DefaultHandler() {
             }
             RSS_DESCRIPTION -> {
                 if (currentFlag == RSS_DESCRIPTION){
-                    if (text.isPicUrl() && rssItem!!.albumPic.isNullOrEmpty()){
-                        rssItem?.albumPic = text
+                    if (text.isContainPicUrl() && rssItem!!.albumPic.isNullOrEmpty()) {
+                        val list = text.split("\"")
+                        for (item in list) {
+                            if (item.isPicString()) {
+                                rssItem?.albumPic = item
+                                break
+                            }
+                        }
                     }
-                    rssItem?.description = rssItem?.description+text
+                    rssItem?.description = rssItem?.description + text
                 }
             }
             RSS_AUTHOR ->{
