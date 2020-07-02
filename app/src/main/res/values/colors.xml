@@ -25,4 +25,6 @@
 
     <color name="c_2a4a66">#2a4a66</color>
 
+    <color name="blackbgtext">#e8e8e8</color>
+    <color name="otherbgtext">#282832</color>
 </resources>

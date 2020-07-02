@@ -29,10 +29,16 @@
         android:id="@+id/menu_collect"
         android:icon="@drawable/ic_search"
         app:showAsAction="never"
-        android:title="@string/collect"/>
+        android:title="@string/collect" />
     <item
         android:id="@+id/menu_unread"
         android:icon="@drawable/ic_search"
         app:showAsAction="never"
-        android:title="@string/unread"/>
+        android:title="@string/unread" />
+
+    <item
+        android:id="@+id/menu_open"
+        android:icon="@drawable/ic_search"
+        app:showAsAction="never"
+        android:title="@string/openinbrowser" />
 </menu>

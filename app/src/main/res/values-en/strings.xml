@@ -35,4 +35,6 @@
     <string name="collectfail">Do not collect again</string>
     <string name="latersuccess">Downloaded,Look it offline</string>
     <string name="laterfail">Do not download again</string>
+
+    <string name="openinbrowser">Open in browser</string>
 </resources>

@@ -43,13 +43,6 @@ class ViewUtils {
                 activity.window.setFlags(
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-                /*    // 设置状态栏透明
-                    activity.window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-                    // 设置根布局的参数
-                    val rootView = (activity.findViewById<View>(android.R.id
-                            .content) as ViewGroup).getChildAt(0) as ViewGroup
-                    rootView.fitsSystemWindows = false
-                    rootView.clipToPadding = true*/
             }
         }
     }

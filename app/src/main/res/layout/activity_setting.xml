@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -21,7 +22,46 @@
             app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
             app:title="@string/setting" />
 
-        <RelativeLayout
+        <ImageView
+            android:layout_marginTop="20dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/iv_day"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            android:src="@drawable/app_dark"
+            android:id="@+id/iv_dark"
+            android:layout_width="0dp"
+            android:layout_height="200dp" />
+
+        <RadioButton
+            android:text="暗黑"
+            android:id="@+id/rb_dark"
+            app:layout_constraintLeft_toLeftOf="@id/iv_dark"
+            app:layout_constraintRight_toRightOf="@id/iv_dark"
+            app:layout_constraintTop_toBottomOf="@id/iv_dark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:layout_marginTop="20dp"
+            app:layout_constraintLeft_toRightOf="@id/iv_dark"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            android:src="@drawable/app_day"
+            android:id="@+id/iv_day"
+            android:layout_width="0dp"
+            android:layout_height="200dp" />
+
+        <RadioButton
+            android:text="亮白"
+            android:id="@+id/rb_day"
+            app:layout_constraintLeft_toLeftOf="@id/iv_day"
+            app:layout_constraintRight_toRightOf="@id/iv_day"
+            app:layout_constraintTop_toBottomOf="@id/iv_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <!--<RelativeLayout
+            android:layout_marginTop="10dp"
+            android:background="@color/view_color"
             android:id="@+id/ll_dark"
             android:layout_width="match_parent"
             android:layout_height="60dp"
@@ -44,6 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="20dp" />
-        </RelativeLayout>
+        </RelativeLayout>-->
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

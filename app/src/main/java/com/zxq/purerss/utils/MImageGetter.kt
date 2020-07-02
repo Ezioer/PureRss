@@ -18,19 +18,20 @@ import com.bumptech.glide.request.transition.Transition
  * on 2020/6/16
  * fun
  */
- open class MImageGetter(var container: TextView, var c: Context) : ImageGetter {
+open class MImageGetter(var container: TextView, var c: Context) : ImageGetter {
     override fun getDrawable(source: String): Drawable {
         var drawable = LevelListDrawable()
         Glide.with(c).asBitmap().load(source).into(object : SimpleTarget<Bitmap?>() {
 
             override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap?>?) {
-                if (resource != null) {
+                if (resource != null && resource.width > 0 && resource.height > 0) {
                     var width = container.width
                     if (resource.width > width) {
                         val scale = (width / resource.width.toFloat())
                         val handleWidth = (resource.width * scale).toInt()
                         val handleHeight = (resource.height * scale).toInt()
-                        val bitmapDrawable = BitmapDrawable(resizeBitmap(resource,handleWidth,handleHeight))
+                        val bitmapDrawable =
+                            BitmapDrawable(resizeBitmap(resource, handleWidth, handleHeight))
                         drawable.addLevel(1, 1, bitmapDrawable)
                         drawable.setBounds(0, 0, handleWidth, handleHeight)
                         drawable.setLevel(1)

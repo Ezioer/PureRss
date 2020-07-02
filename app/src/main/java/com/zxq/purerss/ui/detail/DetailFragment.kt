@@ -2,6 +2,7 @@ package com.zxq.purerss.ui.detail
 
 import android.content.Intent
 import android.graphics.Typeface
+import android.net.Uri
 import android.os.Bundle
 import android.text.Html
 import android.util.TypedValue
@@ -64,6 +65,9 @@ class DetailFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
                     R.id.menu_collect -> {
                         mViewModel.collectItem(mRssItemInfo!!)
                     }
+                    R.id.menu_open -> {
+                        openInBrowser()
+                    }
                 }
                 true
             }
@@ -88,7 +92,7 @@ class DetailFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
         )
         sharedElementEnterTransition = MaterialContainerTransform().apply {
             fadeMode = MaterialContainerTransform.FADE_MODE_CROSS
-            fadeProgressThresholds = MaterialContainerTransform.ProgressThresholds(0.1f,1.0f)
+            fadeProgressThresholds = MaterialContainerTransform.ProgressThresholds(0.1f, 1.0f)
             duration = 800L
             interpolator = interp
         }
@@ -97,6 +101,14 @@ class DetailFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
             interpolator = interp
         }
         return bind.root
+    }
+
+    private fun openInBrowser() {
+        val intent = Intent()
+        intent.action = "android.intent.action.VIEW"
+        val content_url = Uri.parse(mRssItemInfo?.link)
+        intent.data = content_url
+        startActivity(intent)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -246,6 +258,15 @@ class DetailFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
         for (item in bgList!!.indices) {
             bgList!![item].setOnClickListener {
                 bgList!![item].setBackgroundResource(bgColor!![item])
+                if (item == 3) {
+                    tv_content.setTextColor(context!!.getColor(R.color.blackbgtext))
+                    tv_title.setTextColor(context!!.getColor(R.color.blackbgtext))
+                    tv_author.setTextColor(context!!.getColor(R.color.blackbgtext))
+                } else {
+                    tv_content.setTextColor(context!!.getColor(R.color.otherbgtext))
+                    tv_title.setTextColor(context!!.getColor(R.color.otherbgtext))
+                    tv_author.setTextColor(context!!.getColor(R.color.otherbgtext))
+                }
                 appbarlayout.setBackgroundResource(bgReaderColor!![item])
                 ctl_root.setBackgroundResource(bgReaderColor!![item])
                 activity?.putSpValue("readbg", item)

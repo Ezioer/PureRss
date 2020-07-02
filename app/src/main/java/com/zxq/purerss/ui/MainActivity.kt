@@ -19,6 +19,8 @@ class MainActivity : AppCompatActivity() {
         ViewUtils.settranslucent(this)
         if (getSpValue("nightmodel", 0) != 1) {
             StatusBarUtil.StatusBarLightMode(this)
+        } else {
+            StatusBarUtil.StatusBarDarkMode(this)
         }
         binding.apply {
             val nav = Navigation.findNavController(this@MainActivity,R.id.nav_host_fragment)

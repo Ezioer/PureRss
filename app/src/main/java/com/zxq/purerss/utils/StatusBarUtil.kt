@@ -42,12 +42,23 @@ class StatusBarUtil {
                     MIUISetStatusBarLightMode(activity.window, true) -> result = 1
                     FlymeSetStatusBarLightMode(activity.window, true) -> result = 2
                     Build.VERSION.SDK_INT >= Build.VERSION_CODES.M -> {
-                        activity.window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                        activity.window.decorView.systemUiVisibility =
+                            View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
                         result = 3
                     }
                 }
             }
             return result
+        }
+
+        fun StatusBarDarkMode(activity: Activity) {
+            if (MIUISetStatusBarLightMode(activity.window, true)) {
+                MIUISetStatusBarLightMode(activity.window, false)
+            } else if (FlymeSetStatusBarLightMode(activity.window, true)) {
+                FlymeSetStatusBarLightMode(activity.window, false)
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                activity.window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
+            }
         }
 
         fun FlymeSetStatusBarLightMode(window: Window?, dark: Boolean): Boolean {

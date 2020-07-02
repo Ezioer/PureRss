@@ -34,4 +34,6 @@
     <string name="collectfail">不要重复收藏哦</string>
     <string name="latersuccess">已离线，可在稍后阅读页离线查看</string>
     <string name="laterfail">不要重复添加哦</string>
+
+    <string name="openinbrowser">在浏览器中打开</string>
 </resources>
