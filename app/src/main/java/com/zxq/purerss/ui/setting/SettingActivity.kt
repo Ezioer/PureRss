@@ -2,7 +2,6 @@ package com.zxq.purerss.ui.setting
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
@@ -27,6 +26,11 @@ class SettingActivity : AppCompatActivity() {
             StatusBarUtil.StatusBarDarkMode(this)
         }
         binding.apply {
+            setSupportActionBar(toolbar)
+            ctlLayout.title = getString(R.string.setting)
+            ctlLayout.isTitleEnabled = true
+            ctlLayout.setExpandedTitleColor(getColor(R.color.c_008f68))
+            ctlLayout.setCollapsedTitleTextColor(getColor(R.color.c_008f68))
             toolbar.setNavigationOnClickListener { finish() }
             if (getSpValue("nightmodel", 0) == 1) {
                 rbDark.isChecked = true
@@ -47,7 +51,27 @@ class SettingActivity : AppCompatActivity() {
             rbDark.setOnClickListener {
                 checkMode(1)
             }
+            rbLeft.setOnClickListener {
+                slide(0)
+                rbRight.isChecked = false
+            }
+
+            rbRight.setOnClickListener {
+                rbLeft.isChecked = false
+                slide(1)
+            }
         }
+    }
+
+    private fun slide(i: Int) {
+        if (i == 0) {
+            swipe_left.smoothExpand()
+            swipe_right.smoothClose()
+        } else {
+            swipe_right.smoothExpand()
+            swipe_left.smoothClose()
+        }
+
     }
 
     private fun checkMode(i: Int) {

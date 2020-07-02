@@ -22,6 +22,7 @@
 
     <string name="setting">设置</string>
     <string name="darktheme">暗黑模式</string>
+    <string name="slide">item滑动方向</string>
 
     <string name="readsetting">阅读设置</string>
     <string name="theme">主题</string>

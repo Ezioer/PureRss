@@ -23,6 +23,7 @@
 
     <string name="setting">Setting</string>
     <string name="darktheme">DarkTheme</string>
+    <string name="slide">Item slide diretion</string>
 
     <string name="readsetting">Reading Setting</string>
     <string name="theme">Theme</string>

@@ -3,7 +3,7 @@
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/view_color</item>
-        <item name="colorPrimaryDark">@color/view_color</item>
+        <item name="colorPrimaryDark">@color/root_color</item>
         <item name="colorAccent">@color/c_008f68</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
 <!--        <item name="android:statusBarColor">@android:color/transparent</item>-->
@@ -38,6 +38,10 @@
         <item name="itemTextAppearance">?attr/textAppearanceBody2</item>
         <item name="itemTextColor">@color/color_on_surface_emphasis_medium</item>
         <item name="itemIconTint">@color/color_on_surface_emphasis_medium</item>
+    </style>
+
+    <style name="settingtheme" parent="AppTheme">
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
     <style name="anim_bottom2top">
