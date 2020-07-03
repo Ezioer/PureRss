@@ -45,10 +45,10 @@ class ItemTypeDiffCallback : DiffUtil.ItemCallback<RSSItemEntity>() {
 
 class RssDiffCallback: DiffUtil.ItemCallback<RSSFeedEntity>(){
     override fun areItemsTheSame(oldItem: RSSFeedEntity, newItem: RSSFeedEntity): Boolean {
-        return oldItem.feedId == newItem.feedId
+        return oldItem.feedTitle == newItem.feedTitle
     }
 
     override fun areContentsTheSame(oldItem: RSSFeedEntity, newItem: RSSFeedEntity): Boolean {
-        return oldItem == newItem
+        return oldItem.feedTitle == newItem.feedTitle
     }
 }

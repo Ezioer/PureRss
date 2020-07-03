@@ -24,6 +24,8 @@ import com.zxq.purerss.ui.setting.SettingActivity
 import com.zxq.purerss.utils.InjectorUtil
 import com.zxq.purerss.utils.SpringAddItemAnimator
 import com.zxq.purerss.utils.getSpValue
+import kotlinx.android.synthetic.main.fragment_news.*
+import java.io.FileFilter
 
 /**
  *  created by xiaoqing.zhou
@@ -67,11 +69,10 @@ class MainPageFragment: Fragment() {
             })
             recyclerview.adapter = adapter
             recyclerview.itemAnimator = SpringAddItemAnimator()
-            adapter.setHeaderView(getHeaderView())
             adapter.setDiffCallback(RssDiffCallback())
-            recyclerview.doOnNextLayout {
-                adapter.setDiffNewData(mainViewModel.feedsList.value)
-            }
+            /*   recyclerview.doOnNextLayout {
+                   adapter.setDiffNewData(mainViewModel.feedsList.value)
+               }*/
             mainViewModel.feedsList.observe(this@MainPageFragment, Observer {
                 adapter.setDiffNewData(it)
             })
@@ -84,14 +85,19 @@ class MainPageFragment: Fragment() {
         return binding.root
     }
 
-    /*  private var mAddDialog: AddRssDialog? = null
-      private fun addRssDialog() {
-          if (mAddDialog == null){
-              mAddDialog = AddRssDialog(context!!)
-          }
-          mAddDialog?.show()
-          mSearchDialog?.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
-      }*/
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initListener()
+    }
+
+    private fun initListener() {
+        tv_readed.setOnClickListener { onTypeClick(1) }
+        iv_readedmore.setOnClickListener { onTypeClick(1) }
+        tv_collect.setOnClickListener { onTypeClick(2) }
+        iv_collectmore.setOnClickListener { onTypeClick(2) }
+        tv_laterread.setOnClickListener { onTypeClick(3) }
+        iv_laterreadmore.setOnClickListener { onTypeClick(3) }
+    }
 
     private var mSearchDialog: SearchFeedsDialog? = null
     private fun popSearchDialog() {
@@ -100,17 +106,6 @@ class MainPageFragment: Fragment() {
         }
         mSearchDialog?.show()
         mSearchDialog?.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
-    }
-
-    private fun getHeaderView(): View {
-        val view = layoutInflater.inflate(R.layout.header_news,null,false)
-        view.findViewById<TextView>(R.id.tv_readed).setOnClickListener { onTypeClick(1) }
-        view.findViewById<ImageView>(R.id.iv_readedmore).setOnClickListener { onTypeClick(1) }
-        view.findViewById<TextView>(R.id.tv_collect).setOnClickListener { onTypeClick(2) }
-        view.findViewById<ImageView>(R.id.iv_collectmore).setOnClickListener { onTypeClick(2) }
-        view.findViewById<TextView>(R.id.tv_laterread).setOnClickListener { onTypeClick(3) }
-        view.findViewById<ImageView>(R.id.iv_laterreadmore).setOnClickListener { onTypeClick(3) }
-        return view
     }
 
     private fun onTypeClick(i: Int) {
