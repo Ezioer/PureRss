@@ -52,6 +52,9 @@ open class MImageGetter(var container: TextView, var c: Context) : ImageGetter {
     open fun resizeBitmap(bitmap: Bitmap, w: Int, h: Int): Bitmap? {
         val width = bitmap.width
         val height = bitmap.height
+        if (w <= 0 || h <= 0) {
+            return bitmap
+        }
         val scaleWidth = w.toFloat() / width
         val scaleHeight = h.toFloat() / height
         val matrix = Matrix()

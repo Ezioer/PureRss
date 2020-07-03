@@ -38,6 +38,9 @@ internal class RssHandler : DefaultHandler() {
         Log.i("i", "要获取的内容：$text")
         when (currentFlag) {
             RSS_TITLE -> {
+                if (rssItem == null) {
+                    rssFeed?.title = text
+                }
                 rssItem?.title = text
                 currentFlag = 0 // 设置完后，重置为开始状态
             }
@@ -50,11 +53,17 @@ internal class RssHandler : DefaultHandler() {
                 currentFlag = 0 // 设置完后，重置为开始状态
             }*/
             RSS_LINK -> {
+                if (rssItem == null) {
+                    rssFeed?.link = text
+                }
                 rssItem?.link = text
                 currentFlag = 0 // 设置完后，重置为开始状态
             }
             RSS_DESCRIPTION -> {
-                if (currentFlag == RSS_DESCRIPTION){
+                if (rssItem == null) {
+                    rssFeed?.subTitle = text
+                }
+                if (currentFlag == RSS_DESCRIPTION) {
                     if (text.isContainPicUrl() && rssItem!!.albumPic.isNullOrEmpty()) {
                         val list = text.split("\"")
                         for (item in list) {

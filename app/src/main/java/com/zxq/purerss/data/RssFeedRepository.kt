@@ -14,87 +14,161 @@ import kotlinx.coroutines.withContext
  *  on 2020/4/28
  *  fun
  */
-class RssFeedRepository private constructor(private val feedDao: FeedDao,private val itemDao: ItemDao) {
+class RssFeedRepository private constructor(
+    private val feedDao: FeedDao,
+    private val itemDao: ItemDao
+) {
 
     suspend fun insertEvent(list: List<RSSFeedEntity>) = withContext(Dispatchers.IO) {
-        for (item in list){
-            if (feedDao.isFeedIsExist(item.feedTitle) ==null){
+        for (item in list) {
+            if (feedDao.isFeedIsExist(item.feedTitle) == null) {
                 feedDao.insertOneFeed(item)
             }
         }
     }
 
-    suspend fun removeItem(id: Long,type: Int) = withContext(Dispatchers.IO){
-        if (type == 1){
+    suspend fun insertEvent(item: RSSFeedEntity): Boolean = withContext(Dispatchers.IO) {
+        if (feedDao.isFeedIsExist(item.feedTitle) == null) {
+            feedDao.insertOneFeed(item)
+            true
+        } else {
+            false
+        }
+    }
+
+    suspend fun removeItem(id: Long, type: Int) = withContext(Dispatchers.IO) {
+        if (type == 1) {
             itemDao.removeReaded(id)
-        } else if (type == 2){
+        } else if (type == 2) {
             itemDao.removeCollect(id)
         } else {
             itemDao.removeReaded(id)
         }
     }
 
-    suspend fun searchItem(key: String,type: Int): MutableList<RSSItemEntity> = withContext(Dispatchers.IO){
-        val result = mutableListOf<RSSItemEntity>()
-        if (type == 1){
-            val list = itemDao.searchReaded(key)
-            for (item in list){
-                result.add(RSSItemEntity(item.itemId,item.itemTitle,item.itemLink,item.itemDesc,item.itemAuthor,item.itemDate,item.itemPic,item.itemFeed,item.feedTitle))
+    suspend fun searchItem(key: String, type: Int): MutableList<RSSItemEntity> =
+        withContext(Dispatchers.IO) {
+            val result = mutableListOf<RSSItemEntity>()
+            if (type == 1) {
+                val list = itemDao.searchReaded(key)
+                for (item in list) {
+                    result.add(
+                        RSSItemEntity(
+                            item.itemId,
+                            item.itemTitle,
+                            item.itemLink,
+                            item.itemDesc,
+                            item.itemAuthor,
+                            item.itemDate,
+                            item.itemPic,
+                            item.itemFeed,
+                            item.feedTitle
+                        )
+                    )
+                }
+            } else if (type == 2) {
+                val list = itemDao.searchCollect(key)
+                for (item in list) {
+                    result.add(
+                        RSSItemEntity(
+                            item.itemId,
+                            item.itemTitle,
+                            item.itemLink,
+                            item.itemDesc,
+                            item.itemAuthor,
+                            item.itemDate,
+                            item.itemPic,
+                            item.itemFeed,
+                            item.feedTitle
+                        )
+                    )
+                }
+            } else {
+                val list = itemDao.searchLater(key)
+                for (item in list) {
+                    result.add(
+                        RSSItemEntity(
+                            item.itemId,
+                            item.itemTitle,
+                            item.itemLink,
+                            item.itemDesc,
+                            item.itemAuthor,
+                            item.itemDate,
+                            item.itemPic,
+                            item.itemFeed,
+                            item.feedTitle
+                        )
+                    )
+                }
             }
-        } else if (type == 2){
-            val list = itemDao.searchCollect(key)
-            for (item in list){
-                result.add(RSSItemEntity(item.itemId,item.itemTitle,item.itemLink,item.itemDesc,item.itemAuthor,item.itemDate,item.itemPic,item.itemFeed,item.feedTitle))
-            }
-        } else {
-            val list = itemDao.searchLater(key)
-            for (item in list){
-                result.add(RSSItemEntity(item.itemId,item.itemTitle,item.itemLink,item.itemDesc,item.itemAuthor,item.itemDate,item.itemPic,item.itemFeed,item.feedTitle))
-            }
+            result
         }
-        result
-    }
 
-    suspend fun searchFeeds(key: String): MutableList<RSSFeedEntity> = withContext(Dispatchers.IO){
+    suspend fun searchFeeds(key: String): MutableList<RSSFeedEntity> = withContext(Dispatchers.IO) {
         feedDao.searchFeeds(key)
     }
 
-    suspend fun getRssListFromDb(): MutableList<RSSFeedEntity> = withContext(Dispatchers.IO){
+    suspend fun getRssListFromDb(): MutableList<RSSFeedEntity> = withContext(Dispatchers.IO) {
         feedDao.getFeedsFromDb()
     }
 
-    suspend fun getRssListFromDb(type: Int): MutableList<RSSItemEntity> = withContext(Dispatchers.IO){
-        val result = mutableListOf<RSSItemEntity>()
-        if (type == 1){
-           var list =  itemDao.selectAllReaded()
-            for (item in list){
-                result.add(RSSItemEntity(item.itemId,item.itemTitle,item.itemLink,item.itemDesc,item.itemAuthor,item.itemDate,item.itemPic,item.itemFeed,item.feedTitle))
-            }
-        } else if (type == 2){
-            var list= itemDao.selectAllCollect()
-            for (item in list){
-                result.add(RSSItemEntity(item.itemId,item.itemTitle,item.itemLink,item.itemDesc,item.itemAuthor,item.itemDate,item.itemPic,item.itemFeed,item.feedTitle))
-            }
-        } else {
-           var list = itemDao.selectAllLater()
-            for (item in list){
-                result.add(
-                    RSSItemEntity(
-                        item.itemId,
-                        item.itemTitle,
-                        item.itemLink,
-                        item.itemDesc,
-                        item.itemAuthor,
-                        item.itemDate,
-                        item.itemPic,
-                        item.itemFeed,
-                        item.feedTitle
+    suspend fun getRssListFromDb(type: Int): MutableList<RSSItemEntity> =
+        withContext(Dispatchers.IO) {
+            val result = mutableListOf<RSSItemEntity>()
+            if (type == 1) {
+                var list = itemDao.selectAllReaded()
+                for (item in list) {
+                    result.add(
+                        RSSItemEntity(
+                            item.itemId,
+                            item.itemTitle,
+                            item.itemLink,
+                            item.itemDesc,
+                            item.itemAuthor,
+                            item.itemDate,
+                            item.itemPic,
+                            item.itemFeed,
+                            item.feedTitle
+                        )
                     )
-                )
+                }
+            } else if (type == 2) {
+                var list = itemDao.selectAllCollect()
+                for (item in list) {
+                    result.add(
+                        RSSItemEntity(
+                            item.itemId,
+                            item.itemTitle,
+                            item.itemLink,
+                            item.itemDesc,
+                            item.itemAuthor,
+                            item.itemDate,
+                            item.itemPic,
+                            item.itemFeed,
+                            item.feedTitle
+                        )
+                    )
+                }
+            } else {
+                var list = itemDao.selectAllLater()
+                for (item in list) {
+                    result.add(
+                        RSSItemEntity(
+                            item.itemId,
+                            item.itemTitle,
+                            item.itemLink,
+                            item.itemDesc,
+                            item.itemAuthor,
+                            item.itemDate,
+                            item.itemPic,
+                            item.itemFeed,
+                            item.feedTitle
+                        )
+                    )
+                }
             }
+            result
         }
-        result
-    }
 
     suspend fun getRssItemFromDB(id: Long): MutableList<RSSItemEntity> =
         withContext(Dispatchers.IO) {
@@ -168,6 +242,10 @@ class RssFeedRepository private constructor(private val feedDao: FeedDao,private
         }
     }
 
+    suspend fun deleteFeed(item: RSSFeedEntity) = withContext(Dispatchers.IO) {
+        feedDao.deleteFeed(item.feedId)
+    }
+
     suspend fun saveContent2DB(feed: RssFeed, id: Long) = withContext(Dispatchers.IO) {
         val feedTitle = feed.title
         for (item in feed.items) {
@@ -194,9 +272,9 @@ class RssFeedRepository private constructor(private val feedDao: FeedDao,private
         @Volatile
         private var instance: RssFeedRepository? = null
 
-        fun getInstance(feedDao: FeedDao,itemDao: ItemDao) =
+        fun getInstance(feedDao: FeedDao, itemDao: ItemDao) =
             instance ?: synchronized(this) {
-                instance ?: RssFeedRepository(feedDao,itemDao).also { instance = it }
+                instance ?: RssFeedRepository(feedDao, itemDao).also { instance = it }
             }
     }
 }

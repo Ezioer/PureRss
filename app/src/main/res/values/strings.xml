@@ -23,6 +23,11 @@
     <string name="setting">设置</string>
     <string name="darktheme">暗黑模式</string>
     <string name="slide">item滑动方向</string>
+    <string name="dark">暗黑</string>
+    <string name="light">纯白</string>
+
+    <string name="left_slide">左滑</string>
+    <string name="right_slide">右滑</string>
 
     <string name="readsetting">阅读设置</string>
     <string name="theme">主题</string>
@@ -37,4 +42,7 @@
     <string name="laterfail">不要重复添加哦</string>
 
     <string name="openinbrowser">在浏览器中打开</string>
+
+    <string name="nothingfound">请输入正确的rss网址</string>
+    <string name="addsuccess">已添加到我的rss，可在首页查看</string>
 </resources>

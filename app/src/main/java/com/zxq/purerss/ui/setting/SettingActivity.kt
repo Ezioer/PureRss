@@ -37,6 +37,11 @@ class SettingActivity : AppCompatActivity() {
             } else {
                 rbDay.isChecked = true
             }
+            if (getSpValue("slide", 0) == 1) {
+                rbLeft.isChecked = true
+            } else {
+                rbRight.isChecked = true
+            }
             rbDay.setOnClickListener {
                 checkMode(0)
             }
@@ -53,10 +58,12 @@ class SettingActivity : AppCompatActivity() {
             }
             rbLeft.setOnClickListener {
                 slide(0)
+                putSpValue("slide", 1)
                 rbRight.isChecked = false
             }
 
             rbRight.setOnClickListener {
+                putSpValue("slide", 0)
                 rbLeft.isChecked = false
                 slide(1)
             }

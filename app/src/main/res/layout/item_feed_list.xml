@@ -8,27 +8,42 @@
         <variable
             name="item"
             type="com.zxq.purerss.data.entity.table.RSSFeedEntity" />
+
         <variable
             name="clickHandle"
             type="com.zxq.purerss.ui.mainpage.MainPageAdapter.FeedClick" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:onClick="@{(v) -> clickHandle.onClick(v, item)}"
-        android:background="?android:selectableItemBackground"
+    <com.zxq.purerss.widget.SwipeMenuLayout
+        android:id="@+id/swipe"
         android:layout_width="match_parent"
-        android:layout_height="48dp">
+        android:layout_height="wrap_content">
 
-        <TextView
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:id="@+id/tv_feedtitle"
-            tools:text= "少数派"
-            android:text="@{item.feedTitle}"
-            android:gravity="center_vertical"
-            android:textAppearance="@style/TextAppearance.Owl.Subtitle1"
-            android:paddingLeft="20dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:onClick="@{(v) -> clickHandle.onClick(v, item)}"
+            android:background="?android:selectableItemBackground"
             android:layout_width="match_parent"
-            android:layout_height="48dp"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="48dp">
+
+            <TextView
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/tv_feedtitle"
+                tools:text="少数派"
+                android:text="@{item.feedTitle}"
+                android:gravity="center_vertical"
+                android:textAppearance="@style/TextAppearance.Owl.Subtitle1"
+                android:paddingLeft="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="48dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/delete"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:src="@drawable/delete_96px"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp" />
+    </com.zxq.purerss.widget.SwipeMenuLayout>
 </layout>

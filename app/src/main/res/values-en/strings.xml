@@ -24,6 +24,10 @@
     <string name="setting">Setting</string>
     <string name="darktheme">DarkTheme</string>
     <string name="slide">Item slide diretion</string>
+    <string name="dark">Dark</string>
+    <string name="light">Light</string>
+    <string name="left_slide">Left Slide</string>
+    <string name="right_slide">Right Slide</string>
 
     <string name="readsetting">Reading Setting</string>
     <string name="theme">Theme</string>
@@ -38,4 +42,7 @@
     <string name="laterfail">Do not download again</string>
 
     <string name="openinbrowser">Open in browser</string>
+
+    <string name="nothingfound">Sorry,Nothing to found </string>
+    <string name="addsuccess">Successful Add,Look it in MainPage</string>
 </resources>

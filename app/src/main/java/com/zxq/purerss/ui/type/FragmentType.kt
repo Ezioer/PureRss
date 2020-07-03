@@ -22,6 +22,7 @@ import com.zxq.purerss.ui.dialog.SearchItemDialog
 import com.zxq.purerss.ui.feedlist.FeedListFragmentDirections
 import com.zxq.purerss.utils.InjectorUtil
 import com.zxq.purerss.utils.SpringAddItemAnimator
+import com.zxq.purerss.utils.getSpValue
 import java.util.concurrent.TimeUnit
 
 class FragmentType: Fragment() {
@@ -75,7 +76,7 @@ class FragmentType: Fragment() {
             tvSearch.setOnClickListener {
                 showSearchDialog(onClick)
             }
-            val adapter = TypeAdapter(onClick)
+            val adapter = TypeAdapter(onClick, context?.getSpValue("slide", 0) == 0)
             adapter.setOnRemoveListener(object : TypeAdapter.OnRemoveListener {
                 override fun onRemove(item: RSSItemEntity) {
                     adapter.data.remove(item)
@@ -86,14 +87,11 @@ class FragmentType: Fragment() {
             recyclerview.itemAnimator = SpringAddItemAnimator()
             adapter.setDiffCallback(ItemTypeDiffCallback())
             viewM.feedsList.observe(this@FragmentType, Observer {
-                adapter.setDiffNewData(it)
+                if (it.isEmpty()) {
+                } else {
+                    adapter.setDiffNewData(it)
+                }
             })
-
-            val a = "abcdefg<img src=\"0001.jpg\"/>hijklmnopq"
-            val c =
-                "</p><p></p><figure class=\"img-alt-wap\"><img src=\"http://s1.dgtle.com/dgtle_img/news/2020/07/01/b5016202007011429503756_1800_500.jpeg?imageView2/2/w/600\"></figure><p>新饰面可与"
-            c.split("\"")
-            val b = a.replaceFirst("<img[^/>]*/>".toRegex(), "")
         }
         postponeEnterTransition(10L, TimeUnit.MILLISECONDS)
         val forward = MaterialSharedAxis.create(MaterialSharedAxis.Y, true)

@@ -19,6 +19,7 @@ import com.zxq.purerss.ui.mainpage.MainPageViewModel
 import com.zxq.purerss.utils.KeyBoardUtil
 import com.zxq.purerss.utils.SpringAddItemAnimator
 import com.zxq.purerss.utils.addOnAfterChange
+import com.zxq.purerss.utils.getSpValue
 import kotlinx.android.synthetic.main.dialog_search.*
 
 class SearchFeedsDialog(
@@ -39,13 +40,21 @@ class SearchFeedsDialog(
         et_search.addOnAfterChange {
             mainViewModel.serachFeeds(it.toString())
         }
-        val onClick = object: MainPageAdapter.FeedClick{
+        val onClick = object : MainPageAdapter.FeedClick {
             override fun onClick(view: View, rss: RSSFeedEntity) {
-                val action = MainPageFragmentDirections.actionMainpageToList(RssFeedInfo(rss.feedTitle,rss.feedLink,rss.feedDesc,"",rss.feedId))
+                val action = MainPageFragmentDirections.actionMainpageToList(
+                    RssFeedInfo(
+                        rss.feedTitle,
+                        rss.feedLink,
+                        rss.feedDesc,
+                        "",
+                        rss.feedId
+                    )
+                )
                 mView.findNavController().navigate(action)
             }
         }
-        val adapter = MainPageAdapter(onClick)
+        val adapter = MainPageAdapter(onClick, context?.getSpValue("slide", 0) == 0)
         recyclerview.adapter = adapter
         recyclerview.itemAnimator = SpringAddItemAnimator()
         adapter.setDiffCallback(RssDiffCallback())

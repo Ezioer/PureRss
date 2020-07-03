@@ -14,23 +14,31 @@ import kotlinx.coroutines.launch
  */
 class MainPageViewModel(private val repository: RssFeedRepository): ViewModel() {
 
-    val feedsList =MutableLiveData<MutableList<RSSFeedEntity>>()
+    val feedsList = MutableLiveData<MutableList<RSSFeedEntity>>()
     val searchFeedsList = MutableLiveData<MutableList<RSSFeedEntity>>()
 
-    fun getFeedsList(){
+    fun getFeedsList() {
         launch({
             val result = repository.getRssListFromDb()
             feedsList.value = result
-        },{
+        }, {
 
         })
     }
 
-    fun serachFeeds(key: String){
+    fun deleteItem(item: RSSFeedEntity) {
+        launch({
+            val result = repository.deleteFeed(item)
+        }, {
+
+        })
+    }
+
+    fun serachFeeds(key: String) {
         launch({
             val result = repository.searchFeeds(key)
             searchFeedsList.value = result
-        },{
+        }, {
 
         })
     }

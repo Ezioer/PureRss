@@ -14,7 +14,8 @@ import com.zxq.purerss.widget.SwipeMenuLayout
  *  on 2020/6/28
  *  fun
  */
-class FeedListAdapter(private val onClick: ItemClickListener): BaseQuickAdapter<RssItem,BaseViewHolder>(R.layout.item_content_list) {
+class FeedListAdapter(private val onClick: ItemClickListener, private var slideDir: Boolean) :
+    BaseQuickAdapter<RssItem, BaseViewHolder>(R.layout.item_content_list) {
 
     override fun onItemViewHolderCreated(viewHolder: BaseViewHolder, viewType: Int) {
         DataBindingUtil.bind<ItemContentListBinding>(viewHolder.itemView)
@@ -33,6 +34,7 @@ class FeedListAdapter(private val onClick: ItemClickListener): BaseQuickAdapter<
             (binding.root as SwipeMenuLayout).smoothClose()
             onLaterListener?.later(item)
         }
+        binding?.swipe?.setLeftSwipe(slideDir)
         binding?.item = item
         binding?.clickHandle = onClick
         binding?.executePendingBindings()

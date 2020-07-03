@@ -22,6 +22,7 @@ import com.zxq.purerss.listener.ItemClickListener
 import com.zxq.purerss.listener.ItemDiffCallback
 import com.zxq.purerss.utils.InjectorUtil
 import com.zxq.purerss.utils.SpringAddItemAnimator
+import com.zxq.purerss.utils.getSpValue
 import java.util.concurrent.TimeUnit
 
 /**
@@ -53,7 +54,7 @@ class FeedListFragment: Fragment() {
             }
             toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
             viewM.getFeedsList(mInfo!!.link, mInfo!!.id, false)
-            val mAdapter = FeedListAdapter(onClick)
+            val mAdapter = FeedListAdapter(onClick, context?.getSpValue("slide", 0) == 0)
             mAdapter.setOnLaterListener(object: FeedListAdapter.OnLaterListener{
                 override fun later(item: RssItem) {
                     viewM.later(item)
@@ -72,6 +73,7 @@ class FeedListFragment: Fragment() {
                 mAdapter.setDiffNewData(diffResult, it)
                 if (refreshlayout.isRefreshing) {
                     refreshlayout.isRefreshing = false
+                    recyclerview.smoothScrollToPosition(0)
                 }
             })
 
@@ -98,7 +100,7 @@ class FeedListFragment: Fragment() {
 
         val backward = MaterialSharedAxis.create(MaterialSharedAxis.Y, false)
         returnTransition = backward
-        postponeEnterTransition(10L, TimeUnit.MILLISECONDS)
+        postponeEnterTransition(6L, TimeUnit.MILLISECONDS)
         return binding.root
     }
 }

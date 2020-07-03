@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name="colorPrimarySurfaceVariant" format="color" />
-    <attr name="emphasisMediumAlpha" format="float"/>
+    <attr name="emphasisMediumAlpha" format="float" />
 
-    <attr name="motionInterpolatorPersistent" format="reference"/>
-    <attr name="motionInterpolatorIncoming" format="reference"/>
-    <attr name="motionInterpolatorOutgoing" format="reference"/>
+    <attr name="motionInterpolatorPersistent" format="reference" />
+    <attr name="motionInterpolatorIncoming" format="reference" />
+    <attr name="motionInterpolatorOutgoing" format="reference" />
     <declare-styleable name="SwipeMenuLayout">
-        <attr name="swipeEnable" format="boolean"/>
-        <attr name="ios" format="boolean"/>
-        <attr name="leftSwipe" format="boolean"/>
+        <attr name="swipeEnable" format="boolean" />
+        <attr name="ios" format="boolean" />
+        <attr name="leftSwipe" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="SWImageView">
+        <attr name="borderRadius" format="dimension" />
+        <attr name="type">
+            <enum name="normal" value="-1" />
+            <enum name="circle" value="0" />
+            <enum name="round" value="1" />
+        </attr>
+        <attr name="borderWidth" format="dimension" />
+        <attr name="borderColor" format="integer" />
     </declare-styleable>
 </resources>

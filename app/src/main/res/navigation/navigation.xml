@@ -29,6 +29,11 @@
             android:id="@+id/action_mainpage_to_type"
             app:destination="@id/type"
             app:exitAnim="@null" />
+
+        <action
+            android:id="@+id/action_mainpage_to_add"
+            app:destination="@id/add"
+            app:exitAnim="@null" />
     </fragment>
 
 
@@ -67,6 +72,17 @@
         tools:layout="@layout/fragment_detail">
         <argument
             android:name="itemcontent"
-            app:argType="com.zxq.purerss.data.entity.RssItemInfo"/>
+            app:argType="com.zxq.purerss.data.entity.RssItemInfo" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/add"
+        android:name="com.zxq.purerss.ui.add.AddRssFragment"
+        android:label="add"
+        tools:layout="@layout/dialog_addrss">
+        <action
+            android:id="@+id/action_add_to_detail"
+            app:destination="@id/detail"
+            app:exitAnim="@null" />
     </fragment>
 </navigation>

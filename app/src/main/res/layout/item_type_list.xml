@@ -16,18 +16,20 @@
 
     <com.zxq.purerss.widget.SwipeMenuLayout
         android:clickable="true"
+        android:id="@+id/swipe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/rootview"
+            android:background="?android:selectableItemBackground"
             android:transitionName="@{item.itemTitle}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="@{(v) -> clickHandle.onClick(v, item)}"
-            android:paddingLeft="10dp"
+            android:paddingLeft="20dp"
             android:paddingTop="10dp"
-            android:paddingRight="10dp">
+            android:paddingRight="20dp">
 
             <TextView
                 android:id="@+id/tv_title"
@@ -43,8 +45,9 @@
                 app:layout_constraintTop_toTopOf="@id/iv_pic"
                 tools:text="幕后｜采访《马卡龙玩图》：用优秀的 AI 技术和创作" />
 
-            <ImageView
+            <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/iv_pic"
+                app:riv_corner_radius="12dp"
                 android:layout_width="120dp"
                 android:layout_height="100dp"
                 android:scaleType="centerCrop"

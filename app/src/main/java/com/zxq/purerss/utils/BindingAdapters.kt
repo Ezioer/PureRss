@@ -26,6 +26,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.elevation.ElevationOverlayProvider
+import com.makeramen.roundedimageview.RoundedImageView
 import com.zxq.purerss.R
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 
@@ -37,15 +38,12 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 
 @BindingAdapter("app:imageUrl")
 fun loadImage(
-    imageView: ImageView,
+    imageView: RoundedImageView,
     url: String?
 ): Unit {
     Glide.with(imageView.context)
         .load(url)
-        .placeholder(R.drawable.default_two)
-        .error(R.drawable.default_two)
-        .apply(RequestOptions.bitmapTransform(RoundedCornersTransformation(22, 3)))
-        .transition(DrawableTransitionOptions.withCrossFade())
+        .apply(RequestOptions().placeholder(R.drawable.default_two).error(R.drawable.default_two))
         .into(imageView)
 }
 

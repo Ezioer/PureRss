@@ -23,6 +23,9 @@ interface FeedDao {
     @Query("select * from rssfeed where feed_title = :title")
     fun isFeedIsExist(title: String): RSSFeedEntity
 
+    @Query("delete  from rssfeed where feed_id = :id")
+    fun deleteFeed(id: Long)
+
     @Query("select * from rssfeed where feed_title like '%' || :key || '%' ")
     fun searchFeeds(key: String): MutableList<RSSFeedEntity>
 }

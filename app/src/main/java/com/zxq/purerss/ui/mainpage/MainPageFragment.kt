@@ -23,6 +23,7 @@ import com.zxq.purerss.ui.dialog.SearchFeedsDialog
 import com.zxq.purerss.ui.setting.SettingActivity
 import com.zxq.purerss.utils.InjectorUtil
 import com.zxq.purerss.utils.SpringAddItemAnimator
+import com.zxq.purerss.utils.getSpValue
 
 /**
  *  created by xiaoqing.zhou
@@ -48,8 +49,8 @@ class MainPageFragment: Fragment() {
             }
             toolbar.setNavigationOnClickListener { startActivity(Intent(activity,SettingActivity::class.java)) }
             toolbar.setOnMenuItemClickListener {
-                if (it.itemId == R.id.addfeed){
-
+                if (it.itemId == R.id.addfeed) {
+                    findNavController().navigate(R.id.action_mainpage_to_add)
                 }
                 true
             }
@@ -57,7 +58,13 @@ class MainPageFragment: Fragment() {
                 popSearchDialog()
             }
             mainViewModel.getFeedsList()
-            val adapter = MainPageAdapter(onClick)
+            val adapter = MainPageAdapter(onClick, context?.getSpValue("slide", 0) == 0)
+            adapter.setOnDeleteListener(object : MainPageAdapter.OnDeleteListener {
+                override fun delete(item: RSSFeedEntity) {
+                    adapter.data.remove(item)
+                    mainViewModel.deleteItem(item)
+                }
+            })
             recyclerview.adapter = adapter
             recyclerview.itemAnimator = SpringAddItemAnimator()
             adapter.setHeaderView(getHeaderView())
@@ -77,10 +84,19 @@ class MainPageFragment: Fragment() {
         return binding.root
     }
 
+    /*  private var mAddDialog: AddRssDialog? = null
+      private fun addRssDialog() {
+          if (mAddDialog == null){
+              mAddDialog = AddRssDialog(context!!)
+          }
+          mAddDialog?.show()
+          mSearchDialog?.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
+      }*/
+
     private var mSearchDialog: SearchFeedsDialog? = null
     private fun popSearchDialog() {
-        if (mSearchDialog == null){
-            mSearchDialog = SearchFeedsDialog(context!!,mainViewModel,this@MainPageFragment)
+        if (mSearchDialog == null) {
+            mSearchDialog = SearchFeedsDialog(context!!, mainViewModel, this@MainPageFragment)
         }
         mSearchDialog?.show()
         mSearchDialog?.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)

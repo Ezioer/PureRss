@@ -1,4 +1,4 @@
-package com.zxq.purerss.ui.home
+package com.zxq.purerss.ui.add
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -6,12 +6,13 @@ import com.zxq.purerss.data.RssFeedRepository
 
 /**
  *  created by xiaoqing.zhou
- *  on 2020/4/29
+ *  on 2020/6/28
  *  fun
  */
-class FeedContentListFactory(private val repository : RssFeedRepository) : ViewModelProvider.NewInstanceFactory() {
+class AddRssModelFactory(private val repository: RssFeedRepository) :
+    ViewModelProvider.NewInstanceFactory() {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return FeedContentViewModel(repository) as T
+        return AddRssViewModel(repository) as T
     }
 }

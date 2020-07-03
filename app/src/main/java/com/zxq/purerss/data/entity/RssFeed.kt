@@ -7,8 +7,10 @@ package com.zxq.purerss.data.entity
  */
 data class RssFeed(
     var title: String = "",
-    var pubdata:String = "",
-    var items:ArrayList<RssItem> = ArrayList()
+    var pubdate: String = "",
+    var subTitle: String = "",
+    var link: String = "",
+    var items: ArrayList<RssItem> = ArrayList()
 ) {
     fun addItem(item: RssItem){
         items?.add(item)

@@ -4,11 +4,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.zxq.purerss.data.DataBase
 import com.zxq.purerss.data.RssFeedRepository
-import com.zxq.purerss.ui.bottomdrawer.AllFeedFactory
+import com.zxq.purerss.ui.add.AddRssModelFactory
 import com.zxq.purerss.ui.chooserss.SaveDBRssModelFactory
 import com.zxq.purerss.ui.detail.DetailModelFactory
 import com.zxq.purerss.ui.feedlist.FeedListModelFactory
-import com.zxq.purerss.ui.home.FeedContentListFactory
 import com.zxq.purerss.ui.mainpage.MainPageModelFactory
 import com.zxq.purerss.ui.type.TypeModelFactory
 
@@ -26,34 +25,27 @@ object InjectorUtil {
         )
     )
 
-
-    fun getAllFeedFactory(fragment: Fragment) = AllFeedFactory(
-        RssFeedRepository.getInstance(
-            DataBase.getInstance(
-                fragment.requireContext()
-            ).feedDao(),DataBase.getInstance(fragment.requireContext()).itemDao()
-        )
-    )
-
-    fun getFeedListFactory(fragment: Fragment) = FeedContentListFactory(
-        RssFeedRepository.getInstance(
-            DataBase.getInstance(
-                fragment.requireContext()
-            ).feedDao(),DataBase.getInstance(fragment.requireContext()).itemDao()
-        )
-    )
-
     fun getMainFactory(fragment: Fragment) = MainPageModelFactory(
         RssFeedRepository.getInstance(
-            DataBase.getInstance(fragment.requireContext()
-            ).feedDao(),DataBase.getInstance(fragment.requireContext()).itemDao()
+            DataBase.getInstance(
+                fragment.requireContext()
+            ).feedDao(), DataBase.getInstance(fragment.requireContext()).itemDao()
         )
     )
 
     fun getFeedsListFactory(fragment: Fragment) = FeedListModelFactory(
         RssFeedRepository.getInstance(
-            DataBase.getInstance(fragment.requireContext()
-            ).feedDao(),DataBase.getInstance(fragment.requireContext()).itemDao()
+            DataBase.getInstance(
+                fragment.requireContext()
+            ).feedDao(), DataBase.getInstance(fragment.requireContext()).itemDao()
+        )
+    )
+
+    fun getAddRssFactory(fragment: Fragment) = AddRssModelFactory(
+        RssFeedRepository.getInstance(
+            DataBase.getInstance(
+                fragment.requireContext()
+            ).feedDao(), DataBase.getInstance(fragment.requireContext()).itemDao()
         )
     )
 

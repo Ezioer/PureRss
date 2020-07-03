@@ -20,6 +20,7 @@ import com.zxq.purerss.ui.type.TypeViewModel
 import com.zxq.purerss.utils.KeyBoardUtil
 import com.zxq.purerss.utils.SpringAddItemAnimator
 import com.zxq.purerss.utils.addOnAfterChange
+import com.zxq.purerss.utils.getSpValue
 import kotlinx.android.synthetic.main.dialog_search.*
 
 class SearchItemDialog(
@@ -59,7 +60,7 @@ class SearchItemDialog(
                 view.findNavController().navigate(action,extra)
             }
         }*/
-        val adapter = TypeAdapter(onClick)
+        val adapter = TypeAdapter(onClick, mContext?.getSpValue("slide", 0) == 0)
         recyclerview.adapter = adapter
         recyclerview.itemAnimator = SpringAddItemAnimator()
         adapter.setDiffCallback(ItemTypeDiffCallback())

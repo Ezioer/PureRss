@@ -14,7 +14,7 @@ import com.zxq.purerss.widget.SwipeMenuLayout
  *  on 2020/6/28
  *  fun
  */
-class TypeAdapter(private val onClick: ItemTypeClickListener) :
+class TypeAdapter(private val onClick: ItemTypeClickListener, private var slideDir: Boolean) :
     BaseQuickAdapter<RSSItemEntity, BaseViewHolder>(R.layout.item_type_list) {
 
     override fun onItemViewHolderCreated(viewHolder: BaseViewHolder, viewType: Int) {
@@ -31,6 +31,7 @@ class TypeAdapter(private val onClick: ItemTypeClickListener) :
             notifyItemRemoved(holder.adapterPosition)
             listener?.onRemove(item)
         }
+        binding?.swipe?.setLeftSwipe(slideDir)
         binding?.item = item
         binding?.clickHandle = onClick
         binding?.executePendingBindings()
