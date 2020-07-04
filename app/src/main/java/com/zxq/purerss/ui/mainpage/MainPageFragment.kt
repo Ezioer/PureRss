@@ -6,9 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.core.view.doOnNextLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -25,7 +22,7 @@ import com.zxq.purerss.utils.InjectorUtil
 import com.zxq.purerss.utils.SpringAddItemAnimator
 import com.zxq.purerss.utils.getSpValue
 import kotlinx.android.synthetic.main.fragment_news.*
-import java.io.FileFilter
+import java.util.concurrent.TimeUnit
 
 /**
  *  created by xiaoqing.zhou
@@ -70,13 +67,11 @@ class MainPageFragment: Fragment() {
             recyclerview.adapter = adapter
             recyclerview.itemAnimator = SpringAddItemAnimator()
             adapter.setDiffCallback(RssDiffCallback())
-            /*   recyclerview.doOnNextLayout {
-                   adapter.setDiffNewData(mainViewModel.feedsList.value)
-               }*/
             mainViewModel.feedsList.observe(this@MainPageFragment, Observer {
                 adapter.setDiffNewData(it)
             })
         }
+        postponeEnterTransition(10L, TimeUnit.MILLISECONDS)
         val backward = MaterialSharedAxis.create(MaterialSharedAxis.Y, false)
         reenterTransition = backward
 

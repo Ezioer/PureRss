@@ -43,7 +43,7 @@ class ItemTypeDiffCallback : DiffUtil.ItemCallback<RSSItemEntity>() {
     }
 }
 
-class RssDiffCallback: DiffUtil.ItemCallback<RSSFeedEntity>(){
+class RssDiffCallback : DiffUtil.ItemCallback<RSSFeedEntity>() {
     override fun areItemsTheSame(oldItem: RSSFeedEntity, newItem: RSSFeedEntity): Boolean {
         return oldItem.feedTitle == newItem.feedTitle
     }
@@ -51,4 +51,26 @@ class RssDiffCallback: DiffUtil.ItemCallback<RSSFeedEntity>(){
     override fun areContentsTheSame(oldItem: RSSFeedEntity, newItem: RSSFeedEntity): Boolean {
         return oldItem.feedTitle == newItem.feedTitle
     }
+}
+
+class RssItemDiffCallback(
+    private var oldList: MutableList<RSSFeedEntity>,
+    private var newList: MutableList<RSSFeedEntity>
+) : DiffUtil.Callback() {
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition].feedTitle == newList[newItemPosition].feedTitle
+    }
+
+    override fun getOldListSize(): Int {
+        return oldList.size
+    }
+
+    override fun getNewListSize(): Int {
+        return newList.size
+    }
+
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition].feedLink == newList[newItemPosition].feedLink
+    }
+
 }

@@ -20,7 +20,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="10dp"
+                android:paddingBottom="5dp"
                 app:layout_scrollFlags="scroll|enterAlways">
 
                 <androidx.appcompat.widget.Toolbar
@@ -75,9 +75,9 @@
                     android:text="@string/readed"
                     android:paddingLeft="15dp"
                     android:background="?android:selectableItemBackground"
-                    android:layout_marginTop="5dp"
                     android:drawableLeft="@drawable/reading_48px"
                     android:drawablePadding="4dp"
+                    android:layout_marginTop="5dp"
                     android:gravity="center_vertical"
                     android:textAppearance="@style/TextAppearance.Owl.Subtitle1"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -167,7 +167,6 @@
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
             android:clipChildren="false"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
