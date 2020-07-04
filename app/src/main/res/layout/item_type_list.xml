@@ -27,9 +27,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="@{(v) -> clickHandle.onClick(v, item)}"
-            android:paddingLeft="20dp"
+            android:paddingLeft="15dp"
             android:paddingTop="10dp"
-            android:paddingRight="20dp">
+            android:paddingRight="15dp">
 
             <TextView
                 android:id="@+id/tv_title"
@@ -81,8 +81,8 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/remove"
             android:text="@string/remove"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             app:backgroundTint="@color/c_008f68"
             android:background="@color/c_008f68"
             android:layout_width="wrap_content"

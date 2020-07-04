@@ -31,9 +31,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="@{(v) -> clickHandle.onClick(v, item)}"
-            android:paddingLeft="20dp"
+            android:paddingLeft="15dp"
             android:paddingTop="10dp"
-            android:paddingRight="20dp">
+            android:paddingRight="15dp">
 
             <TextView
                 android:id="@+id/tv_title"
@@ -88,8 +88,8 @@
             android:id="@+id/collect"
             app:backgroundTint="@color/c_008f68"
             android:text="@string/collect"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             android:background="@color/c_008f68"
             android:layout_width="wrap_content"
             android:layout_height="match_parent" />
@@ -98,8 +98,8 @@
             android:id="@+id/later"
             app:backgroundTint="@color/c_008f68"
             android:text="@string/laterread"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             android:background="@color/c_008f68"
             android:layout_width="wrap_content"
             android:layout_height="match_parent" />

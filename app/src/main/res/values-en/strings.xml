@@ -20,6 +20,8 @@
 
     <string name="rsslink">Input Rss Link</string>
     <string name="parse">Parse</string>
+    <string name="searchyourrss">Search Your RSS</string>
+    <string name="searchtype">Search Current List</string>
 
     <string name="setting">Setting</string>
     <string name="darktheme">DarkTheme</string>

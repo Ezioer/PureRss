@@ -55,6 +55,7 @@
                     android:gravity="center_vertical"
                     android:paddingLeft="8dp"
                     android:text="@string/search"
+                    android:textAppearance="@style/TextAppearance.Owl.Body2"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/app_name" />
 
@@ -89,7 +90,7 @@
                 <ImageView
                     android:id="@+id/iv_readedmore"
                     android:paddingLeft="15dp"
-                    android:paddingRight="20dp"
+                    android:paddingRight="15dp"
                     android:background="?android:selectableItemBackground"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="@id/tv_readed"
@@ -115,7 +116,7 @@
                 <ImageView
                     android:id="@+id/iv_collectmore"
                     android:paddingLeft="15dp"
-                    android:paddingRight="20dp"
+                    android:paddingRight="15dp"
                     android:background="?android:selectableItemBackground"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="@id/tv_collect"
@@ -141,7 +142,7 @@
                 <ImageView
                     android:id="@+id/iv_laterreadmore"
                     android:paddingLeft="15dp"
-                    android:paddingRight="20dp"
+                    android:paddingRight="15dp"
                     android:background="?android:selectableItemBackground"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="@id/tv_laterread"

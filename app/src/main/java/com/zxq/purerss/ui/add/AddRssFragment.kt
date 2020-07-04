@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -76,6 +75,7 @@ class AddRssFragment : Fragment() {
                 info = it
                 ctlResult.visibility = View.VISIBLE
                 ctlResult.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in))
+                ivParse.setImageResource(R.drawable.search_64px)
                 val diffResult = DiffUtil.calculateDiff(ItemDiffCallback(adapter.data, it.items))
                 adapter.setDiffNewData(diffResult, it.items)
             })

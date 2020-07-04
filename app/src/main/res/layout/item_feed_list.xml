@@ -33,15 +33,15 @@
                 android:text="@{item.feedTitle}"
                 android:gravity="center_vertical"
                 android:textAppearance="@style/TextAppearance.Owl.Subtitle1"
-                android:paddingLeft="20dp"
+                android:paddingLeft="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="48dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
             android:id="@+id/delete"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             android:src="@drawable/delete_96px"
             android:layout_width="wrap_content"
             android:layout_height="48dp" />

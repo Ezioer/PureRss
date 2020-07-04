@@ -21,7 +21,7 @@ internal class RssHandler : DefaultHandler() {
     val RSS_DESCRIPTION = 3 // 若是 description 标签，记做3
     val RSS_CATEGORY = 4 // 若是category标签,记做 4
     val RSS_PUBDATE = 5 // 若是pubdate标签,记做5,注意有两个pubdate,但我们都保存在item的pubdate成员变量中
-    val RSS_AUTHOR = 6 // 若是pubdate标签,记做5,注意有两个pubdate,但我们都保存在item的pubdate成员变量中
+    val RSS_AUTHOR = 6
     var currentFlag = 0
 
     @Throws(SAXException::class)
@@ -48,10 +48,6 @@ internal class RssHandler : DefaultHandler() {
                 rssItem?.pubdate = text
                 currentFlag = 0 // 设置完后，重置为开始状态
             }
-       /*     RSS_CATEGORY -> {
-                rssItem.setCategory(text)
-                currentFlag = 0 // 设置完后，重置为开始状态
-            }*/
             RSS_LINK -> {
                 if (rssItem == null) {
                     rssFeed?.link = text
@@ -93,12 +89,12 @@ internal class RssHandler : DefaultHandler() {
         attributes: Attributes
     ) {
         super.startElement(uri, localName, qName, attributes)
-        if ("channel" == localName) {
+        if ("channel" == localName || "feed" == localName) {
             // 这个标签内没有我们关心的内容，所以不作处理，currentFlag=0
             currentFlag = 0
             return
         }
-        if ("item" == localName) {
+        if ("item" == localName || "entry" == localName) {
             rssItem = RssItem()
             return
         }
@@ -106,7 +102,7 @@ internal class RssHandler : DefaultHandler() {
             currentFlag = RSS_TITLE
             return
         }
-        if ("description" == localName) {
+        if ("description" == localName || "content" == localName) {
             currentFlag = RSS_DESCRIPTION
             return
         }
@@ -114,7 +110,7 @@ internal class RssHandler : DefaultHandler() {
             currentFlag = RSS_LINK
             return
         }
-        if ("pubDate" == localName) {
+        if ("pubDate" == localName || "updated" == localName) {
             currentFlag = RSS_PUBDATE
             return
         }
@@ -123,7 +119,7 @@ internal class RssHandler : DefaultHandler() {
             return
         }
 
-        if ("author" == localName){
+        if ("author" == localName || "name" == localName) {
             currentFlag = RSS_AUTHOR
             return
         }
@@ -137,7 +133,7 @@ internal class RssHandler : DefaultHandler() {
     ) {
         super.endElement(uri, localName, qName)
         // 如果解析一个item节点结束，就将rssItem添加到rssFeed中。
-        if ("item" == localName) {
+        if ("item" == localName || "entry" == localName) {
             rssFeed?.addItem(rssItem!!)
             return
         }

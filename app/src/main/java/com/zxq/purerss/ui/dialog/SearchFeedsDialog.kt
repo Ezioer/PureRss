@@ -11,7 +11,6 @@ import com.zxq.purerss.R
 import com.zxq.purerss.data.entity.RssFeedInfo
 import com.zxq.purerss.data.entity.table.RSSFeedEntity
 import com.zxq.purerss.listener.RssDiffCallback
-import com.zxq.purerss.ui.feedlist.FeedListAdapter
 import com.zxq.purerss.ui.mainpage.MainPageAdapter
 import com.zxq.purerss.ui.mainpage.MainPageFragment
 import com.zxq.purerss.ui.mainpage.MainPageFragmentDirections
@@ -40,6 +39,7 @@ class SearchFeedsDialog(
         et_search.addOnAfterChange {
             mainViewModel.serachFeeds(it.toString())
         }
+        iv_close.setOnClickListener { dismiss() }
         val onClick = object : MainPageAdapter.FeedClick {
             override fun onClick(view: View, rss: RSSFeedEntity) {
                 val action = MainPageFragmentDirections.actionMainpageToList(
