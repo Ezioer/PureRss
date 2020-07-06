@@ -11,7 +11,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginTop="10dp"
         android:id="@+id/title"
-        android:text="导入opml文件"
+        android:text="导出opml文件"
         android:textAppearance="@style/TextAppearance.Owl.Headline5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -22,7 +22,7 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="10dp"
         android:id="@+id/noti"
-        android:text="opml文件可以导入导出rss数据，请确保选择的是以xml为后缀的文件"
+        android:text="opml文件可以导入导出rss数据，导出后的文件位置为根目录下的purerss_opml.xml"
         android:textAppearance="@style/TextAppearance.Owl.Subtitle1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

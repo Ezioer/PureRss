@@ -67,13 +67,39 @@
                 android:layout_marginBottom="10dp"
                 android:ellipsize="end"
                 android:maxLines="1"
+                android:layout_marginLeft="10dp"
                 android:paddingRight="10dp"
-                android:text='@{"by   "+item.author+"/"+item.pubdate}'
+                android:text="@{item.author}"
                 android:textAppearance="@style/TextAppearance.Owl.Subtitle2"
                 app:layout_constraintBottom_toTopOf="@id/view_line"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/iv_pic"
-                tools:text="by  testtest /16:45" />
+                tools:text="testtest" />
+
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:layout_marginLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="@{item.converTime()}"
+                android:textAppearance="@style/TextAppearance.Owl.Subtitle2"
+                app:layout_constraintBottom_toTopOf="@id/view_line"
+                app:layout_constraintRight_toLeftOf="@id/iv_pic"
+                tools:text="07-07" />
+
+            <ImageView
+                android:src="@drawable/red_dot"
+                android:id="@+id/iv_reddot"
+                app:layout_constraintRight_toLeftOf="@id/tv_date"
+                app:layout_constraintTop_toTopOf="@id/tv_author"
+                app:layout_constraintBottom_toBottomOf="@id/tv_author"
+                android:layout_marginRight="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
             <View
                 android:id="@+id/view_line"

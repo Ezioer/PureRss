@@ -7,6 +7,7 @@ import com.zxq.purerss.data.entity.RssItem
 import com.zxq.purerss.data.entity.RssItemInfo
 import com.zxq.purerss.data.entity.RssOpmlInfo
 import com.zxq.purerss.data.entity.table.*
+import com.zxq.purerss.utils.DateUtils
 import com.zxq.purerss.utils.ReadOPML
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -74,6 +75,7 @@ class RssFeedRepository private constructor(
                             item.itemDate,
                             item.itemPic,
                             item.itemFeed,
+                            1,
                             item.feedTitle
                         )
                     )
@@ -91,6 +93,7 @@ class RssFeedRepository private constructor(
                             item.itemDate,
                             item.itemPic,
                             item.itemFeed,
+                            item.itemRead,
                             item.feedTitle
                         )
                     )
@@ -108,6 +111,7 @@ class RssFeedRepository private constructor(
                             item.itemDate,
                             item.itemPic,
                             item.itemFeed,
+                            item.itemRead,
                             item.feedTitle
                         )
                     )
@@ -140,6 +144,7 @@ class RssFeedRepository private constructor(
                             item.itemDate,
                             item.itemPic,
                             item.itemFeed,
+                            1,
                             item.feedTitle
                         )
                     )
@@ -157,6 +162,7 @@ class RssFeedRepository private constructor(
                             item.itemDate,
                             item.itemPic,
                             item.itemFeed,
+                            item.itemRead,
                             item.feedTitle
                         )
                     )
@@ -174,6 +180,7 @@ class RssFeedRepository private constructor(
                             item.itemDate,
                             item.itemPic,
                             item.itemFeed,
+                            item.itemRead,
                             item.feedTitle
                         )
                     )
@@ -199,6 +206,7 @@ class RssFeedRepository private constructor(
                     item.pubdate,
                     item.albumPic,
                     0L,
+                    item.itemRead ?: 0,
                     ""
                 )
             )
@@ -221,6 +229,7 @@ class RssFeedRepository private constructor(
                     item.pubdate,
                     item.albumPic,
                     0L,
+                    item.itemRead ?: 0,
                     ""
                 )
             )
@@ -276,9 +285,10 @@ class RssFeedRepository private constructor(
                         item.link,
                         item.description,
                         item.author,
-                        item.pubdate,
+                        DateUtils.handleDate(item.pubdate),
                         item.albumPic,
                         id,
+                        0,
                         feedTitle
                     )
                 )

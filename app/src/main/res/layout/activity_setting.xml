@@ -109,6 +109,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
@@ -197,6 +198,17 @@
                         android:layout_height="wrap_content"
                         android:text="@string/left_slide" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:layout_margin="10dp"
+                    android:paddingLeft="20dp"
+                    android:background="@drawable/bg_setting"
+                    android:id="@+id/tv_export"
+                    android:text="导出OPML"
+                    android:gravity="center_vertical"
+                    android:textAppearance="@style/TextAppearance.Owl.Headline7"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

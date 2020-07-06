@@ -177,31 +177,38 @@ class AddRssFragment : Fragment() {
         }
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 11) {
+            popNoti()
+        }
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == 11) {
-                popNoti()
+            var path = ""
+            val uri = data?.getData()
+            val resolver = activity?.getContentResolver()
+            val cursor = resolver?.query(uri!!, null, null, null, null)
+            if (cursor == null) {
+                path = uri?.path ?: ""
             } else {
-                var path = ""
-                val uri = data?.getData()
-                val resolver = activity?.getContentResolver()
-                val cursor = resolver?.query(uri!!, null, null, null, null)
-                if (cursor == null) {
-                    path = uri?.path ?: ""
-                } else {
-                    if (cursor!!.moveToFirst()) {
-                        // 多媒体文件，从数据库中获取文件的真实路径
-                        path = cursor!!.getString(cursor!!.getColumnIndex("_data"))
-                    }
+                if (cursor!!.moveToFirst()) {
+                    // 多媒体文件，从数据库中获取文件的真实路径
+                    path = cursor!!.getString(cursor!!.getColumnIndex("_data"))
                 }
-                if (path.isNullOrEmpty()) {
-                    return
-                }
-                val action = AddRssFragmentDirections.actionAddToOpml(path)
-                findNavController().navigate(action)
-
             }
+            if (path.isNullOrEmpty()) {
+                return
+            }
+            val action = AddRssFragmentDirections.actionAddToOpml(path)
+            findNavController().navigate(action)
+
         }
 
     }

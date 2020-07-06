@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
 import com.zxq.purerss.R
 import com.zxq.purerss.databinding.ActivitySettingBinding
+import com.zxq.purerss.ui.dialog.ExportOpmlNotiDialog
 import com.zxq.purerss.utils.StatusBarUtil
 import com.zxq.purerss.utils.contentView
 import com.zxq.purerss.utils.getSpValue
@@ -32,6 +33,9 @@ class SettingActivity : AppCompatActivity() {
             ctlLayout.setExpandedTitleColor(getColor(R.color.c_008f68))
             ctlLayout.setCollapsedTitleTextColor(getColor(R.color.c_008f68))
             toolbar.setNavigationOnClickListener { finish() }
+            tvExport.setOnClickListener {
+                exportOpml()
+            }
             if (getSpValue("nightmodel", 0) == 1) {
                 rbDark.isChecked = true
             } else {
@@ -67,6 +71,22 @@ class SettingActivity : AppCompatActivity() {
                 rbLeft.isChecked = false
                 slide(1)
             }
+        }
+    }
+
+
+    private var mDialog: ExportOpmlNotiDialog? = null
+    private fun exportOpml() {
+        if (!getSpValue("exportopmlnoti", false)) {
+            if (mDialog == null) {
+                mDialog = ExportOpmlNotiDialog(this)
+            }
+            mDialog?.show()
+            mDialog?.setOnDismissListener {
+
+            }
+        } else {
+
         }
     }
 

@@ -1,5 +1,8 @@
 package com.zxq.purerss.data.entity
 
+import com.zxq.purerss.utils.DateUtils
+
+
 /**
  *  created by xiaoqing.zhou
  *  on 2020/6/16
@@ -23,5 +26,10 @@ data class RssItem(
     var description: String = "",
     var pubdate: String = "",
     var author: String = "",
-    var albumPic: String = ""
-)
+    var albumPic: String = "",
+    var itemRead: Int? = 0
+) {
+    fun converTime(): String {
+        return DateUtils.handleDate(pubdate)
+    }
+}

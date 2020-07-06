@@ -19,6 +19,7 @@ data class RSSItemEntity(
     @ColumnInfo(name = "item_date") var itemDate: String,
     @ColumnInfo(name = "item_pic") var itemPic: String,
     @ColumnInfo(name = "item_feed") var itemFeed: Long,
+    @ColumnInfo(name = "item_read") var itemRead: Int,
     @ColumnInfo(name = "feed_title") var feedTitle: String
 
 ) {
