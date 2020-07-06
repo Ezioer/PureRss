@@ -23,6 +23,10 @@
     <string name="searchtype">搜索当前源</string>
 
     <string name="setting">设置</string>
+    <string name="import_opml">导入</string>
+    <string name="opml">导入OPML</string>
+    <string name="select_all">全选</string>
+    <string name="select_none">全不选</string>
     <string name="darktheme">暗黑模式</string>
     <string name="slide">item滑动方向</string>
     <string name="dark">暗黑</string>

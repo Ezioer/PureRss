@@ -9,6 +9,7 @@ import com.zxq.purerss.ui.chooserss.SaveDBRssModelFactory
 import com.zxq.purerss.ui.detail.DetailModelFactory
 import com.zxq.purerss.ui.feedlist.FeedListModelFactory
 import com.zxq.purerss.ui.mainpage.MainPageModelFactory
+import com.zxq.purerss.ui.opml.OpmlModelFactory
 import com.zxq.purerss.ui.type.TypeModelFactory
 
 /**
@@ -52,14 +53,23 @@ object InjectorUtil {
     fun getDetailFactory(fragment: Fragment) = DetailModelFactory(
         RssFeedRepository.getInstance(
             DataBase.getInstance(fragment.requireContext()
-            ).feedDao(),DataBase.getInstance(fragment.requireContext()).itemDao()
+            ).feedDao(), DataBase.getInstance(fragment.requireContext()).itemDao()
         )
     )
 
     fun getTypeFactory(fragment: Fragment) = TypeModelFactory(
         RssFeedRepository.getInstance(
-            DataBase.getInstance(fragment.requireContext()
-            ).feedDao(),DataBase.getInstance(fragment.requireContext()).itemDao()
+            DataBase.getInstance(
+                fragment.requireContext()
+            ).feedDao(), DataBase.getInstance(fragment.requireContext()).itemDao()
+        )
+    )
+
+    fun getOpmlFactory(fragment: Fragment) = OpmlModelFactory(
+        RssFeedRepository.getInstance(
+            DataBase.getInstance(
+                fragment.requireContext()
+            ).feedDao(), DataBase.getInstance(fragment.requireContext()).itemDao()
         )
     )
 }

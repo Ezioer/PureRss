@@ -76,4 +76,6 @@ dependencies {
 
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
     implementation project(":livedatabus")
+    implementation files('libs/dom4j-2.0.3.jar')
+    implementation files('libs/jaxen-1.2.0.jar')
 }

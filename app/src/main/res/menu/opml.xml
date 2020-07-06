@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_importopml"
+        android:icon="@drawable/import_64px"
+        android:title="@string/import_opml"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/menu_selectall"
+        android:icon="@drawable/select_all_64px"
+        android:title="@string/select_all"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/menu_selecctnone"
+        android:icon="@drawable/select_none_64px"
+        android:title="@string/select_none"
+        app:showAsAction="always" />
+</menu>

@@ -5,7 +5,9 @@ import com.zxq.purerss.data.dao.ItemDao
 import com.zxq.purerss.data.entity.RssFeed
 import com.zxq.purerss.data.entity.RssItem
 import com.zxq.purerss.data.entity.RssItemInfo
+import com.zxq.purerss.data.entity.RssOpmlInfo
 import com.zxq.purerss.data.entity.table.*
+import com.zxq.purerss.utils.ReadOPML
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -33,6 +35,16 @@ class RssFeedRepository private constructor(
             true
         } else {
             false
+        }
+    }
+
+    suspend fun insertOpml(list: MutableList<RssOpmlInfo>?) = withContext(Dispatchers.IO) {
+        if (!list.isNullOrEmpty()) {
+            for (item in list) {
+                if (feedDao.isFeedIsExist(item.title) == null) {
+                    feedDao.insertOneFeed(RSSFeedEntity(0, item.title, item.url, "", ""))
+                }
+            }
         }
     }
 
@@ -236,11 +248,17 @@ class RssFeedRepository private constructor(
         }
     }
 
-    suspend fun deleteReaded(title: String) {
+    suspend fun deleteReaded(title: String) = withContext(Dispatchers.IO) {
         if (itemDao.readedIsExist(title) != null) {
             itemDao.removeReaded(title)
         }
     }
+
+    suspend fun readOpml(filepath: String): MutableList<RssOpmlInfo>? =
+        withContext(Dispatchers.IO) {
+            ReadOPML.read(filepath)
+        }
+
 
     suspend fun deleteFeed(item: RSSFeedEntity) = withContext(Dispatchers.IO) {
         feedDao.deleteFeed(item.feedId)

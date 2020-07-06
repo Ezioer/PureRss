@@ -84,5 +84,20 @@
             android:id="@+id/action_add_to_detail"
             app:destination="@id/detail"
             app:exitAnim="@null" />
+
+        <action
+            android:id="@+id/action_add_to_opml"
+            app:destination="@id/opml"
+            app:exitAnim="@null" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/opml"
+        android:name="com.zxq.purerss.ui.opml.OpmlFragment"
+        android:label="opml"
+        tools:layout="@layout/fragment_opml">
+        <argument
+            android:name="filepath"
+            app:argType="string" />
     </fragment>
 </navigation>

@@ -1,10 +1,17 @@
 package com.zxq.purerss.ui.add
 
+import android.Manifest
+import android.app.Activity
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -20,8 +27,11 @@ import com.zxq.purerss.data.entity.table.RSSFeedEntity
 import com.zxq.purerss.databinding.DialogAddrssBinding
 import com.zxq.purerss.listener.ItemClickListener
 import com.zxq.purerss.listener.ItemDiffCallback
+import com.zxq.purerss.ui.dialog.OpmlNotiDialog
 import com.zxq.purerss.ui.feedlist.FeedListAdapter
 import com.zxq.purerss.utils.*
+import java.util.*
+
 
 /**
  *  created by xiaoqing.zhou
@@ -50,6 +60,12 @@ class AddRssFragment : Fragment() {
                 }
             }
             toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
+            toolbar.setOnMenuItemClickListener {
+                if (it.itemId == R.id.importopml) {
+                    checkPri()
+                }
+                true
+            }
             val onClick = object : ItemClickListener {
                 override fun onClick(view: View, rss: RssItem) {
                     val extra = FragmentNavigatorExtras(view to "rssdetail")
@@ -112,5 +128,81 @@ class AddRssFragment : Fragment() {
         val backward = MaterialSharedAxis.create(MaterialSharedAxis.Y, false)
         returnTransition = backward
         return binding.root
+    }
+
+    private fun addOpml() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.setType("*/*")
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        startActivityForResult(intent, 1)
+    }
+
+    private var mDialog: OpmlNotiDialog? = null
+    private fun popNoti() {
+        if (!context!!.getSpValue("opmlnoti", false)) {
+            if (mDialog == null) {
+                mDialog = OpmlNotiDialog(context!!)
+            }
+            mDialog?.show()
+            mDialog?.setOnDismissListener {
+                addOpml()
+            }
+        } else {
+            addOpml()
+        }
+    }
+
+    private fun checkPri() {
+        val list = ArrayList<String>()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(
+                    context!!,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) !==
+                PackageManager.PERMISSION_GRANTED
+            ) {
+                //申请权限
+                list.add(Manifest.permission.READ_EXTERNAL_STORAGE)
+            }
+            if (list.size > 0) {
+                ActivityCompat.requestPermissions(
+                    activity!!,
+                    list.toTypedArray(), 11
+                )
+            } else {
+                popNoti()
+            }
+        } else {
+            popNoti()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == 11) {
+                popNoti()
+            } else {
+                var path = ""
+                val uri = data?.getData()
+                val resolver = activity?.getContentResolver()
+                val cursor = resolver?.query(uri!!, null, null, null, null)
+                if (cursor == null) {
+                    path = uri?.path ?: ""
+                } else {
+                    if (cursor!!.moveToFirst()) {
+                        // 多媒体文件，从数据库中获取文件的真实路径
+                        path = cursor!!.getString(cursor!!.getColumnIndex("_data"))
+                    }
+                }
+                if (path.isNullOrEmpty()) {
+                    return
+                }
+                val action = AddRssFragmentDirections.actionAddToOpml(path)
+                findNavController().navigate(action)
+
+            }
+        }
+
     }
 }
