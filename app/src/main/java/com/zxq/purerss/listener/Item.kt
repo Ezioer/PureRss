@@ -2,6 +2,7 @@ package com.zxq.purerss.listener
 
 import androidx.recyclerview.widget.DiffUtil
 import com.zxq.purerss.data.entity.RssItem
+import com.zxq.purerss.data.entity.RssOpmlInfo
 import com.zxq.purerss.data.entity.table.RSSFeedEntity
 import com.zxq.purerss.data.entity.table.RSSItemEntity
 
@@ -40,6 +41,16 @@ class ItemTypeDiffCallback : DiffUtil.ItemCallback<RSSItemEntity>() {
 
     override fun areContentsTheSame(oldItem: RSSItemEntity, newItem: RSSItemEntity): Boolean {
         return oldItem == newItem
+    }
+}
+
+class OpmlItemDiffCallback : DiffUtil.ItemCallback<RssOpmlInfo>() {
+    override fun areItemsTheSame(oldItem: RssOpmlInfo, newItem: RssOpmlInfo): Boolean {
+        return oldItem.state == newItem.state
+    }
+
+    override fun areContentsTheSame(oldItem: RssOpmlInfo, newItem: RssOpmlInfo): Boolean {
+        return oldItem.state == newItem.state
     }
 }
 

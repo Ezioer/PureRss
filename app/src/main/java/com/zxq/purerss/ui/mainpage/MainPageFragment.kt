@@ -19,6 +19,7 @@ import com.zxq.purerss.listener.RssDiffCallback
 import com.zxq.purerss.ui.dialog.SearchFeedsDialog
 import com.zxq.purerss.ui.setting.SettingActivity
 import com.zxq.purerss.utils.InjectorUtil
+import com.zxq.purerss.utils.ReadOPML
 import com.zxq.purerss.utils.SpringAddItemAnimator
 import com.zxq.purerss.utils.getSpValue
 import kotlinx.android.synthetic.main.fragment_news.*
@@ -53,6 +54,7 @@ class MainPageFragment: Fragment() {
                 }
                 true
             }
+
             tvSearch.setOnClickListener {
                 popSearchDialog()
             }
