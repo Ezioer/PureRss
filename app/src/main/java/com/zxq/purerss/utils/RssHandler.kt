@@ -40,9 +40,9 @@ internal class RssHandler : DefaultHandler() {
             RSS_TITLE -> {
                 if (rssItem == null) {
                     rssFeed?.title = text
+                    currentFlag = 0 // 设置完后，重置为开始状态
                 }
-                rssItem?.title = text
-                currentFlag = 0 // 设置完后，重置为开始状态
+                rssItem?.title = rssItem?.title + text
             }
             RSS_PUBDATE -> {
                 rssItem?.pubdate = text

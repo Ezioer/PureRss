@@ -244,12 +244,13 @@ class RssFeedRepository private constructor(
 
     suspend fun deleteFeed(item: RSSFeedEntity) = withContext(Dispatchers.IO) {
         feedDao.deleteFeed(item.feedId)
+        itemDao.deleteById(item.feedId)
     }
 
     suspend fun saveContent2DB(feed: RssFeed, id: Long) = withContext(Dispatchers.IO) {
         val feedTitle = feed.title
         for (item in feed.items) {
-            if (itemDao.isExits(item.link) == null) {
+            if (itemDao.isExits(item.title) == null) {
                 itemDao.insertOneContent(
                     RSSItemEntity(
                         0,

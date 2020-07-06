@@ -19,14 +19,17 @@ interface ItemDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertOneFeed(rssItemEntity: RSSItemEntity): Long
 
-    @Query("select * from rssitem where item_link = :link")
-    fun isExits(link: String):RSSItemEntity
+    @Query("select * from rssitem where item_title = :link")
+    fun isExits(link: String): RSSItemEntity
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertOneContent(rssItemEntity: RSSItemEntity)
 
     @Query("select * from rssitem where item_feed=:id")
     fun selectById(id: Long): MutableList<RSSItemEntity>
+
+    @Query("delete from rssitem where item_feed=:id")
+    fun deleteById(id: Long)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertReaded(rssReadedEntity: RSSReadedEntity)

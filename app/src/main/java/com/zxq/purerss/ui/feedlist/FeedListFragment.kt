@@ -11,7 +11,6 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.DiffUtil
 import com.google.android.material.transition.MaterialSharedAxis
 import com.zxq.purerss.R
 import com.zxq.purerss.data.entity.RssFeedInfo
@@ -19,7 +18,7 @@ import com.zxq.purerss.data.entity.RssItem
 import com.zxq.purerss.data.entity.RssItemInfo
 import com.zxq.purerss.databinding.FragmentFeedlistBinding
 import com.zxq.purerss.listener.ItemClickListener
-import com.zxq.purerss.listener.ItemDiffCallback
+import com.zxq.purerss.listener.ItemRssDiffCallback
 import com.zxq.purerss.utils.InjectorUtil
 import com.zxq.purerss.utils.SpringAddItemAnimator
 import com.zxq.purerss.utils.getSpValue
@@ -68,9 +67,10 @@ class FeedListFragment: Fragment() {
             })
             recyclerview.adapter = mAdapter
             recyclerview.itemAnimator = SpringAddItemAnimator()
+            mAdapter.setDiffCallback(ItemRssDiffCallback())
             viewM.feedsList.observe(this@FeedListFragment, Observer {
-                val diffResult = DiffUtil.calculateDiff(ItemDiffCallback(mAdapter.data, it))
-                mAdapter.setDiffNewData(diffResult, it)
+//                val diffResult = DiffUtil.calculateDiff(ItemDiffCallback(mAdapter.data, it))
+                mAdapter.setDiffNewData(it)
                 if (refreshlayout.isRefreshing) {
                     refreshlayout.isRefreshing = false
                     recyclerview.smoothScrollToPosition(0)
