@@ -28,8 +28,4 @@ data class RssItem(
     var author: String = "",
     var albumPic: String = "",
     var itemRead: Int? = 0
-) {
-    fun converTime(): String {
-        return DateUtils.handleDate(pubdate)
-    }
-}
+)

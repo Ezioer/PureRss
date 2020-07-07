@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zxq.purerss.data.RssFeedRepository
 import com.zxq.purerss.data.entity.RssItem
+import com.zxq.purerss.data.entity.table.RSSItemEntity
 import com.zxq.purerss.utils.RssFeed_SAXParser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,10 +18,10 @@ import kotlinx.coroutines.withContext
  */
 class FeedListViewModel(private val repository: RssFeedRepository) : ViewModel() {
 
-    val feedsList = MutableLiveData<MutableList<RssItem>>()
+    val feedsList = MutableLiveData<MutableList<RSSItemEntity>>()
     val collectResult = MutableLiveData<Int>()
     val laterResult = MutableLiveData<Int>()
-    fun collectItem(item: RssItem) {
+    fun collectItem(item: RSSItemEntity) {
         launch({
             val result = repository.collectItem(item)
             collectResult.value = result
@@ -29,11 +30,11 @@ class FeedListViewModel(private val repository: RssFeedRepository) : ViewModel()
         })
     }
 
-    fun later(item: RssItem) {
+    fun later(item: RSSItemEntity) {
         launch({
             val result = repository.laterItem(item)
             laterResult.value = result
-        },{
+        }, {
 
         })
     }
@@ -45,23 +46,9 @@ class FeedListViewModel(private val repository: RssFeedRepository) : ViewModel()
                 val result = withContext(Dispatchers.IO) {
                     RssFeed_SAXParser().getFeed(url)
                 }
-                repository.saveContent2DB(result, id)
-                feedsList.value = result.items
+                feedsList.value = repository.saveContent2DB(result, id, list)
             } else {
-                val resultList = mutableListOf<RssItem>()
-                for (item in list) {
-                    resultList.add(
-                        RssItem(
-                            item.itemTitle,
-                            item.itemLink,
-                            item.itemDesc,
-                            item.itemDate,
-                            item.itemAuthor,
-                            item.itemPic
-                        )
-                    )
-                }
-                feedsList.value = resultList
+                feedsList.value = list
             }
         }, {
 

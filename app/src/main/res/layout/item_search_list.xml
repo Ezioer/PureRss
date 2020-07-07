@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="item"
+            type="com.zxq.purerss.data.entity.RssItem" />
+
+        <variable
+            name="slidedir"
+            type="Integer" />
+
+        <variable
+            name="clickHandle"
+            type="com.zxq.purerss.listener.ItemSearchClickListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/rootview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:selectableItemBackground"
+        android:onClick="@{(v) -> clickHandle.onClick(v, item)}"
+        android:paddingLeft="15dp"
+        android:paddingTop="10dp"
+        android:paddingRight="15dp"
+        android:transitionName="@{item.title}">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:paddingRight="10dp"
+            android:text="@{item.title}"
+            android:textAppearance="@style/TextAppearance.Owl.Headline7"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/iv_pic"
+            app:layout_constraintTop_toTopOf="@id/iv_pic"
+            tools:text="幕后｜采访《马卡龙玩图》：用优秀的 AI 技术和创作" />
+
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/iv_pic"
+            android:layout_width="120dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            app:imageUrl="@{item.albumPic}"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:riv_corner_radius="12dp" />
+
+        <TextView
+            android:id="@+id/tv_author"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingRight="10dp"
+            android:text="@{item.author}"
+            android:textAppearance="@style/TextAppearance.Owl.Subtitle2"
+            app:layout_constraintBottom_toTopOf="@id/view_line"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/iv_pic"
+            tools:text="testtest" />
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingRight="10dp"
+            android:text="@{item.pubdate}"
+            android:textAppearance="@style/TextAppearance.Owl.Subtitle2"
+            app:layout_constraintBottom_toTopOf="@id/view_line"
+            app:layout_constraintRight_toLeftOf="@id/iv_pic"
+            tools:text="07-07" />
+
+        <ImageView
+            android:id="@+id/iv_reddot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/red_dot"
+            app:layout_constraintBottom_toBottomOf="@id/tv_author"
+            app:layout_constraintRight_toLeftOf="@id/tv_date"
+            app:layout_constraintTop_toTopOf="@id/tv_author" />
+
+        <View
+            android:id="@+id/view_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="#efefef"
+            app:layout_constraintTop_toBottomOf="@id/iv_pic" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

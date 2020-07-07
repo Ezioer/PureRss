@@ -2,21 +2,25 @@ package com.zxq.purerss.ui.setting
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Environment
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.zxq.purerss.R
+import com.zxq.purerss.data.entity.table.goods
 import com.zxq.purerss.databinding.ActivitySettingBinding
 import com.zxq.purerss.ui.dialog.ExportOpmlNotiDialog
-import com.zxq.purerss.utils.StatusBarUtil
-import com.zxq.purerss.utils.contentView
-import com.zxq.purerss.utils.getSpValue
-import com.zxq.purerss.utils.putSpValue
+import com.zxq.purerss.utils.*
 import kotlinx.android.synthetic.main.activity_setting.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SettingActivity : AppCompatActivity() {
+    private val mViewModel: SettingViewModel by viewModels {
+        InjectorUtil.getSettingFactory(this)
+    }
     private val binding: ActivitySettingBinding by contentView(R.layout.activity_setting)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,6 +75,11 @@ class SettingActivity : AppCompatActivity() {
                 rbLeft.isChecked = false
                 slide(1)
             }
+            mViewModel.list.observe(this@SettingActivity, Observer {
+                ReadOPML.write(
+                    Environment.getExternalStorageDirectory().getPath() + "/OPML/opml.xml", it
+                )
+            })
         }
     }
 
@@ -83,10 +92,10 @@ class SettingActivity : AppCompatActivity() {
             }
             mDialog?.show()
             mDialog?.setOnDismissListener {
-
+                mViewModel.getAllFeeds()
             }
         } else {
-
+            mViewModel.getAllFeeds()
         }
     }
 

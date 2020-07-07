@@ -25,7 +25,7 @@ interface ItemDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertOneContent(rssItemEntity: RSSItemEntity)
 
-    @Query("select * from rssitem where item_feed=:id")
+    @Query("select * from rssitem where item_feed=:id order by feed_time desc")
     fun selectById(id: Long): MutableList<RSSItemEntity>
 
     @Query("delete from rssitem where item_feed=:id")
@@ -33,6 +33,12 @@ interface ItemDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertReaded(rssReadedEntity: RSSReadedEntity)
+
+    @Query("update rssitem set item_read =:state where  item_title =:title")
+    fun updateReadedState(title: String, state: Int)
+
+    @Query("update rssitem set item_read =:state where  item_id =:id")
+    fun updateReadedState(id: Long, state: Boolean)
 
     @Query("select * from rssreaded where item_title =:title")
     fun readedIsExist(title: String): RSSReadedEntity

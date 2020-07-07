@@ -6,6 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.zxq.purerss.data.RssFeedRepository
 import com.zxq.purerss.data.entity.RssItem
 import com.zxq.purerss.data.entity.RssItemInfo
+import com.zxq.purerss.data.entity.table.RSSItemEntity
+import com.zxq.purerss.utils.DateUtils
 import kotlinx.coroutines.launch
 /**
  *  created by xiaoqing.zhou
@@ -19,13 +21,18 @@ class DetailViewModel(private val repository: RssFeedRepository) : ViewModel() {
     fun collectItem(item: RssItemInfo) {
         launch({
             val result = repository.collectItem(
-                RssItem(
+                RSSItemEntity(
+                    0,
                     item.title,
                     item.link,
                     item.description,
-                    item.pubdate,
                     item.author,
-                    item.pic
+                    item.pubdate,
+                    item.pic,
+                    0,
+                    1,
+                    "",
+                    DateUtils.getCurrentSystemTime()
                 )
             )
             collectResult.value = result
@@ -44,7 +51,7 @@ class DetailViewModel(private val repository: RssFeedRepository) : ViewModel() {
 
     fun deleteReaded(item: RssItemInfo){
         launch({
-            val result = repository.readedItem(item)
+            val result = repository.deleteReaded(item.title)
         },{
 
         })

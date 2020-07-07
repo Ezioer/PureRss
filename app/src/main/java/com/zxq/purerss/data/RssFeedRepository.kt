@@ -52,6 +52,7 @@ class RssFeedRepository private constructor(
     suspend fun removeItem(id: Long, type: Int) = withContext(Dispatchers.IO) {
         if (type == 1) {
             itemDao.removeReaded(id)
+            itemDao.updateReadedState(id, false)
         } else if (type == 2) {
             itemDao.removeCollect(id)
         } else {
@@ -76,7 +77,8 @@ class RssFeedRepository private constructor(
                             item.itemPic,
                             item.itemFeed,
                             1,
-                            item.feedTitle
+                            item.feedTitle,
+                            DateUtils.getCurrentSystemTime()
                         )
                     )
                 }
@@ -94,7 +96,8 @@ class RssFeedRepository private constructor(
                             item.itemPic,
                             item.itemFeed,
                             item.itemRead,
-                            item.feedTitle
+                            item.feedTitle,
+                            DateUtils.getCurrentSystemTime()
                         )
                     )
                 }
@@ -112,7 +115,8 @@ class RssFeedRepository private constructor(
                             item.itemPic,
                             item.itemFeed,
                             item.itemRead,
-                            item.feedTitle
+                            item.feedTitle,
+                            DateUtils.getCurrentSystemTime()
                         )
                     )
                 }
@@ -145,7 +149,8 @@ class RssFeedRepository private constructor(
                             item.itemPic,
                             item.itemFeed,
                             1,
-                            item.feedTitle
+                            item.feedTitle,
+                            DateUtils.getCurrentSystemTime()
                         )
                     )
                 }
@@ -163,7 +168,8 @@ class RssFeedRepository private constructor(
                             item.itemPic,
                             item.itemFeed,
                             item.itemRead,
-                            item.feedTitle
+                            item.feedTitle,
+                            DateUtils.getCurrentSystemTime()
                         )
                     )
                 }
@@ -181,7 +187,8 @@ class RssFeedRepository private constructor(
                             item.itemPic,
                             item.itemFeed,
                             item.itemRead,
-                            item.feedTitle
+                            item.feedTitle,
+                            DateUtils.getCurrentSystemTime()
                         )
                     )
                 }
@@ -194,17 +201,17 @@ class RssFeedRepository private constructor(
             itemDao.selectById(id)
         }
 
-    suspend fun collectItem(item: RssItem): Int = withContext(Dispatchers.IO) {
-        if (itemDao.collectIsExist(item.title) == null) {
+    suspend fun collectItem(item: RSSItemEntity): Int = withContext(Dispatchers.IO) {
+        if (itemDao.collectIsExist(item.itemTitle) == null) {
             itemDao.insertCollect(
                 RSSCollectEntity(
                     0,
-                    item.title,
-                    item.link,
-                    item.description,
-                    item.author,
-                    item.pubdate,
-                    item.albumPic,
+                    item.itemTitle,
+                    item.itemLink,
+                    item.itemDesc,
+                    item.itemAuthor,
+                    item.itemDate,
+                    item.itemPic,
                     0L,
                     item.itemRead ?: 0,
                     ""
@@ -217,17 +224,17 @@ class RssFeedRepository private constructor(
 
     }
 
-    suspend fun laterItem(item: RssItem): Int = withContext(Dispatchers.IO) {
-        if (itemDao.laterIsExist(item.title) == null) {
+    suspend fun laterItem(item: RSSItemEntity): Int = withContext(Dispatchers.IO) {
+        if (itemDao.laterIsExist(item.itemTitle) == null) {
             itemDao.insertLater(
                 RSSLaterEntity(
                     0,
-                    item.title,
-                    item.link,
-                    item.description,
-                    item.author,
-                    item.pubdate,
-                    item.albumPic,
+                    item.itemTitle,
+                    item.itemLink,
+                    item.itemDesc,
+                    item.itemAuthor,
+                    item.itemDate,
+                    item.itemPic,
                     0L,
                     item.itemRead ?: 0,
                     ""
@@ -241,6 +248,7 @@ class RssFeedRepository private constructor(
 
     suspend fun readedItem(item: RssItemInfo) = withContext(Dispatchers.IO) {
         if (itemDao.readedIsExist(item.title) == null) {
+            itemDao.updateReadedState(item.title, 1)
             itemDao.insertReaded(
                 RSSReadedEntity(
                     0,
@@ -259,6 +267,7 @@ class RssFeedRepository private constructor(
 
     suspend fun deleteReaded(title: String) = withContext(Dispatchers.IO) {
         if (itemDao.readedIsExist(title) != null) {
+            itemDao.updateReadedState(title, 0)
             itemDao.removeReaded(title)
         }
     }
@@ -274,26 +283,32 @@ class RssFeedRepository private constructor(
         itemDao.deleteById(item.feedId)
     }
 
-    suspend fun saveContent2DB(feed: RssFeed, id: Long) = withContext(Dispatchers.IO) {
+    suspend fun saveContent2DB(
+        feed: RssFeed,
+        id: Long,
+        list: MutableList<RSSItemEntity>
+    ): MutableList<RSSItemEntity> = withContext(Dispatchers.IO) {
         val feedTitle = feed.title
-        for (item in feed.items) {
+        for (item in feed.items.reversed()) {
             if (itemDao.isExits(item.title) == null) {
-                itemDao.insertOneContent(
-                    RSSItemEntity(
-                        0,
-                        item.title,
-                        item.link,
-                        item.description,
-                        item.author,
-                        DateUtils.handleDate(item.pubdate),
-                        item.albumPic,
-                        id,
-                        0,
-                        feedTitle
-                    )
+                val info = RSSItemEntity(
+                    0,
+                    item.title,
+                    item.link,
+                    item.description,
+                    item.author,
+                    item.pubdate,
+                    item.albumPic,
+                    id,
+                    0,
+                    feedTitle,
+                    DateUtils.getCurrentSystemTime()
                 )
+                list.add(0, info)
+                itemDao.insertOneContent(info)
             }
         }
+        list
     }
 
     companion object {

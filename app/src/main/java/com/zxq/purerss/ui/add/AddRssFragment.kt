@@ -27,6 +27,7 @@ import com.zxq.purerss.data.entity.table.RSSFeedEntity
 import com.zxq.purerss.databinding.DialogAddrssBinding
 import com.zxq.purerss.listener.ItemClickListener
 import com.zxq.purerss.listener.ItemDiffCallback
+import com.zxq.purerss.listener.ItemSearchClickListener
 import com.zxq.purerss.ui.dialog.OpmlNotiDialog
 import com.zxq.purerss.ui.feedlist.FeedListAdapter
 import com.zxq.purerss.utils.*
@@ -38,7 +39,7 @@ import java.util.*
  *  on 2020/7/3
  *  fun
  */
-class AddRssFragment : Fragment() {
+class AddRssFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCallback {
     private val mViewModel: AddRssViewModel by viewModels {
         InjectorUtil.getAddRssFactory(this)
     }
@@ -66,7 +67,7 @@ class AddRssFragment : Fragment() {
                 }
                 true
             }
-            val onClick = object : ItemClickListener {
+            val onClick = object : ItemSearchClickListener {
                 override fun onClick(view: View, rss: RssItem) {
                     val extra = FragmentNavigatorExtras(view to "rssdetail")
                     val action = AddRssFragmentDirections.actionAddToDetail(
@@ -84,7 +85,7 @@ class AddRssFragment : Fragment() {
                     findNavController().navigate(action, extra)
                 }
             }
-            val adapter = FeedListAdapter(onClick, true)
+            val adapter = SearchListAdapter(onClick, true)
             recyclerview.adapter = adapter
             recyclerview.itemAnimator = SpringAddItemAnimator()
             mViewModel.feedsList.observe(this@AddRssFragment, Observer {
@@ -157,18 +158,15 @@ class AddRssFragment : Fragment() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(
                     context!!,
-                    Manifest.permission.READ_EXTERNAL_STORAGE
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
                 ) !==
                 PackageManager.PERMISSION_GRANTED
             ) {
                 //申请权限
-                list.add(Manifest.permission.READ_EXTERNAL_STORAGE)
+                list.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
             }
             if (list.size > 0) {
-                ActivityCompat.requestPermissions(
-                    activity!!,
-                    list.toTypedArray(), 11
-                )
+                requestPermissions(list.toTypedArray(), 11)
             } else {
                 popNoti()
             }

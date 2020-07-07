@@ -1,10 +1,16 @@
 package com.zxq.purerss.ui.feedlist
 
+import android.view.View
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.fragment.findNavController
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.zxq.purerss.R
 import com.zxq.purerss.data.entity.RssItem
+import com.zxq.purerss.data.entity.RssItemInfo
+import com.zxq.purerss.data.entity.table.RSSItemEntity
 import com.zxq.purerss.databinding.ItemContentListBinding
 import com.zxq.purerss.listener.ItemClickListener
 import com.zxq.purerss.widget.SwipeMenuLayout
@@ -14,14 +20,14 @@ import com.zxq.purerss.widget.SwipeMenuLayout
  *  on 2020/6/28
  *  fun
  */
-class FeedListAdapter(private val onClick: ItemClickListener, private var slideDir: Boolean) :
-    BaseQuickAdapter<RssItem, BaseViewHolder>(R.layout.item_content_list) {
+class FeedListAdapter(private var slideDir: Boolean) :
+    BaseQuickAdapter<RSSItemEntity, BaseViewHolder>(R.layout.item_content_list) {
 
     override fun onItemViewHolderCreated(viewHolder: BaseViewHolder, viewType: Int) {
         DataBindingUtil.bind<ItemContentListBinding>(viewHolder.itemView)
     }
 
-    override fun convert(holder: BaseViewHolder, item: RssItem) {
+    override fun convert(holder: BaseViewHolder, item: RSSItemEntity) {
         if (item == null) {
             return
         }
@@ -34,9 +40,28 @@ class FeedListAdapter(private val onClick: ItemClickListener, private var slideD
             (binding.root as SwipeMenuLayout).smoothClose()
             onLaterListener?.later(item)
         }
+        binding?.ivReddot?.visibility = if (item.itemRead == 0) View.VISIBLE else View.GONE
         binding?.swipe?.setLeftSwipe(slideDir)
         binding?.item = item
-        binding?.clickHandle = onClick
+        binding?.clickHandle = object : ItemClickListener {
+            override fun onClick(view: View, rss: RSSItemEntity) {
+                binding?.ivReddot?.visibility = View.GONE
+                val extra = FragmentNavigatorExtras(view to "rssdetail")
+                val action = FeedListFragmentDirections.actionListToDetail(
+                    RssItemInfo(
+                        rss.itemTitle,
+                        rss.itemLink,
+                        rss.itemDesc,
+                        rss.itemDate,
+                        rss.itemAuthor,
+                        1L,
+                        rss.feedTitle,
+                        rss.itemPic
+                    )
+                )
+                view.findNavController().navigate(action, extra)
+            }
+        }
         binding?.executePendingBindings()
     }
 
@@ -46,7 +71,7 @@ class FeedListAdapter(private val onClick: ItemClickListener, private var slideD
     }
 
     interface OnCollectListener {
-        fun collect(item: RssItem)
+        fun collect(item: RSSItemEntity)
     }
 
     private var onLaterListener: OnLaterListener? = null
@@ -55,6 +80,6 @@ class FeedListAdapter(private val onClick: ItemClickListener, private var slideD
     }
 
     interface OnLaterListener {
-        fun later(item: RssItem)
+        fun later(item: RSSItemEntity)
     }
 }

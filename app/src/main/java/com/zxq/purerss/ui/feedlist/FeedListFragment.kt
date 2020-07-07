@@ -16,6 +16,7 @@ import com.zxq.purerss.R
 import com.zxq.purerss.data.entity.RssFeedInfo
 import com.zxq.purerss.data.entity.RssItem
 import com.zxq.purerss.data.entity.RssItemInfo
+import com.zxq.purerss.data.entity.table.RSSItemEntity
 import com.zxq.purerss.databinding.FragmentFeedlistBinding
 import com.zxq.purerss.listener.ItemClickListener
 import com.zxq.purerss.listener.ItemRssDiffCallback
@@ -44,24 +45,17 @@ class FeedListFragment: Fragment() {
             lifecycleOwner = this@FeedListFragment
             mInfo = args.feedinfo
             feedinfo = mInfo
-            val onClick = object: ItemClickListener{
-                override fun onClick(view: View, rss: RssItem) {
-                    val extra = FragmentNavigatorExtras(view to "rssdetail")
-                    val action = FeedListFragmentDirections.actionListToDetail(RssItemInfo(rss.title,rss.link,rss.description,rss.pubdate,rss.author,1L,rss.title,rss.albumPic))
-                    findNavController().navigate(action,extra)
-                }
-            }
             toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
             viewM.getFeedsList(mInfo!!.link, mInfo!!.id, false)
-            val mAdapter = FeedListAdapter(onClick, context?.getSpValue("slide", 0) == 0)
+            val mAdapter = FeedListAdapter(context?.getSpValue("slide", 0) == 0)
             mAdapter.setOnLaterListener(object: FeedListAdapter.OnLaterListener{
-                override fun later(item: RssItem) {
+                override fun later(item: RSSItemEntity) {
                     viewM.later(item)
                 }
             })
 
             mAdapter.setOnCollectListener(object: FeedListAdapter.OnCollectListener{
-                override fun collect(item: RssItem) {
+                override fun collect(item: RSSItemEntity) {
                     viewM.collectItem(item)
                 }
             })
@@ -69,7 +63,6 @@ class FeedListFragment: Fragment() {
             recyclerview.itemAnimator = SpringAddItemAnimator()
             mAdapter.setDiffCallback(ItemRssDiffCallback())
             viewM.feedsList.observe(this@FeedListFragment, Observer {
-//                val diffResult = DiffUtil.calculateDiff(ItemDiffCallback(mAdapter.data, it))
                 mAdapter.setDiffNewData(it)
                 if (refreshlayout.isRefreshing) {
                     refreshlayout.isRefreshing = false

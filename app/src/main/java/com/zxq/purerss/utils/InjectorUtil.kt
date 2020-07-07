@@ -10,6 +10,7 @@ import com.zxq.purerss.ui.detail.DetailModelFactory
 import com.zxq.purerss.ui.feedlist.FeedListModelFactory
 import com.zxq.purerss.ui.mainpage.MainPageModelFactory
 import com.zxq.purerss.ui.opml.OpmlModelFactory
+import com.zxq.purerss.ui.setting.SettingModelFactory
 import com.zxq.purerss.ui.type.TypeModelFactory
 
 /**
@@ -70,6 +71,12 @@ object InjectorUtil {
             DataBase.getInstance(
                 fragment.requireContext()
             ).feedDao(), DataBase.getInstance(fragment.requireContext()).itemDao()
+        )
+    )
+
+    fun getSettingFactory(activity: FragmentActivity) = SettingModelFactory(
+        RssFeedRepository.getInstance(
+            DataBase.getInstance(activity).feedDao(), DataBase.getInstance(activity).itemDao()
         )
     )
 }

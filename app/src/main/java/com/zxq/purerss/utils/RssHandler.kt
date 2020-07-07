@@ -45,7 +45,7 @@ internal class RssHandler : DefaultHandler() {
                 rssItem?.title = rssItem?.title + text
             }
             RSS_PUBDATE -> {
-                rssItem?.pubdate = text
+                rssItem?.pubdate = DateUtils.handleDate(text)
                 currentFlag = 0 // 设置完后，重置为开始状态
             }
             RSS_LINK -> {

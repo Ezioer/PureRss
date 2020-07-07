@@ -3,6 +3,7 @@ package com.zxq.purerss.utils
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.regex.Pattern
 
 
 /**
@@ -17,7 +18,7 @@ class DateUtils {
         const val MD = "MM-dd"
 
         fun getCurrentSystemTime(): Long {
-            return System.currentTimeMillis() / 1000
+            return System.currentTimeMillis()
         }
 
         fun convertTimestamp(timestamp: Long, pattern: String): String {
@@ -84,11 +85,20 @@ class DateUtils {
                 var sdf = SimpleDateFormat(pattern, Locale.CHINA)
                 time = sdf.format(Date(date));//将传入的字符串转ISO 8601格式
                 result = sdf.parse(time).getTime()
-                time = convertTimestamp(result, MD)
+                time = convertTimestamp(result / 1000, MD)
             } catch (e: ParseException) {
                 e.printStackTrace();
             }
             return time
+        }
+
+        fun isNumeric(str: String?): Boolean {
+            if (str.isNullOrEmpty()) {
+                return true
+            }
+            val pattern = Pattern.compile("[0-9]*")
+            val isNum = pattern.matcher(str)
+            return isNum.matches()
         }
     }
 }
