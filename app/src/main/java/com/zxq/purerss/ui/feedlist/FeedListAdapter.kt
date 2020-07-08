@@ -45,7 +45,6 @@ class FeedListAdapter(private var slideDir: Boolean) :
         binding?.item = item
         binding?.clickHandle = object : ItemClickListener {
             override fun onClick(view: View, rss: RSSItemEntity) {
-                binding?.ivReddot?.visibility = View.GONE
                 val extra = FragmentNavigatorExtras(view to "rssdetail")
                 val action = FeedListFragmentDirections.actionListToDetail(
                     RssItemInfo(
