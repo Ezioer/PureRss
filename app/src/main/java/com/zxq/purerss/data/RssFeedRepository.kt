@@ -3,7 +3,6 @@ package com.zxq.purerss.data
 import com.zxq.purerss.data.dao.FeedDao
 import com.zxq.purerss.data.dao.ItemDao
 import com.zxq.purerss.data.entity.RssFeed
-import com.zxq.purerss.data.entity.RssItem
 import com.zxq.purerss.data.entity.RssItemInfo
 import com.zxq.purerss.data.entity.RssOpmlInfo
 import com.zxq.purerss.data.entity.table.*
@@ -37,10 +36,6 @@ class RssFeedRepository private constructor(
         } else {
             false
         }
-    }
-
-    suspend fun insertAllFromOpml() = withContext(Dispatchers.IO) {
-        val list = ReadOPML.read()
     }
 
     suspend fun insertOpml(list: MutableList<RssOpmlInfo>?) = withContext(Dispatchers.IO) {

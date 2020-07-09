@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zxq.purerss.data.RssFeedRepository
+import com.zxq.purerss.data.entity.SourceRepository
 import com.zxq.purerss.data.entity.table.RSSFeedEntity
 import kotlinx.coroutines.launch
 
@@ -12,7 +13,10 @@ import kotlinx.coroutines.launch
  *  on 2020/6/28
  *  fun
  */
-class MainPageViewModel(private val repository: RssFeedRepository): ViewModel() {
+class MainPageViewModel(
+    private val repository: RssFeedRepository,
+    private val sourceRepository: SourceRepository
+) : ViewModel() {
 
     val feedsList = MutableLiveData<MutableList<RSSFeedEntity>>()
     val searchFeedsList = MutableLiveData<MutableList<RSSFeedEntity>>()
@@ -45,7 +49,7 @@ class MainPageViewModel(private val repository: RssFeedRepository): ViewModel() 
 
     fun insertSource() {
         launch({
-            val result = repository.insertAllFromOpml()
+            val result = sourceRepository.insertAllFromOpml()
         }, {
 
         })

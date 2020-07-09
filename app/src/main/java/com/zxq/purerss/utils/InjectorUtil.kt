@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.zxq.purerss.data.DataBase
 import com.zxq.purerss.data.RssFeedRepository
+import com.zxq.purerss.data.entity.SourceRepository
 import com.zxq.purerss.ui.add.AddRssModelFactory
 import com.zxq.purerss.ui.chooserss.SaveDBRssModelFactory
 import com.zxq.purerss.ui.detail.DetailModelFactory
@@ -32,7 +33,7 @@ object InjectorUtil {
             DataBase.getInstance(
                 fragment.requireContext()
             ).feedDao(), DataBase.getInstance(fragment.requireContext()).itemDao()
-        )
+        ), SourceRepository.getInstance(DataBase.getInstance(fragment.requireContext()).sourceDao())
     )
 
     fun getFeedsListFactory(fragment: Fragment) = FeedListModelFactory(
@@ -48,7 +49,7 @@ object InjectorUtil {
             DataBase.getInstance(
                 fragment.requireContext()
             ).feedDao(), DataBase.getInstance(fragment.requireContext()).itemDao()
-        )
+        ), SourceRepository.getInstance(DataBase.getInstance(fragment.requireContext()).sourceDao())
     )
 
     fun getDetailFactory(fragment: Fragment) = DetailModelFactory(

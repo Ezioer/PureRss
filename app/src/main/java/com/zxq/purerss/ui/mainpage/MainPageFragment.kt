@@ -19,9 +19,9 @@ import com.zxq.purerss.listener.RssDiffCallback
 import com.zxq.purerss.ui.dialog.SearchFeedsDialog
 import com.zxq.purerss.ui.setting.SettingActivity
 import com.zxq.purerss.utils.InjectorUtil
-import com.zxq.purerss.utils.ReadOPML
 import com.zxq.purerss.utils.SpringAddItemAnimator
 import com.zxq.purerss.utils.getSpValue
+import com.zxq.purerss.utils.putSpValue
 import kotlinx.android.synthetic.main.fragment_news.*
 import java.util.concurrent.TimeUnit
 
@@ -47,12 +47,24 @@ class MainPageFragment: Fragment() {
                     findNavController().navigate(action)
                 }
             }
-            toolbar.setNavigationOnClickListener { startActivity(Intent(activity,SettingActivity::class.java)) }
+            toolbar.setNavigationOnClickListener {
+                startActivity(
+                    Intent(
+                        activity,
+                        SettingActivity::class.java
+                    )
+                )
+            }
             toolbar.setOnMenuItemClickListener {
                 if (it.itemId == R.id.addfeed) {
                     findNavController().navigate(R.id.action_mainpage_to_add)
                 }
                 true
+            }
+
+            if (context?.getSpValue("initSource", 0) == 0) {
+                mainViewModel.insertSource()
+                context?.putSpValue("initSource", 1)
             }
 
             tvSearch.setOnClickListener {

@@ -5,8 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zxq.purerss.data.RssFeedRepository
 import com.zxq.purerss.data.entity.RssFeed
-import com.zxq.purerss.data.entity.RssItem
+import com.zxq.purerss.data.entity.SourceRepository
 import com.zxq.purerss.data.entity.table.RSSFeedEntity
+import com.zxq.purerss.data.entity.table.RSSSourceEntity
 import com.zxq.purerss.utils.RssFeed_SAXParser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,9 +18,13 @@ import kotlinx.coroutines.withContext
  *  on 2020/6/28
  *  fun
  */
-class AddRssViewModel(private val repository: RssFeedRepository) : ViewModel() {
+class AddRssViewModel(
+    private val repository: RssFeedRepository,
+    private val sourceRepository: SourceRepository
+) : ViewModel() {
 
     val feedsList = MutableLiveData<RssFeed>()
+    val sources = MutableLiveData<MutableList<RSSSourceEntity>>()
     val noThingFound = MutableLiveData<Boolean>()
     val addComplete = MutableLiveData<Boolean>()
     fun getFeedsList(url: String) {
@@ -28,6 +33,15 @@ class AddRssViewModel(private val repository: RssFeedRepository) : ViewModel() {
                 RssFeed_SAXParser().getFeed(url)
             }
             feedsList.value = result
+        }, {
+            noThingFound.value = false
+        })
+    }
+
+    fun searchSource(text: String) {
+        launch({
+            val result = sourceRepository.searchSource(text)
+            sources.value = result
         }, {
             noThingFound.value = false
         })

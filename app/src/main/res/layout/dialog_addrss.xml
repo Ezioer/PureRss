@@ -82,6 +82,7 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <RelativeLayout
+            android:background="@color/root_color"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingTop="10dp"
@@ -144,6 +145,16 @@
                     app:layout_constraintTop_toBottomOf="@+id/app_des"
                     tools:listitem="@layout/item_content_list" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_source"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipChildren="false"
+                android:paddingTop="10dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_search_source_list" />
 
             <ProgressBar
                 android:visibility="gone"

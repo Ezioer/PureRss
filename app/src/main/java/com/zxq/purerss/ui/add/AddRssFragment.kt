@@ -25,11 +25,10 @@ import com.zxq.purerss.data.entity.RssItem
 import com.zxq.purerss.data.entity.RssItemInfo
 import com.zxq.purerss.data.entity.table.RSSFeedEntity
 import com.zxq.purerss.databinding.DialogAddrssBinding
-import com.zxq.purerss.listener.ItemClickListener
 import com.zxq.purerss.listener.ItemDiffCallback
 import com.zxq.purerss.listener.ItemSearchClickListener
+import com.zxq.purerss.listener.RssSourceDiffCallback
 import com.zxq.purerss.ui.dialog.OpmlNotiDialog
-import com.zxq.purerss.ui.feedlist.FeedListAdapter
 import com.zxq.purerss.utils.*
 import java.util.*
 
@@ -52,11 +51,16 @@ class AddRssFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCall
         val binding = DialogAddrssBinding.inflate(inflater, null, false).apply {
             lifecycleOwner = this@AddRssFragment
             ivParse.setOnClickListener {
-                if (etInput.text.toString().isNotEmpty()) {
-                    link = etInput.text.toString()
-                    KeyBoardUtil.hideKeyboard(etInput)
-                    pbLoad.visibility = View.VISIBLE
-                    mViewModel.getFeedsList(etInput.text.toString())
+                val text = etInput.text.toString()
+                if (text.isNotEmpty()) {
+                    if (text.startsWith("http") || text.startsWith("https")) {
+                        link = etInput.text.toString()
+                        KeyBoardUtil.hideKeyboard(etInput)
+                        pbLoad.visibility = View.VISIBLE
+                        mViewModel.getFeedsList(etInput.text.toString())
+                    } else {
+                        mViewModel.searchSource(text)
+                    }
                 } else {
                     MotionUtil.startLeftRightAnimation(ivParse)
                 }
@@ -86,18 +90,31 @@ class AddRssFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCall
                     findNavController().navigate(action, extra)
                 }
             }
+
+            val sourceAdapter = SearchSourceListAdapter()
+            rvSource.adapter = sourceAdapter
+            sourceAdapter.setDiffCallback(RssSourceDiffCallback())
+            rvSource.itemAnimator = SpringAddItemAnimator()
+            mViewModel.sources.observe(this@AddRssFragment, Observer {
+                rvSource.visibility = View.VISIBLE
+                ctlResult.visibility = View.GONE
+                sourceAdapter.setDiffNewData(it)
+            })
+
             val adapter = SearchListAdapter(onClick, true)
             recyclerview.adapter = adapter
             recyclerview.itemAnimator = SpringAddItemAnimator()
             mViewModel.feedsList.observe(this@AddRssFragment, Observer {
                 info = it
                 pbLoad.visibility = View.GONE
+                rvSource.visibility = View.GONE
                 ctlResult.visibility = View.VISIBLE
                 ctlResult.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in))
                 ivParse.setImageResource(R.drawable.search_64px)
                 val diffResult = DiffUtil.calculateDiff(ItemDiffCallback(adapter.data, it.items))
                 adapter.setDiffNewData(diffResult, it.items)
             })
+
             mViewModel.noThingFound.observe(this@AddRssFragment, Observer {
                 if (!it) {
                     pbLoad.visibility = View.GONE

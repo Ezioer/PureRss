@@ -5,6 +5,7 @@ import com.zxq.purerss.data.entity.RssItem
 import com.zxq.purerss.data.entity.RssOpmlInfo
 import com.zxq.purerss.data.entity.table.RSSFeedEntity
 import com.zxq.purerss.data.entity.table.RSSItemEntity
+import com.zxq.purerss.data.entity.table.RSSSourceEntity
 
 /**
  *  created by xiaoqing.zhou
@@ -70,6 +71,16 @@ class RssDiffCallback : DiffUtil.ItemCallback<RSSFeedEntity>() {
     }
 
     override fun areContentsTheSame(oldItem: RSSFeedEntity, newItem: RSSFeedEntity): Boolean {
+        return oldItem.feedTitle == newItem.feedTitle
+    }
+}
+
+class RssSourceDiffCallback : DiffUtil.ItemCallback<RSSSourceEntity>() {
+    override fun areItemsTheSame(oldItem: RSSSourceEntity, newItem: RSSSourceEntity): Boolean {
+        return oldItem.feedTitle == newItem.feedTitle
+    }
+
+    override fun areContentsTheSame(oldItem: RSSSourceEntity, newItem: RSSSourceEntity): Boolean {
         return oldItem.feedTitle == newItem.feedTitle
     }
 }

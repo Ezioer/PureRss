@@ -15,7 +15,6 @@ class SourceRepository private constructor(
     private val sourceDao: SourceDao
 ) {
 
-
     suspend fun insertAllFromOpml() = withContext(Dispatchers.IO) {
         val list = ReadOPML.read()
         for (item in list!!) {
@@ -24,6 +23,11 @@ class SourceRepository private constructor(
             }
         }
     }
+
+    suspend fun searchSource(text: String): MutableList<RSSSourceEntity> =
+        withContext(Dispatchers.IO) {
+            sourceDao.searchFeeds(text)
+        }
 
     companion object {
 
