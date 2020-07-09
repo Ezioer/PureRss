@@ -39,6 +39,10 @@ class RssFeedRepository private constructor(
         }
     }
 
+    suspend fun insertAllFromOpml() = withContext(Dispatchers.IO) {
+        val list = ReadOPML.read()
+    }
+
     suspend fun insertOpml(list: MutableList<RssOpmlInfo>?) = withContext(Dispatchers.IO) {
         if (!list.isNullOrEmpty()) {
             for (item in list) {

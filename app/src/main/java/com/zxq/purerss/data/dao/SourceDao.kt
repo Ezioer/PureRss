@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.zxq.purerss.data.entity.table.RSSFeedEntity
 import com.zxq.purerss.data.entity.table.RSSReadedEntity
+import com.zxq.purerss.data.entity.table.RSSSourceEntity
 
 /**
  *  created by xiaoqing.zhou
@@ -15,17 +16,14 @@ import com.zxq.purerss.data.entity.table.RSSReadedEntity
 @Dao
 interface SourceDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertOneFeed(rssFeedEntity: RSSFeedEntity): Long
+    fun insertOneFeed(rssFeedEntity: RSSSourceEntity): Long
 
-    @Query("select * from rssfeed")
-    fun getFeedsFromDb(): MutableList<RSSFeedEntity>
+    @Query("select * from rsssource")
+    fun getFeedsFromDb(): MutableList<RSSSourceEntity>
 
-    @Query("select * from rssfeed where feed_title = :title")
-    fun isFeedIsExist(title: String): RSSFeedEntity
+    @Query("select * from rsssource where feed_title = :title")
+    fun isFeedIsExist(title: String): RSSSourceEntity
 
-    @Query("delete  from rssfeed where feed_id = :id")
-    fun deleteFeed(id: Long)
-
-    @Query("select * from rssfeed where feed_title like '%' || :key || '%' ")
-    fun searchFeeds(key: String): MutableList<RSSFeedEntity>
+    @Query("select * from rsssource where feed_title like '%' || :key || '%' ")
+    fun searchFeeds(key: String): MutableList<RSSSourceEntity>
 }

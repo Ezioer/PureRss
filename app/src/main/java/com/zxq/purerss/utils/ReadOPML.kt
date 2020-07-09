@@ -1,6 +1,6 @@
 package com.zxq.purerss.utils
 
-import android.content.Context
+import com.zxq.purerss.App
 import com.zxq.purerss.data.entity.RssOpmlInfo
 import com.zxq.purerss.data.entity.table.RSSFeedEntity
 import org.dom4j.DocumentHelper
@@ -19,16 +19,16 @@ import java.io.FileWriter
  */
 class ReadOPML {
     companion object {
-        fun read(context: Context): MutableList<RssOpmlInfo>? {
+        fun read(): MutableList<RssOpmlInfo>? {
             val list = mutableListOf<RssOpmlInfo>()
             val reader = SAXReader()
-            val fis = context.assets.open("opml.xml")
+            val fis = App.instance?.assets?.open("opml.xml")
             val doc = reader.read(fis)
             val elm = doc.rootElement
             val body = elm.selectSingleNode("body") as Element
             val elementIterator = body.elementIterator("outline")
             for (item in elementIterator) {
-                val title = item.attributeValue("title")
+                val title = item.attributeValue("text")
                 val url = item.attributeValue("xmlUrl")
                 list.add(RssOpmlInfo(title, url))
             }

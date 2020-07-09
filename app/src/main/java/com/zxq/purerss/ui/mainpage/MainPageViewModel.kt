@@ -43,6 +43,14 @@ class MainPageViewModel(private val repository: RssFeedRepository): ViewModel() 
         })
     }
 
+    fun insertSource() {
+        launch({
+            val result = repository.insertAllFromOpml()
+        }, {
+
+        })
+    }
+
     private fun launch(block: suspend () -> Unit, error: suspend (Throwable) -> Unit) =
         viewModelScope.launch {
             try {
