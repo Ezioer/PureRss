@@ -5,14 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import android.widget.Toast.makeText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.DiffUtil
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialSharedAxis
 import com.zxq.purerss.R
+import com.zxq.purerss.data.Constant
 import com.zxq.purerss.data.entity.RssFeedInfo
 import com.zxq.purerss.data.entity.RssItem
 import com.zxq.purerss.data.entity.RssItemInfo
@@ -20,9 +24,12 @@ import com.zxq.purerss.data.entity.table.RSSItemEntity
 import com.zxq.purerss.databinding.FragmentFeedlistBinding
 import com.zxq.purerss.listener.ItemClickListener
 import com.zxq.purerss.listener.ItemRssDiffCallback
+import com.zxq.purerss.listener.RssItemDiffCallback
 import com.zxq.purerss.utils.InjectorUtil
 import com.zxq.purerss.utils.SpringAddItemAnimator
 import com.zxq.purerss.utils.getSpValue
+import kotlinx.android.synthetic.main.fragment_feedlist.*
+import kotlinx.android.synthetic.main.include_status.*
 import java.util.concurrent.TimeUnit
 
 /**
@@ -61,9 +68,11 @@ class FeedListFragment: Fragment() {
             })
             recyclerview.adapter = mAdapter
             recyclerview.itemAnimator = SpringAddItemAnimator()
-            mAdapter.setDiffCallback(ItemRssDiffCallback())
             viewM.feedsList.observe(this@FeedListFragment, Observer {
-                mAdapter.setDiffNewData(it)
+                status = Constant.SUCCESS
+                val diffResult =
+                    DiffUtil.calculateDiff(RssItemDiffCallback(mAdapter.data, it), false)
+                mAdapter.setDiffNewData(diffResult, it)
                 if (refreshlayout.isRefreshing) {
                     refreshlayout.isRefreshing = false
                     recyclerview.smoothScrollToPosition(0)
@@ -72,21 +81,25 @@ class FeedListFragment: Fragment() {
 
             viewM.collectResult.observe(this@FeedListFragment, Observer {
                 if (it == 1) {
-                    Toast.makeText(context, R.string.collectsuccess, Toast.LENGTH_SHORT).show()
+                    Snackbar.make(recyclerview, R.string.collectsuccess, 600).show()
                 } else {
-                    Toast.makeText(context, R.string.collectfail, Toast.LENGTH_SHORT).show()
+                    Snackbar.make(recyclerview, R.string.collectfail, 600).show()
                 }
             })
             viewM.laterResult.observe(this@FeedListFragment, Observer {
                 if (it == 1) {
-                    Toast.makeText(context, R.string.latersuccess, Toast.LENGTH_SHORT).show()
+                    Snackbar.make(recyclerview, R.string.latersuccess, 600).show()
                 } else {
-                    Toast.makeText(context, R.string.laterfail, Toast.LENGTH_SHORT).show()
+                    Snackbar.make(recyclerview, R.string.laterfail, 600).show()
                 }
             })
             refreshlayout.setOnRefreshListener {
                 viewM.getFeedsList(mInfo!!.link, mInfo!!.id, true)
             }
+
+            viewM.status.observe(this@FeedListFragment, Observer {
+                status = it
+            })
         }
         val forward = MaterialSharedAxis.create(MaterialSharedAxis.Y, true)
         enterTransition = forward

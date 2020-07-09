@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data></data>
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="status"
+            type="Integer" />
+    </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinator_layout"
@@ -59,7 +67,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/ll_root"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -72,8 +80,15 @@
                 android:layout_marginTop="10dp"
                 android:clipChildren="false"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-
                 tools:listitem="@layout/item_type_list" />
-        </LinearLayout>
+
+            <include
+                bind:status="@{status}"
+                android:visibility="@{status == 13? View.GONE: View.VISIBLE}"
+                android:id="@+id/include_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                layout="@layout/include_status" />
+        </RelativeLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

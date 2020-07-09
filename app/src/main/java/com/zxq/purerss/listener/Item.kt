@@ -75,11 +75,11 @@ class RssDiffCallback : DiffUtil.ItemCallback<RSSFeedEntity>() {
 }
 
 class RssItemDiffCallback(
-    private var oldList: MutableList<RSSFeedEntity>,
-    private var newList: MutableList<RSSFeedEntity>
+    private var oldList: MutableList<RSSItemEntity>,
+    private var newList: MutableList<RSSItemEntity>
 ) : DiffUtil.Callback() {
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition].feedTitle == newList[newItemPosition].feedTitle
+        return oldList[oldItemPosition].itemTitle == newList[newItemPosition].itemTitle
     }
 
     override fun getOldListSize(): Int {
@@ -91,7 +91,7 @@ class RssItemDiffCallback(
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition].feedLink == newList[newItemPosition].feedLink
+        return oldList[oldItemPosition].itemRead == newList[newItemPosition].itemRead
     }
 
 }

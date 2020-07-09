@@ -7,5 +7,8 @@ package com.zxq.purerss.data
  */
 class Constant {
     companion object{
+        const val EMPTY = 11
+        const val ERROR = 12
+        const val SUCCESS = 13
     }
 }

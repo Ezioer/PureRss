@@ -48,7 +48,7 @@ class ReadOPML {
             val body = elm.selectSingleNode("body") as Element
             val elementIterator = body.elementIterator("outline")
             for (item in elementIterator) {
-                val title = item.attributeValue("title")
+                val title = item.attributeValue("text")
                 val url = item.attributeValue("xmlUrl")
                 list.add(RssOpmlInfo(title, url))
             }

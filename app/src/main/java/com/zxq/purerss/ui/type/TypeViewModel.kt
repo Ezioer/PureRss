@@ -3,6 +3,7 @@ package com.zxq.purerss.ui.type
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.zxq.purerss.data.Constant
 import com.zxq.purerss.data.RssFeedRepository
 import com.zxq.purerss.data.entity.table.RSSItemEntity
 import kotlinx.coroutines.launch
@@ -16,12 +17,17 @@ class TypeViewModel(private val repository: RssFeedRepository): ViewModel() {
 
     val feedsList =MutableLiveData<MutableList<RSSItemEntity>>()
     val itemList = MutableLiveData<MutableList<RSSItemEntity>>()
+    val status = MutableLiveData<Int>()
     fun getFeedsList(type: Int){
         launch({
             val result = repository.getRssListFromDb(type)
-            feedsList.value = result
+            if (result.isNullOrEmpty()) {
+                status.value = Constant.EMPTY
+            } else {
+                feedsList.value = result
+            }
         },{
-
+            status.value = Constant.ERROR
         })
     }
 

@@ -51,4 +51,7 @@
 
     <string name="nothingfound">Sorry,Nothing to found </string>
     <string name="addsuccess">Successful Add,Look it in MainPage</string>
+
+    <string name="empty">Nothing Found</string>
+    <string name="error">Error</string>
 </resources>

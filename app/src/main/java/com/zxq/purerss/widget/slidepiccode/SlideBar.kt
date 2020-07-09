@@ -35,7 +35,7 @@ class SlideBar(context: Context, attributeSet: AttributeSet?) : View(context, at
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         mBitmapW = width / 8
-        mBitmapH = height * 3 / 5
+        mBitmapH = height / 5 * 3
         mBitmap = resizeBitmap(mBitmap, mBitmapW, mBitmapH)
         backgroundRctf.set(0f, height.toFloat() / 5 * 2, width.toFloat(), height.toFloat() / 5 * 3)
         //绘制拖动条背景
@@ -91,7 +91,7 @@ class SlideBar(context: Context, attributeSet: AttributeSet?) : View(context, at
                 currentTemp = System.currentTimeMillis()
             }
             MotionEvent.ACTION_MOVE -> {
-                mDistance = if (event.getX() < 0) 0 else event.x.toInt()
+                mDistance = if (event.getX().toInt() < 0) 0 else event.x.toInt()
                 _onDrag?.invoke(mDistance.toFloat() / (width - mBitmapW), null, false)
                 invalidate()
             }

@@ -56,7 +56,7 @@ class RssFeedRepository private constructor(
         } else if (type == 2) {
             itemDao.removeCollect(id)
         } else {
-            itemDao.removeReaded(id)
+            itemDao.removeLater(id)
         }
     }
 

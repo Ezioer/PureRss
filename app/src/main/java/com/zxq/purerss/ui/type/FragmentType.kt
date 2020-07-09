@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.transition.MaterialSharedAxis
 import com.zxq.purerss.R
+import com.zxq.purerss.data.Constant
 import com.zxq.purerss.data.entity.RssItemInfo
 import com.zxq.purerss.data.entity.table.RSSItemEntity
 import com.zxq.purerss.databinding.FragmentTypeBinding
@@ -23,6 +24,8 @@ import com.zxq.purerss.ui.feedlist.FeedListFragmentDirections
 import com.zxq.purerss.utils.InjectorUtil
 import com.zxq.purerss.utils.SpringAddItemAnimator
 import com.zxq.purerss.utils.getSpValue
+import kotlinx.android.synthetic.main.fragment_type.*
+import kotlinx.android.synthetic.main.include_status.*
 import java.util.concurrent.TimeUnit
 
 class FragmentType: Fragment() {
@@ -80,17 +83,19 @@ class FragmentType: Fragment() {
             adapter.setOnRemoveListener(object : TypeAdapter.OnRemoveListener {
                 override fun onRemove(item: RSSItemEntity) {
                     adapter.data.remove(item)
-                    viewM.removeItem(item.itemId,type)
+                    viewM.removeItem(item.itemId, type)
                 }
             })
             recyclerview.adapter = adapter
             recyclerview.itemAnimator = SpringAddItemAnimator()
             adapter.setDiffCallback(ItemTypeDiffCallback())
             viewM.feedsList.observe(this@FragmentType, Observer {
-                if (it.isEmpty()) {
-                } else {
-                    adapter.setDiffNewData(it)
-                }
+                status = Constant.SUCCESS
+                adapter.setDiffNewData(it)
+            })
+
+            viewM.status.observe(this@FragmentType, Observer {
+                status = it
             })
         }
         postponeEnterTransition(10L, TimeUnit.MILLISECONDS)

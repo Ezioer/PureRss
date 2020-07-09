@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.zxq.purerss.widget.slidepiccode.Puzzle
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/puzzle"
+        android:layout_width="match_parent"
+        android:layout_height="160dp" />
+
+    <com.zxq.purerss.widget.slidepiccode.SlideBar
+        app:layout_constraintTop_toBottomOf="@id/puzzle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:id="@+id/slidebar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

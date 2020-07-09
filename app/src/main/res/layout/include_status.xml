@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="status"
+            type="Integer" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/view_color">
+
+        <ProgressBar
+            android:id="@+id/pb_loading"
+            app:layout_constraintVertical_bias="0.4"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            app:layout_constraintVertical_bias="0.4"
+            android:visibility="@{status == 12? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:src="@drawable/error_512px"
+            android:id="@+id/iv_error"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+
+        <ImageView
+            app:layout_constraintVertical_bias="0.4"
+            android:visibility="@{status == 11? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:src="@drawable/empty_box_160px"
+            android:id="@+id/iv_empty"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+
+        <TextView
+            android:visibility="@{status == 11? View.VISIBLE : View.GONE}"
+            android:text='@{status ==11? @string/empty : ""}'
+            android:id="@+id/tv_emptynoti"
+            android:layout_marginTop="10dp"
+            android:padding="5dp"
+            android:background="?android:selectableItemBackground"
+            app:layout_constraintTop_toBottomOf="@id/iv_empty"
+            android:textAppearance="@style/TextAppearance.Owl.Subtitle2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:visibility="@{status == 12? View.VISIBLE : View.GONE}"
+            android:text='@{status ==12? @string/error : ""}'
+            android:id="@+id/tv_errornoti"
+            android:layout_marginTop="10dp"
+            android:padding="5dp"
+            android:background="?android:selectableItemBackground"
+            app:layout_constraintTop_toBottomOf="@id/iv_empty"
+            android:textAppearance="@style/TextAppearance.Owl.Subtitle2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

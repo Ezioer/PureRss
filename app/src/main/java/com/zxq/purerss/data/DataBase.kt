@@ -7,6 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.zxq.purerss.data.dao.FeedDao
 import com.zxq.purerss.data.dao.ItemDao
+import com.zxq.purerss.data.dao.SourceDao
 import com.zxq.purerss.data.entity.table.*
 
 /**
@@ -15,13 +16,14 @@ import com.zxq.purerss.data.entity.table.*
  *  fun
  */
 @Database(
-    entities = [RSSFeedEntity::class, RSSItemEntity::class,RSSLaterEntity::class,RSSReadedEntity::class,RSSCollectEntity::class],
+    entities = [RSSFeedEntity::class, RSSItemEntity::class, RSSLaterEntity::class, RSSReadedEntity::class, RSSCollectEntity::class, RSSSourceEntity::class],
     version = 1,
     exportSchema = false
 )
 abstract class DataBase : RoomDatabase() {
     abstract fun feedDao(): FeedDao
     abstract fun itemDao(): ItemDao
+    abstract fun sourceDao(): SourceDao
 
     companion object {
         @Volatile

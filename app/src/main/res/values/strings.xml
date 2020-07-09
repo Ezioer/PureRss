@@ -51,4 +51,7 @@
 
     <string name="nothingfound">请输入正确的rss网址</string>
     <string name="addsuccess">已添加到我的rss，可在首页查看</string>
+
+    <string name="empty">空荡荡的</string>
+    <string name="error">出错了</string>
 </resources>

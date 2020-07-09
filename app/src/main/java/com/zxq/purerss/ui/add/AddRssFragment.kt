@@ -55,6 +55,7 @@ class AddRssFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCall
                 if (etInput.text.toString().isNotEmpty()) {
                     link = etInput.text.toString()
                     KeyBoardUtil.hideKeyboard(etInput)
+                    pbLoad.visibility = View.VISIBLE
                     mViewModel.getFeedsList(etInput.text.toString())
                 } else {
                     MotionUtil.startLeftRightAnimation(ivParse)
@@ -90,6 +91,7 @@ class AddRssFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCall
             recyclerview.itemAnimator = SpringAddItemAnimator()
             mViewModel.feedsList.observe(this@AddRssFragment, Observer {
                 info = it
+                pbLoad.visibility = View.GONE
                 ctlResult.visibility = View.VISIBLE
                 ctlResult.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in))
                 ivParse.setImageResource(R.drawable.search_64px)
@@ -98,6 +100,7 @@ class AddRssFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCall
             })
             mViewModel.noThingFound.observe(this@AddRssFragment, Observer {
                 if (!it) {
+                    pbLoad.visibility = View.GONE
                     ivParse.setImageResource(R.drawable.nothing_found_64px)
                     Snackbar.make(recyclerview, R.string.nothingfound, 2000).show()
                 }

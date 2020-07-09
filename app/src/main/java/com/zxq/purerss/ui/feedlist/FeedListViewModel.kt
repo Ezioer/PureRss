@@ -3,6 +3,7 @@ package com.zxq.purerss.ui.feedlist
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.zxq.purerss.data.Constant
 import com.zxq.purerss.data.RssFeedRepository
 import com.zxq.purerss.data.entity.RssItem
 import com.zxq.purerss.data.entity.table.RSSItemEntity
@@ -21,6 +22,7 @@ class FeedListViewModel(private val repository: RssFeedRepository) : ViewModel()
     val feedsList = MutableLiveData<MutableList<RSSItemEntity>>()
     val collectResult = MutableLiveData<Int>()
     val laterResult = MutableLiveData<Int>()
+    val status = MutableLiveData<Int>()
     fun collectItem(item: RSSItemEntity) {
         launch({
             val result = repository.collectItem(item)
@@ -46,12 +48,17 @@ class FeedListViewModel(private val repository: RssFeedRepository) : ViewModel()
                 val result = withContext(Dispatchers.IO) {
                     RssFeed_SAXParser().getFeed(url)
                 }
-                feedsList.value = repository.saveContent2DB(result, id, list)
+                val tempList = repository.saveContent2DB(result, id, list)
+                if (tempList.isNullOrEmpty()) {
+                    status.value = Constant.EMPTY
+                } else {
+                    feedsList.value = tempList
+                }
             } else {
                 feedsList.value = list
             }
         }, {
-
+            status.value = Constant.ERROR
         })
     }
 

@@ -33,7 +33,7 @@ class ChooseRssFragment: Fragment() {
 
             viewM.insertComplete.observe(this@ChooseRssFragment, Observer {
                 if (it){
-                    findNavController().navigate(R.id.action_choose_to_home)
+                    findNavController().popBackStack()
                 }
             })
             chooseGrid.apply {
