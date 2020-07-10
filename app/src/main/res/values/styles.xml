@@ -11,7 +11,6 @@
         <item name="bottomAppBarStyle">@style/Widget.MaterialComponents.BottomAppBar.PrimarySurface</item>
         <item name="bottomSheetStyle">@style/Widget.MaterialComponents.BottomSheet.Modal</item>
         <item name="navigationViewStyle">@style/Widget.Reply.NavigationView</item>
-
         <!--Material type attributes-->
         <item name="textAppearanceHeadline1">@style/TextAppearance.Owl.Headline1</item>
         <item name="textAppearanceHeadline2">@style/TextAppearance.Owl.Headline2</item>
@@ -52,5 +51,10 @@
     <style name="anim_fade2fade">
         <item name="android:windowEnterAnimation">@anim/fade_in</item>
         <item name="android:windowExitAnimation">@anim/fade_out</item>
+    </style>
+
+    <style name="OverflowButtonStyle" parent="@android:style/Widget.ActionButton.Overflow">
+        <item name="android:src">@drawable/list_48px</item>
+        <item name="overlapAnchor">false</item>
     </style>
 </resources>

@@ -14,8 +14,11 @@ import com.google.android.material.transition.MaterialSharedAxis
 import com.zxq.purerss.R
 import com.zxq.purerss.data.entity.RssFeedInfo
 import com.zxq.purerss.data.entity.table.RSSFeedEntity
+import com.zxq.purerss.data.entity.table.RSSFolderEntity
 import com.zxq.purerss.databinding.FragmentNewsBinding
+import com.zxq.purerss.listener.FolderClickListener
 import com.zxq.purerss.listener.RssDiffCallback
+import com.zxq.purerss.ui.dialog.AddFolderDialog
 import com.zxq.purerss.ui.dialog.SearchFeedsDialog
 import com.zxq.purerss.ui.setting.SettingActivity
 import com.zxq.purerss.utils.InjectorUtil
@@ -35,15 +38,25 @@ class MainPageFragment: Fragment() {
     private val mainViewModel: MainPageViewModel by viewModels {
         InjectorUtil.getMainFactory(this)
     }
+    private var showDialog = false
+    private var folderDialog: AddFolderDialog? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentNewsBinding.inflate(inflater,container,false).apply {
-            val onClick = object: MainPageAdapter.FeedClick{
+        val binding = FragmentNewsBinding.inflate(inflater, container, false).apply {
+            val onClick = object : MainPageAdapter.FeedClick {
                 override fun onClick(view: View, rss: RSSFeedEntity) {
-                    val action = MainPageFragmentDirections.actionMainpageToList(RssFeedInfo(rss.feedTitle,rss.feedLink,rss.feedDesc,"",rss.feedId))
+                    val action = MainPageFragmentDirections.actionMainpageToList(
+                        RssFeedInfo(
+                            rss.feedTitle,
+                            rss.feedLink,
+                            rss.feedDesc,
+                            "",
+                            rss.feedId
+                        )
+                    )
                     findNavController().navigate(action)
                 }
             }
@@ -54,6 +67,14 @@ class MainPageFragment: Fragment() {
                         SettingActivity::class.java
                     )
                 )
+            }
+
+            feedBar.setOnMenuItemClickListener {
+                if (it.itemId == R.id.folder) {
+                    showDialog = true
+                    mainViewModel.getFolder()
+                }
+                true
             }
             toolbar.setOnMenuItemClickListener {
                 if (it.itemId == R.id.addfeed) {
@@ -70,7 +91,7 @@ class MainPageFragment: Fragment() {
             tvSearch.setOnClickListener {
                 popSearchDialog()
             }
-            mainViewModel.getFeedsList()
+            mainViewModel.getFeedsList(0)
             val adapter = MainPageAdapter(onClick, context?.getSpValue("slide", 0) == 0)
             adapter.setOnDeleteListener(object : MainPageAdapter.OnDeleteListener {
                 override fun delete(item: RSSFeedEntity) {
@@ -78,11 +99,38 @@ class MainPageFragment: Fragment() {
                     mainViewModel.deleteItem(item)
                 }
             })
+            adapter.setOnEditListener(object : MainPageAdapter.OnEditListener {
+                override fun edit(item: RSSFeedEntity) {
+
+                }
+            })
             recyclerview.adapter = adapter
             recyclerview.itemAnimator = SpringAddItemAnimator()
             adapter.setDiffCallback(RssDiffCallback())
             mainViewModel.feedsList.observe(this@MainPageFragment, Observer {
                 adapter.setDiffNewData(it)
+            })
+            val onFolderClick = object : FolderClickListener {
+                override fun onClick(view: View, rss: RSSFolderEntity) {
+                    folderDialog?.dismiss()
+                    mainViewModel.getFeedsList(rss.folderId)
+                }
+            }
+
+            mainViewModel.folders.observe(this@MainPageFragment, Observer {
+                if (showDialog) {
+                    showDialog = false
+                    if (folderDialog == null) {
+                        folderDialog = AddFolderDialog(context!!, it, onFolderClick)
+                    }
+                    folderDialog?.show()
+
+                    folderDialog?.setAddFolderListener(object : AddFolderDialog.AddFolderListener {
+                        override fun add(title: String) {
+                            mainViewModel.insertFolder(title)
+                        }
+                    })
+                }
             })
         }
         postponeEnterTransition(10L, TimeUnit.MILLISECONDS)

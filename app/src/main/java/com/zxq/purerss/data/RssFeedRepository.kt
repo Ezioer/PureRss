@@ -1,6 +1,7 @@
 package com.zxq.purerss.data
 
 import com.zxq.purerss.data.dao.FeedDao
+import com.zxq.purerss.data.dao.FolderDao
 import com.zxq.purerss.data.dao.ItemDao
 import com.zxq.purerss.data.entity.RssFeed
 import com.zxq.purerss.data.entity.RssItemInfo
@@ -18,7 +19,8 @@ import kotlinx.coroutines.withContext
  */
 class RssFeedRepository private constructor(
     private val feedDao: FeedDao,
-    private val itemDao: ItemDao
+    private val itemDao: ItemDao,
+    private val folderDao: FolderDao
 ) {
 
     suspend fun insertEvent(list: List<RSSFeedEntity>) = withContext(Dispatchers.IO) {
@@ -42,7 +44,7 @@ class RssFeedRepository private constructor(
         if (!list.isNullOrEmpty()) {
             for (item in list) {
                 if (feedDao.isFeedIsExist(item.title) == null) {
-                    feedDao.insertOneFeed(RSSFeedEntity(0, item.title, item.url, "", ""))
+                    feedDao.insertOneFeed(RSSFeedEntity(0, item.title, item.url, "", "", 0))
                 }
             }
         }
@@ -127,8 +129,22 @@ class RssFeedRepository private constructor(
         feedDao.searchFeeds(key)
     }
 
-    suspend fun getRssListFromDb(): MutableList<RSSFeedEntity> = withContext(Dispatchers.IO) {
-        feedDao.getFeedsFromDb()
+    suspend fun getRssListFromDbX(id: Long): MutableList<RSSFeedEntity> =
+        withContext(Dispatchers.IO) {
+            if (folderDao.folderExist("全部") == null) {
+                folderDao.insertOneFolder(RSSFolderEntity(0, "全部"))
+            }
+            feedDao.getFeedsFromDb(id)
+        }
+
+    suspend fun insertFolder(title: String) = withContext(Dispatchers.IO) {
+        if (folderDao.folderExist(title) == null) {
+            folderDao.insertOneFolder(RSSFolderEntity(0, title))
+        }
+    }
+
+    suspend fun getFolderFromDb(): MutableList<RSSFolderEntity> = withContext(Dispatchers.IO) {
+        folderDao.selectFolder()
     }
 
     suspend fun getRssListFromDb(type: Int): MutableList<RSSItemEntity> =
@@ -315,9 +331,9 @@ class RssFeedRepository private constructor(
         @Volatile
         private var instance: RssFeedRepository? = null
 
-        fun getInstance(feedDao: FeedDao, itemDao: ItemDao) =
+        fun getInstance(feedDao: FeedDao, itemDao: ItemDao, folderDao: FolderDao) =
             instance ?: synchronized(this) {
-                instance ?: RssFeedRepository(feedDao, itemDao).also { instance = it }
+                instance ?: RssFeedRepository(feedDao, itemDao, folderDao).also { instance = it }
             }
     }
 }

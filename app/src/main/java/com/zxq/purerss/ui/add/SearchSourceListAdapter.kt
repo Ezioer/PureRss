@@ -6,6 +6,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.zxq.purerss.R
 import com.zxq.purerss.data.entity.table.RSSSourceEntity
 import com.zxq.purerss.databinding.ItemSearchSourceListBinding
+import com.zxq.purerss.listener.AddFeedClickListener
 
 /**
  *  created by xiaoqing.zhou
@@ -13,6 +14,7 @@ import com.zxq.purerss.databinding.ItemSearchSourceListBinding
  *  fun
  */
 class SearchSourceListAdapter(
+    private val onClick: AddFeedClickListener
 ) :
     BaseQuickAdapter<RSSSourceEntity, BaseViewHolder>(R.layout.item_search_source_list) {
 
@@ -25,7 +27,7 @@ class SearchSourceListAdapter(
             return
         }
         val binding = holder.getBinding<ItemSearchSourceListBinding>()
-
+        binding?.clickHandle = onClick
         binding?.item = item
         binding?.executePendingBindings()
     }

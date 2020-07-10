@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.zxq.purerss.data.RssFeedRepository
 import com.zxq.purerss.data.entity.SourceRepository
 import com.zxq.purerss.data.entity.table.RSSFeedEntity
+import com.zxq.purerss.data.entity.table.RSSFolderEntity
 import kotlinx.coroutines.launch
 
 /**
@@ -20,11 +21,28 @@ class MainPageViewModel(
 
     val feedsList = MutableLiveData<MutableList<RSSFeedEntity>>()
     val searchFeedsList = MutableLiveData<MutableList<RSSFeedEntity>>()
-
-    fun getFeedsList() {
+    val folders = MutableLiveData<MutableList<RSSFolderEntity>>()
+    fun getFeedsList(id: Long) {
         launch({
-            val result = repository.getRssListFromDb()
+            val result = repository.getRssListFromDbX(id)
             feedsList.value = result
+        }, {
+
+        })
+    }
+
+    fun getFolder() {
+        launch({
+            val result = repository.getFolderFromDb()
+            folders.value = result
+        }, {
+
+        })
+    }
+
+    fun insertFolder(title: String) {
+        launch({
+            val result = repository.insertFolder(title)
         }, {
 
         })

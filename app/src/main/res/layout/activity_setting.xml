@@ -39,6 +39,13 @@
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
+        <com.zxq.purerss.widget.BezierView
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            android:id="@+id/bezier"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+
         <androidx.core.widget.NestedScrollView
             android:background="@color/root_color"
             android:layout_width="match_parent"

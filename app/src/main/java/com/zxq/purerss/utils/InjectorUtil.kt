@@ -24,7 +24,9 @@ object InjectorUtil {
         RssFeedRepository.getInstance(
             DataBase.getInstance(
                 fragment.requireContext()
-            ).feedDao(),DataBase.getInstance(fragment.requireContext()).itemDao()
+            ).feedDao(),
+            DataBase.getInstance(fragment.requireContext()).itemDao(),
+            DataBase.getInstance(fragment.requireContext()).folderDao()
         )
     )
 
@@ -32,7 +34,9 @@ object InjectorUtil {
         RssFeedRepository.getInstance(
             DataBase.getInstance(
                 fragment.requireContext()
-            ).feedDao(), DataBase.getInstance(fragment.requireContext()).itemDao()
+            ).feedDao(),
+            DataBase.getInstance(fragment.requireContext()).itemDao(),
+            DataBase.getInstance(fragment.requireContext()).folderDao()
         ), SourceRepository.getInstance(DataBase.getInstance(fragment.requireContext()).sourceDao())
     )
 
@@ -40,7 +44,9 @@ object InjectorUtil {
         RssFeedRepository.getInstance(
             DataBase.getInstance(
                 fragment.requireContext()
-            ).feedDao(), DataBase.getInstance(fragment.requireContext()).itemDao()
+            ).feedDao(),
+            DataBase.getInstance(fragment.requireContext()).itemDao(),
+            DataBase.getInstance(fragment.requireContext()).folderDao()
         )
     )
 
@@ -48,14 +54,19 @@ object InjectorUtil {
         RssFeedRepository.getInstance(
             DataBase.getInstance(
                 fragment.requireContext()
-            ).feedDao(), DataBase.getInstance(fragment.requireContext()).itemDao()
+            ).feedDao(),
+            DataBase.getInstance(fragment.requireContext()).itemDao(),
+            DataBase.getInstance(fragment.requireContext()).folderDao()
         ), SourceRepository.getInstance(DataBase.getInstance(fragment.requireContext()).sourceDao())
     )
 
     fun getDetailFactory(fragment: Fragment) = DetailModelFactory(
         RssFeedRepository.getInstance(
-            DataBase.getInstance(fragment.requireContext()
-            ).feedDao(), DataBase.getInstance(fragment.requireContext()).itemDao()
+            DataBase.getInstance(
+                fragment.requireContext()
+            ).feedDao(),
+            DataBase.getInstance(fragment.requireContext()).itemDao(),
+            DataBase.getInstance(fragment.requireContext()).folderDao()
         )
     )
 
@@ -63,7 +74,9 @@ object InjectorUtil {
         RssFeedRepository.getInstance(
             DataBase.getInstance(
                 fragment.requireContext()
-            ).feedDao(), DataBase.getInstance(fragment.requireContext()).itemDao()
+            ).feedDao(),
+            DataBase.getInstance(fragment.requireContext()).itemDao(),
+            DataBase.getInstance(fragment.requireContext()).folderDao()
         )
     )
 
@@ -71,13 +84,17 @@ object InjectorUtil {
         RssFeedRepository.getInstance(
             DataBase.getInstance(
                 fragment.requireContext()
-            ).feedDao(), DataBase.getInstance(fragment.requireContext()).itemDao()
+            ).feedDao(),
+            DataBase.getInstance(fragment.requireContext()).itemDao(),
+            DataBase.getInstance(fragment.requireContext()).folderDao()
         )
     )
 
     fun getSettingFactory(activity: FragmentActivity) = SettingModelFactory(
         RssFeedRepository.getInstance(
-            DataBase.getInstance(activity).feedDao(), DataBase.getInstance(activity).itemDao()
+            DataBase.getInstance(activity).feedDao(),
+            DataBase.getInstance(activity).itemDao(),
+            DataBase.getInstance(activity).folderDao()
         )
     )
 }

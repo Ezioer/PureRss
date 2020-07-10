@@ -17,8 +17,8 @@ interface FeedDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertOneFeed(rssFeedEntity: RSSFeedEntity): Long
 
-    @Query("select * from rssfeed")
-    fun getFeedsFromDb(): MutableList<RSSFeedEntity>
+    @Query("select * from rssfeed where parent_id = :id")
+    fun getFeedsFromDb(id: Long): MutableList<RSSFeedEntity>
 
     @Query("select * from rssfeed where feed_title = :title")
     fun isFeedIsExist(title: String): RSSFeedEntity

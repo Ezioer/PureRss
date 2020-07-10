@@ -32,6 +32,12 @@ class MainPageAdapter(private val onClick: FeedClick, private var slideDir: Bool
             notifyItemRemoved(holder.adapterPosition)
             onDeleteListener?.delete(item)
         }
+
+        binding?.edit?.setOnClickListener {
+            (binding.root as SwipeMenuLayout).smoothClose()
+            notifyItemRemoved(holder.adapterPosition)
+            onEditListener?.edit(item)
+        }
         binding?.swipe?.setLeftSwipe(slideDir)
         binding?.item = item
         binding?.clickHandle = onClick
@@ -50,4 +56,16 @@ class MainPageAdapter(private val onClick: FeedClick, private var slideDir: Bool
     interface OnDeleteListener {
         fun delete(item: RSSFeedEntity)
     }
+
+
+    interface OnEditListener {
+        fun edit(item: RSSFeedEntity)
+    }
+
+    private var onEditListener: OnEditListener? = null
+    fun setOnEditListener(listener: OnEditListener) {
+        onEditListener = listener
+    }
+
+
 }

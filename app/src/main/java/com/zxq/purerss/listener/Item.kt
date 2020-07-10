@@ -4,6 +4,7 @@ import androidx.recyclerview.widget.DiffUtil
 import com.zxq.purerss.data.entity.RssItem
 import com.zxq.purerss.data.entity.RssOpmlInfo
 import com.zxq.purerss.data.entity.table.RSSFeedEntity
+import com.zxq.purerss.data.entity.table.RSSFolderEntity
 import com.zxq.purerss.data.entity.table.RSSItemEntity
 import com.zxq.purerss.data.entity.table.RSSSourceEntity
 
@@ -82,6 +83,16 @@ class RssSourceDiffCallback : DiffUtil.ItemCallback<RSSSourceEntity>() {
 
     override fun areContentsTheSame(oldItem: RSSSourceEntity, newItem: RSSSourceEntity): Boolean {
         return oldItem.feedTitle == newItem.feedTitle
+    }
+}
+
+class RssFolderDiffCallback : DiffUtil.ItemCallback<RSSFolderEntity>() {
+    override fun areItemsTheSame(oldItem: RSSFolderEntity, newItem: RSSFolderEntity): Boolean {
+        return oldItem.folderTitle == newItem.folderTitle
+    }
+
+    override fun areContentsTheSame(oldItem: RSSFolderEntity, newItem: RSSFolderEntity): Boolean {
+        return oldItem.folderTitle == newItem.folderTitle
     }
 }
 

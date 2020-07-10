@@ -14,15 +14,7 @@ import kotlinx.coroutines.launch
  *  fun
  */
 class SaveDBRssViewModel(private val repository: RssFeedRepository): ViewModel(){
-    val poetryList = MutableLiveData<MutableList<RSSFeedEntity>>()
     val insertComplete = MutableLiveData<Boolean>()
-    fun getList(){
-        launch({
-            poetryList.value = repository.getRssListFromDb()
-        },{
-
-        })
-    }
 
     fun insertRss(list: List<RSSFeedEntity>){
         launch({

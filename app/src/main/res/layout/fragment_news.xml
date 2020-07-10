@@ -150,28 +150,46 @@
                     android:layout_width="wrap_content"
                     android:layout_height="40dp" />
 
-                <TextView
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_laterread"
-                    android:text="@string/news"
-                    android:textAppearance="@style/TextAppearance.Owl.Headline5"
-                    android:gravity="center_vertical"
-                    android:layout_marginTop="5dp"
-                    android:paddingLeft="15dp"
-                    android:id="@+id/tv_rss"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipChildren="false"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        <androidx.constraintlayout.widget.ConstraintLayout
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-            tools:listitem="@layout/item_feed_list" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+            <TextView
+                android:visibility="gone"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@string/news"
+                android:textAppearance="@style/TextAppearance.Owl.Headline5"
+                android:gravity="center_vertical"
+                android:layout_marginTop="5dp"
+                android:paddingLeft="15dp"
+                android:id="@+id/tv_rss"
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/feed_bar"
+                app:title="全部"
+                app:titleTextAppearance="@style/TextAppearance.Owl.Headline5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:menu="@menu/menu_managefeed" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipChildren="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/feed_bar"
+                tools:listitem="@layout/item_feed_list" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

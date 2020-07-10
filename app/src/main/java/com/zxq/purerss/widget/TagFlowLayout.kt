@@ -48,7 +48,7 @@ class TagFlowLayout(context: Context, attributes: AttributeSet?) : ViewGroup(con
             val childH =
                 child.measuredHeight + marginLayoutParams.topMargin + marginLayoutParams.bottomMargin
             if (lineW + childW > widthSize - paddingLeft - paddingRight) {
-                //一行的内容大于测量的宽度，执行换行
+                //一行的内容大于当前宽度，执行换行
                 //取多行中最大行的宽度作为布局的宽度
                 wWidth = Math.max(wWidth, lineW)
                 lineW = childW

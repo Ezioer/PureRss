@@ -8,13 +8,19 @@
         <variable
             name="item"
             type="com.zxq.purerss.data.entity.table.RSSSourceEntity" />
+
+        <variable
+            name="clickHandle"
+            type="com.zxq.purerss.listener.AddFeedClickListener" />
     </data>
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:paddingBottom="10dp"
         android:background="@drawable/bg_setting">
 
@@ -51,6 +57,7 @@
             android:layout_height="0dp"
             android:paddingRight="15dp"
             android:paddingLeft="15dp"
+            android:onClick="@{(v) -> clickHandle.onClick(v, item)}"
             android:background="?android:selectableItemBackground"
             android:src="@drawable/add_100px"
             app:layout_constraintBottom_toBottomOf="parent"

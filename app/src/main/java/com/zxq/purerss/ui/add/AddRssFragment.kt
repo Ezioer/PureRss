@@ -24,7 +24,9 @@ import com.zxq.purerss.R
 import com.zxq.purerss.data.entity.RssItem
 import com.zxq.purerss.data.entity.RssItemInfo
 import com.zxq.purerss.data.entity.table.RSSFeedEntity
+import com.zxq.purerss.data.entity.table.RSSSourceEntity
 import com.zxq.purerss.databinding.DialogAddrssBinding
+import com.zxq.purerss.listener.AddFeedClickListener
 import com.zxq.purerss.listener.ItemDiffCallback
 import com.zxq.purerss.listener.ItemSearchClickListener
 import com.zxq.purerss.listener.RssSourceDiffCallback
@@ -91,7 +93,12 @@ class AddRssFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCall
                 }
             }
 
-            val sourceAdapter = SearchSourceListAdapter()
+            val addClick = object : AddFeedClickListener {
+                override fun onClick(view: View, rss: RSSSourceEntity) {
+                    mViewModel.insertRss(RSSFeedEntity(0, rss.feedTitle, rss.feedLink, "", "", 0))
+                }
+            }
+            val sourceAdapter = SearchSourceListAdapter(addClick)
             rvSource.adapter = sourceAdapter
             sourceAdapter.setDiffCallback(RssSourceDiffCallback())
             rvSource.itemAnimator = SpringAddItemAnimator()
@@ -131,7 +138,7 @@ class AddRssFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCall
                 }
             }
             ivAdd.setOnClickListener {
-                mViewModel.insertRss(RSSFeedEntity(0, info!!.title, link, info!!.subTitle, ""))
+                mViewModel.insertRss(RSSFeedEntity(0, info!!.title, link, info!!.subTitle, "", 0))
             }
 
             mViewModel.addComplete.observe(this@AddRssFragment, Observer {
@@ -226,8 +233,6 @@ class AddRssFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCall
             }
             val action = AddRssFragmentDirections.actionAddToOpml(path)
             findNavController().navigate(action)
-
         }
-
     }
 }

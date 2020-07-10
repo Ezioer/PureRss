@@ -47,7 +47,6 @@ class GuaGuaKaView(context: Context, attributeSet: AttributeSet?) : View(context
                 mTranPath.lineTo(event.getX(), event.getY())
             }
             MotionEvent.ACTION_UP -> {
-
             }
         }
         mCanvas.drawPath(mTranPath, mTranPaint)

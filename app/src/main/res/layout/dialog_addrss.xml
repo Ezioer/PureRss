@@ -85,21 +85,21 @@
             android:background="@color/root_color"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="10dp"
             android:paddingBottom="10dp"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/ctl_result"
+                android:visibility="gone"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone">
+                android:layout_height="match_parent">
 
                 <TextView
                     android:id="@+id/app_name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
                     android:text="@{info.title}"
                     android:textAppearance="@style/TextAppearance.Owl.Headline4"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -147,12 +147,11 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_source"
                 android:visibility="gone"
+                android:id="@+id/rv_source"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clipChildren="false"
-                android:paddingTop="10dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_search_source_list" />
 

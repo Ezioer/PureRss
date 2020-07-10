@@ -54,4 +54,6 @@
 
     <string name="empty">Nothing Found</string>
     <string name="error">Error</string>
+
+    <string name="folder">Folder</string>
 </resources>

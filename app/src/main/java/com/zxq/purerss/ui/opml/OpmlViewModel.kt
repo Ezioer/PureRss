@@ -19,8 +19,6 @@ import kotlinx.coroutines.withContext
 class OpmlViewModel(private val repository: RssFeedRepository) : ViewModel() {
 
     val opml = MutableLiveData<MutableList<RssOpmlInfo>>()
-    val collectResult = MutableLiveData<Int>()
-    val laterResult = MutableLiveData<Int>()
 
     fun read(filepath: String) {
         launch({

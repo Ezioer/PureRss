@@ -12,6 +12,7 @@
     <string name="readed">已读</string>
     <string name="laterread">稍后读</string>
     <string name="collect">收藏</string>
+    <string name="folder">分组</string>
     <string name="add">添加</string>
     <string name="remove">移出</string>
     <string name="search">搜索</string>
@@ -49,7 +50,7 @@
 
     <string name="openinbrowser">在浏览器中打开</string>
 
-    <string name="nothingfound">请输入正确的rss网址</string>
+    <string name="nothingfound">手动添加rss地址或搜索rss名称进行搜索</string>
     <string name="addsuccess">已添加到我的rss，可在首页查看</string>
 
     <string name="empty">空荡荡的</string>

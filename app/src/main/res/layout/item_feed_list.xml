@@ -39,11 +39,20 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
+            android:id="@+id/edit"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:src="@drawable/edit_folder_48px"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp" />
+
+        <ImageView
             android:id="@+id/delete"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:src="@drawable/delete_96px"
             android:layout_width="wrap_content"
             android:layout_height="48dp" />
+
     </com.zxq.purerss.widget.SwipeMenuLayout>
 </layout>
