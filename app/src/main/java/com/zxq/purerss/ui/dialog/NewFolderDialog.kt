@@ -5,9 +5,8 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import androidx.navigation.findNavController
 import com.zxq.purerss.R
-import com.zxq.purerss.listener.RssFolderDiffCallback
+import com.zxq.purerss.utils.KeyBoardUtil
 import kotlinx.android.synthetic.main.dialog_newfolder.*
 
 class NewFolderDialog(
@@ -22,6 +21,7 @@ class NewFolderDialog(
     }
 
     private fun initView() {
+        KeyBoardUtil.showKeyboard(et_folder)
         tv_ok.setOnClickListener {
             if (et_folder.text.toString().isNotEmpty()) {
                 listener?.success(et_folder.text.toString())

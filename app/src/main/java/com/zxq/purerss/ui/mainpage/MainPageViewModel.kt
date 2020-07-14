@@ -73,7 +73,7 @@ class MainPageViewModel(
         })
     }
 
-    fun updateFeeds(title: String, link: String, subTitle: String, parentId: Long, id: Long) {
+    fun updateFeeds(title: String, subTitle: String, link: String, parentId: Long, id: Long) {
         launch({
             val result = repository.updateFeed(title, subTitle, link, parentId, id)
         }, {

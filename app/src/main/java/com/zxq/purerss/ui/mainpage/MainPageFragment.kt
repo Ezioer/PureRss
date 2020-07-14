@@ -18,8 +18,8 @@ import com.zxq.purerss.data.entity.table.RSSFolderEntity
 import com.zxq.purerss.databinding.FragmentNewsBinding
 import com.zxq.purerss.listener.FolderClickListener
 import com.zxq.purerss.listener.RssDiffCallback
-import com.zxq.purerss.ui.dialog.AddFolderDialog
 import com.zxq.purerss.ui.dialog.EditFeedsDialog
+import com.zxq.purerss.ui.dialog.FolderDialog
 import com.zxq.purerss.ui.dialog.SearchFeedsDialog
 import com.zxq.purerss.ui.setting.SettingActivity
 import com.zxq.purerss.utils.InjectorUtil
@@ -42,7 +42,7 @@ class MainPageFragment : Fragment() {
     private var showDialog = false
     private var dialogType = 0
     private var rssItem: RSSFeedEntity? = null
-    private var folderDialog: AddFolderDialog? = null
+    private var folderDialog: FolderDialog? = null
     private var editDialog: EditFeedsDialog? = null
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -126,13 +126,19 @@ class MainPageFragment : Fragment() {
                     if (showDialog) {
                         showDialog = false
                         folderDialog =
-                            AddFolderDialog(context!!, it, onFolderClick, findNavController())
+                            FolderDialog(context!!, it, onFolderClick, findNavController())
                         folderDialog?.show()
                     }
                 } else if (dialogType == 2) {
                     if (showDialog) {
                         showDialog = false
-                        editDialog = EditFeedsDialog(context!!, it, rssItem!!, findNavController())
+                        editDialog = EditFeedsDialog(
+                            context!!,
+                            it,
+                            rssItem!!,
+                            findNavController(),
+                            mainViewModel
+                        )
                         editDialog?.show()
                     }
                 }

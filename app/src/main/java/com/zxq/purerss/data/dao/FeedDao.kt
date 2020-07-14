@@ -5,7 +5,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.zxq.purerss.data.entity.table.RSSFeedEntity
-import com.zxq.purerss.data.entity.table.RSSReadedEntity
 
 /**
  *  created by xiaoqing.zhou
@@ -29,7 +28,7 @@ interface FeedDao {
     @Query("delete  from rssfeed where feed_id = :id")
     fun deleteFeed(id: Long)
 
-    @Query("update rssfeed set feed_title =:title and feed_desc = :subTitle and feed_link = :link and parent_id = :parentId  where feed_id = :id")
+    @Query("update rssfeed set feed_title =:title, feed_desc = :subTitle , feed_link = :link , parent_id = :parentId  where feed_id = :id")
     fun update(title: String, subTitle: String, link: String, parentId: Long, id: Long)
 
     @Query("select * from rssfeed where feed_title like '%' || :key || '%' ")

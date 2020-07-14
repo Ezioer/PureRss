@@ -50,7 +50,7 @@
             android:id="@+id/delete"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:src="@drawable/delete_48px"
+            android:src="@drawable/delete_bin_48px"
             android:layout_width="wrap_content"
             android:layout_height="48dp" />
 

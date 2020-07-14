@@ -11,7 +11,7 @@ import com.zxq.purerss.data.entity.table.RSSFolderEntity
 import com.zxq.purerss.listener.FolderClickListener
 import com.zxq.purerss.listener.RssFolderDiffCallback
 import kotlinx.android.synthetic.main.dialog_folder.*
-class AddFolderDialog(
+class FolderDialog(
     private val mContext: Context,
     private val list: MutableList<RSSFolderEntity>,
     private var onClick: FolderClickListener,
