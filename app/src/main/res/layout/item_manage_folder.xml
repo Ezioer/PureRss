@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.zxq.purerss.data.entity.table.RSSFolderEntity" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="?android:selectableItemBackground">
+
+        <TextView
+            android:id="@+id/tv_feedtitle"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:text="@{item.folderTitle}"
+            android:textAppearance="@style/TextAppearance.Owl.Subtitle1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="少数派" />
+
+        <ImageView
+            android:id="@+id/tv_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:src="@drawable/edit_48px"
+            app:layout_constraintRight_toLeftOf="@id/tv_delete_folder" />
+
+        <ImageView
+            android:id="@+id/tv_delete_folder"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:src="@drawable/delete_bin_48px"
+            app:layout_constraintRight_toRightOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

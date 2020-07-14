@@ -19,6 +19,7 @@ import com.zxq.purerss.databinding.FragmentNewsBinding
 import com.zxq.purerss.listener.FolderClickListener
 import com.zxq.purerss.listener.RssDiffCallback
 import com.zxq.purerss.ui.dialog.AddFolderDialog
+import com.zxq.purerss.ui.dialog.EditFeedsDialog
 import com.zxq.purerss.ui.dialog.SearchFeedsDialog
 import com.zxq.purerss.ui.setting.SettingActivity
 import com.zxq.purerss.utils.InjectorUtil
@@ -33,13 +34,16 @@ import java.util.concurrent.TimeUnit
  *  on 2020/6/28
  *  fun
  */
-class MainPageFragment: Fragment() {
+class MainPageFragment : Fragment() {
 
     private val mainViewModel: MainPageViewModel by viewModels {
         InjectorUtil.getMainFactory(this)
     }
     private var showDialog = false
+    private var dialogType = 0
+    private var rssItem: RSSFeedEntity? = null
     private var folderDialog: AddFolderDialog? = null
+    private var editDialog: EditFeedsDialog? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -61,16 +65,12 @@ class MainPageFragment: Fragment() {
                 }
             }
             toolbar.setNavigationOnClickListener {
-                startActivity(
-                    Intent(
-                        activity,
-                        SettingActivity::class.java
-                    )
-                )
+                startActivity(Intent(activity, SettingActivity::class.java))
             }
 
             feedBar.setOnMenuItemClickListener {
                 if (it.itemId == R.id.folder) {
+                    dialogType = 1
                     showDialog = true
                     mainViewModel.getFolder()
                 }
@@ -91,7 +91,7 @@ class MainPageFragment: Fragment() {
             tvSearch.setOnClickListener {
                 popSearchDialog()
             }
-            mainViewModel.getFeedsList(0)
+            mainViewModel.getFeedsList(1)
             val adapter = MainPageAdapter(onClick, context?.getSpValue("slide", 0) == 0)
             adapter.setOnDeleteListener(object : MainPageAdapter.OnDeleteListener {
                 override fun delete(item: RSSFeedEntity) {
@@ -101,7 +101,10 @@ class MainPageFragment: Fragment() {
             })
             adapter.setOnEditListener(object : MainPageAdapter.OnEditListener {
                 override fun edit(item: RSSFeedEntity) {
-
+                    showDialog = true
+                    dialogType = 2
+                    rssItem = item
+                    mainViewModel.getFolder()
                 }
             })
             recyclerview.adapter = adapter
@@ -113,23 +116,25 @@ class MainPageFragment: Fragment() {
             val onFolderClick = object : FolderClickListener {
                 override fun onClick(view: View, rss: RSSFolderEntity) {
                     folderDialog?.dismiss()
+                    feedBar.title = rss.folderTitle
                     mainViewModel.getFeedsList(rss.folderId)
                 }
             }
 
             mainViewModel.folders.observe(this@MainPageFragment, Observer {
-                if (showDialog) {
-                    showDialog = false
-                    if (folderDialog == null) {
-                        folderDialog = AddFolderDialog(context!!, it, onFolderClick)
+                if (dialogType == 1) {
+                    if (showDialog) {
+                        showDialog = false
+                        folderDialog =
+                            AddFolderDialog(context!!, it, onFolderClick, findNavController())
+                        folderDialog?.show()
                     }
-                    folderDialog?.show()
-
-                    folderDialog?.setAddFolderListener(object : AddFolderDialog.AddFolderListener {
-                        override fun add(title: String) {
-                            mainViewModel.insertFolder(title)
-                        }
-                    })
+                } else if (dialogType == 2) {
+                    if (showDialog) {
+                        showDialog = false
+                        editDialog = EditFeedsDialog(context!!, it, rssItem!!, findNavController())
+                        editDialog?.show()
+                    }
                 }
             })
         }

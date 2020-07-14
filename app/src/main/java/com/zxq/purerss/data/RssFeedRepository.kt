@@ -132,15 +132,29 @@ class RssFeedRepository private constructor(
     suspend fun getRssListFromDbX(id: Long): MutableList<RSSFeedEntity> =
         withContext(Dispatchers.IO) {
             if (folderDao.folderExist("全部") == null) {
-                folderDao.insertOneFolder(RSSFolderEntity(0, "全部"))
+                folderDao.insertOneFolder(RSSFolderEntity(1, "全部"))
             }
-            feedDao.getFeedsFromDb(id)
+            if (id == 1L) {
+                feedDao.getAllFeedsFromDb()
+            } else {
+                feedDao.getFeedsFromDb(id)
+            }
         }
 
     suspend fun insertFolder(title: String) = withContext(Dispatchers.IO) {
         if (folderDao.folderExist(title) == null) {
             folderDao.insertOneFolder(RSSFolderEntity(0, title))
         }
+    }
+
+    suspend fun updateFeed(
+        title: String,
+        subTitle: String,
+        link: String,
+        parentId: Long,
+        id: Long
+    ) = withContext(Dispatchers.IO) {
+        feedDao.update(title, subTitle, link, parentId, id)
     }
 
     suspend fun getFolderFromDb(): MutableList<RSSFolderEntity> = withContext(Dispatchers.IO) {

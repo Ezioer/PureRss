@@ -73,6 +73,14 @@ class MainPageViewModel(
         })
     }
 
+    fun updateFeeds(title: String, link: String, subTitle: String, parentId: Long, id: Long) {
+        launch({
+            val result = repository.updateFeed(title, subTitle, link, parentId, id)
+        }, {
+
+        })
+    }
+
     private fun launch(block: suspend () -> Unit, error: suspend (Throwable) -> Unit) =
         viewModelScope.launch {
             try {

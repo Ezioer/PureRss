@@ -35,7 +35,6 @@ class MainPageAdapter(private val onClick: FeedClick, private var slideDir: Bool
 
         binding?.edit?.setOnClickListener {
             (binding.root as SwipeMenuLayout).smoothClose()
-            notifyItemRemoved(holder.adapterPosition)
             onEditListener?.edit(item)
         }
         binding?.swipe?.setLeftSwipe(slideDir)

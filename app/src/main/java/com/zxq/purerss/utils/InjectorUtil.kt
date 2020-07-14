@@ -3,6 +3,7 @@ package com.zxq.purerss.utils
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.zxq.purerss.data.DataBase
+import com.zxq.purerss.data.FolderRepository
 import com.zxq.purerss.data.RssFeedRepository
 import com.zxq.purerss.data.entity.SourceRepository
 import com.zxq.purerss.ui.add.AddRssModelFactory
@@ -10,6 +11,7 @@ import com.zxq.purerss.ui.chooserss.SaveDBRssModelFactory
 import com.zxq.purerss.ui.detail.DetailModelFactory
 import com.zxq.purerss.ui.feedlist.FeedListModelFactory
 import com.zxq.purerss.ui.mainpage.MainPageModelFactory
+import com.zxq.purerss.ui.managefolder.ManageFolderModelFactory
 import com.zxq.purerss.ui.opml.OpmlModelFactory
 import com.zxq.purerss.ui.setting.SettingModelFactory
 import com.zxq.purerss.ui.type.TypeModelFactory
@@ -95,6 +97,12 @@ object InjectorUtil {
             DataBase.getInstance(activity).feedDao(),
             DataBase.getInstance(activity).itemDao(),
             DataBase.getInstance(activity).folderDao()
+        )
+    )
+
+    fun getFolderFactory(activity: Fragment) = ManageFolderModelFactory(
+        FolderRepository.getInstance(
+            DataBase.getInstance(activity.requireContext()).folderDao()
         )
     )
 }

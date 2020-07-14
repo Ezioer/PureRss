@@ -23,6 +23,7 @@
         app:layout_constraintTop_toTopOf="@id/title"
         app:layout_constraintRight_toRightOf="parent"
         android:textColor="@color/c_008f68"
+        android:textAppearance="@style/TextAppearance.Owl.Headline7"
         android:padding="10dp"
         android:background="?android:selectableItemBackground"
         android:layout_marginRight="10dp"
@@ -32,17 +33,18 @@
     <TextView
         android:text="网址"
         android:id="@+id/tv_link"
-        android:textAppearance="@style/TextAppearance.Owl.Subtitle1"
+        android:textAppearance="@style/TextAppearance.Owl.Subtitle2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="@id/tv_linkvalue"
         app:layout_constraintBottom_toBottomOf="@id/tv_linkvalue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <TextView
-        android:text="网址"
+    <EditText
+        android:hint="网址"
         android:id="@+id/tv_linkvalue"
         android:layout_marginTop="10dp"
+        android:paddingLeft="10dp"
         android:textAppearance="@style/TextAppearance.Owl.Subtitle1"
         app:layout_constraintLeft_toRightOf="@id/tv_link"
         app:layout_constraintRight_toRightOf="parent"
@@ -53,16 +55,17 @@
     <TextView
         android:text="名称"
         android:id="@+id/tv_title"
-        android:textAppearance="@style/TextAppearance.Owl.Subtitle1"
+        android:textAppearance="@style/TextAppearance.Owl.Subtitle2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="@id/tv_titlevalue"
         app:layout_constraintBottom_toBottomOf="@id/tv_titlevalue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <TextView
-        android:text="网址"
+    <EditText
+        android:hint="名称"
         android:id="@+id/tv_titlevalue"
+        android:paddingLeft="10dp"
         android:layout_marginTop="10dp"
         android:textAppearance="@style/TextAppearance.Owl.Subtitle1"
         app:layout_constraintLeft_toRightOf="@id/tv_title"
@@ -74,17 +77,18 @@
     <TextView
         android:text="描述"
         android:id="@+id/tv_subtitle"
-        android:textAppearance="@style/TextAppearance.Owl.Subtitle1"
+        android:textAppearance="@style/TextAppearance.Owl.Subtitle2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="@id/tv_subtitlevalue"
         app:layout_constraintBottom_toBottomOf="@id/tv_subtitlevalue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <TextView
-        android:text="网址"
+    <EditText
+        android:hint="描述"
         android:id="@+id/tv_subtitlevalue"
         android:layout_marginTop="10dp"
+        android:paddingLeft="10dp"
         android:textAppearance="@style/TextAppearance.Owl.Subtitle1"
         app:layout_constraintLeft_toRightOf="@id/tv_subtitle"
         app:layout_constraintRight_toRightOf="parent"
@@ -92,4 +96,46 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content" />
 
+    <TextView
+        android:text="分组"
+        android:id="@+id/tv_folder"
+        android:textAppearance="@style/TextAppearance.Owl.Subtitle2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_foldervalue"
+        app:layout_constraintBottom_toBottomOf="@id/tv_foldervalue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:text="全部"
+        android:paddingLeft="10dp"
+        android:id="@+id/tv_foldervalue"
+        android:textAppearance="@style/TextAppearance.Owl.Subtitle1"
+        app:layout_constraintLeft_toRightOf="@id/tv_folder"
+        app:layout_constraintTop_toBottomOf="@id/tv_subtitlevalue"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:text="分组管理"
+        android:paddingLeft="10dp"
+        android:id="@+id/tv_folder_manage"
+        android:textColor="@color/c_008f68"
+        android:textAppearance="@style/TextAppearance.Owl.Subtitle1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_subtitlevalue"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_folders"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/tv_foldervalue"
+        tools:listitem="@layout/item_folder_dialog_list"
+        app:spanCount="2"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </androidx.constraintlayout.widget.ConstraintLayout>

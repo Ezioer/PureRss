@@ -20,7 +20,7 @@ class SettingViewModel(private val repository: RssFeedRepository) : ViewModel() 
 
     fun getAllFeeds() {
         launch({
-            val result = repository.getRssListFromDb()
+            val result = repository.getRssListFromDbX(1)
             list.value = result
         }, {
 

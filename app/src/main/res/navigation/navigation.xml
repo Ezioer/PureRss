@@ -34,6 +34,11 @@
             android:id="@+id/action_mainpage_to_add"
             app:destination="@id/add"
             app:exitAnim="@null" />
+
+        <action
+            android:id="@+id/action_mainpage_to_managefolder"
+            app:destination="@id/managefolder"
+            app:exitAnim="@null" />
     </fragment>
 
 
@@ -100,4 +105,10 @@
             android:name="filepath"
             app:argType="string" />
     </fragment>
+
+    <fragment
+        android:id="@+id/managefolder"
+        android:name="com.zxq.purerss.ui.managefolder.ManageFolderFragment"
+        android:label="managefolder"
+        tools:layout="@layout/fragment_managefolder"></fragment>
 </navigation>
