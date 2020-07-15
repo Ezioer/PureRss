@@ -8,6 +8,7 @@ import org.dom4j.Element
 import org.dom4j.io.SAXReader
 import org.dom4j.io.XMLWriter
 import java.io.File
+import java.io.FileDescriptor
 import java.io.FileInputStream
 import java.io.FileWriter
 
@@ -43,6 +44,22 @@ class ReadOPML {
             val list = mutableListOf<RssOpmlInfo>()
             val reader = SAXReader()
             val fis = FileInputStream(file)
+            val doc = reader.read(fis)
+            val elm = doc.rootElement
+            val body = elm.selectSingleNode("body") as Element
+            val elementIterator = body.elementIterator("outline")
+            for (item in elementIterator) {
+                val title = item.attributeValue("text")
+                val url = item.attributeValue("xmlUrl")
+                list.add(RssOpmlInfo(title, url))
+            }
+            return list
+        }
+
+        fun read(filepath: FileDescriptor): MutableList<RssOpmlInfo>? {
+            val list = mutableListOf<RssOpmlInfo>()
+            val reader = SAXReader()
+            val fis = FileInputStream(filepath)
             val doc = reader.read(fis)
             val elm = doc.rootElement
             val body = elm.selectSingleNode("body") as Element

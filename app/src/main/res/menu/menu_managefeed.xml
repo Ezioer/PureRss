@@ -12,11 +12,11 @@
         android:id="@+id/sort_seecount"
         app:showAsAction="never"
         android:icon="@drawable/list_48px"
-        android:title="浏览次数排序" />
+        android:title="按次数" />
 
     <item
         android:id="@+id/sort"
         app:showAsAction="never"
         android:icon="@drawable/list_48px"
-        android:title="加入时间排序" />
+        android:title="按常去" />
 </menu>

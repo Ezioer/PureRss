@@ -86,8 +86,13 @@ class DateUtils {
                 time = sdf.format(Date(date));//将传入的字符串转ISO 8601格式
                 result = sdf.parse(time).getTime()
                 time = convertTimestamp(result / 1000, MD)
-            } catch (e: ParseException) {
-                e.printStackTrace();
+            } catch (e: Exception) {
+                val df = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+                df.timeZone = TimeZone.getTimeZone("UTC")
+                val after = df.parse(date)
+                df.applyPattern(MD)
+                df.setTimeZone(TimeZone.getDefault())
+                time = df.format(after)
             }
             return time
         }

@@ -11,11 +11,13 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.zxq.purerss.R
+import com.zxq.purerss.data.entity.FilePathInfo
 import com.zxq.purerss.databinding.FragmentOpmlBinding
 import com.zxq.purerss.listener.OpmlItemDiffCallback
 import com.zxq.purerss.utils.InjectorUtil
 import com.zxq.purerss.utils.SpringAddItemAnimator
 import kotlinx.android.synthetic.main.fragment_opml.*
+import java.io.FileDescriptor
 
 /**
  *  created by xiaoqing.zhou
@@ -27,7 +29,7 @@ class OpmlFragment : Fragment() {
     private val mViewModel: OpmlViewModel by viewModels {
         InjectorUtil.getOpmlFactory(this)
     }
-    private var filepath: String = ""
+    private var filePath: FilePathInfo? = null
     private var mAdapter: OpmlAdapter? = null
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,13 +37,17 @@ class OpmlFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentOpmlBinding.inflate(inflater, container, false).apply {
-            filepath = arg.filepath
+            filePath = arg.filepath
             toolbar.setNavigationOnClickListener { findNavController().popBackStack() }
             mAdapter = OpmlAdapter()
             recyclerview.itemAnimator = SpringAddItemAnimator()
             recyclerview.adapter = mAdapter
             mAdapter?.setDiffCallback(OpmlItemDiffCallback())
-            mViewModel.read(filepath)
+            if (!filePath!!.filepath.isNullOrEmpty()) {
+                mViewModel.read(filePath?.filepath ?: "")
+            } else {
+                mViewModel.read(filePath?.des?.fileDescriptor ?: FileDescriptor())
+            }
             mViewModel.opml.observe(this@OpmlFragment, Observer {
                 toolbar.title = "共${it.size}条订阅源"
                 mAdapter?.setDiffNewData(it)

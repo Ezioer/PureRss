@@ -6,6 +6,7 @@ import com.zxq.purerss.data.entity.RssItem
 import org.xml.sax.Attributes
 import org.xml.sax.SAXException
 import org.xml.sax.helpers.DefaultHandler
+import java.lang.Exception
 
 /**
  * created by xiaoqing.zhou
@@ -72,8 +73,12 @@ internal class RssHandler : DefaultHandler() {
                     rssItem?.description = rssItem?.description + text
                 }
             }
-            RSS_AUTHOR ->{
-                rssItem?.author = text
+            RSS_AUTHOR -> {
+                try {
+                    rssItem?.author = text
+                } catch (e: Exception) {
+                    rssItem?.author = text
+                }
                 currentFlag = 0
             }
             else -> {

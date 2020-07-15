@@ -121,6 +121,10 @@ class MainPageFragment : Fragment() {
                 }
             }
 
+            feedBar.setOnClickListener {
+                recyclerview.smoothScrollToPosition(0)
+            }
+
             mainViewModel.folders.observe(this@MainPageFragment, Observer {
                 if (dialogType == 1) {
                     if (showDialog) {

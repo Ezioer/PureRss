@@ -103,7 +103,7 @@
         tools:layout="@layout/fragment_opml">
         <argument
             android:name="filepath"
-            app:argType="string" />
+            app:argType="com.zxq.purerss.data.entity.FilePathInfo" />
     </fragment>
 
     <fragment

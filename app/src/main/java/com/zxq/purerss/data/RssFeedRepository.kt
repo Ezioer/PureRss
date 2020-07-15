@@ -11,6 +11,7 @@ import com.zxq.purerss.utils.DateUtils
 import com.zxq.purerss.utils.ReadOPML
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.io.FileDescriptor
 
 /**
  *  created by xiaoqing.zhou
@@ -306,6 +307,10 @@ class RssFeedRepository private constructor(
             ReadOPML.read(filepath)
         }
 
+    suspend fun readOpml(filepath: FileDescriptor): MutableList<RssOpmlInfo>? =
+        withContext(Dispatchers.IO) {
+            ReadOPML.read(filepath)
+        }
 
     suspend fun deleteFeed(item: RSSFeedEntity) = withContext(Dispatchers.IO) {
         feedDao.deleteFeed(item.feedId)

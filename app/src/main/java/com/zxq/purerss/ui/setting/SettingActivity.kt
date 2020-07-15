@@ -9,13 +9,13 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.zxq.purerss.R
-import com.zxq.purerss.data.entity.table.goods
 import com.zxq.purerss.databinding.ActivitySettingBinding
 import com.zxq.purerss.ui.dialog.ExportOpmlNotiDialog
 import com.zxq.purerss.utils.*
 import kotlinx.android.synthetic.main.activity_setting.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.io.File
 
 class SettingActivity : AppCompatActivity() {
     private val mViewModel: SettingViewModel by viewModels {
@@ -76,8 +76,9 @@ class SettingActivity : AppCompatActivity() {
                 slide(1)
             }
             mViewModel.list.observe(this@SettingActivity, Observer {
+                val filePath = getExternalFilesDir("opml")!!.getAbsolutePath()
                 ReadOPML.write(
-                    Environment.getExternalStorageDirectory().getPath() + "/OPML/opml.xml", it
+                    filePath + File.separator + "purerss_opml.xml", it
                 )
             })
         }
