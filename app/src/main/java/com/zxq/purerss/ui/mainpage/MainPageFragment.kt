@@ -1,5 +1,6 @@
 package com.zxq.purerss.ui.mainpage
 
+import android.content.ComponentName
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,9 +16,11 @@ import com.zxq.purerss.R
 import com.zxq.purerss.data.entity.RssFeedInfo
 import com.zxq.purerss.data.entity.table.RSSFeedEntity
 import com.zxq.purerss.data.entity.table.RSSFolderEntity
+import com.zxq.purerss.data.entity.table.RSSItemEntity
 import com.zxq.purerss.databinding.FragmentNewsBinding
 import com.zxq.purerss.listener.FolderClickListener
 import com.zxq.purerss.listener.RssDiffCallback
+import com.zxq.purerss.ui.RssWidget
 import com.zxq.purerss.ui.dialog.EditFeedsDialog
 import com.zxq.purerss.ui.dialog.FolderDialog
 import com.zxq.purerss.ui.dialog.SearchFeedsDialog
@@ -183,5 +186,16 @@ class MainPageFragment : Fragment() {
     private fun onTypeClick(i: Int) {
         val action = MainPageFragmentDirections.actionMainpageToType(i)
         findNavController().navigate(action)
+    }
+
+    private fun updateWidget(mList: MutableList<RSSItemEntity>) {
+        val intent = Intent("action_update_ui")
+        val index = if (RssWidget.WIDGET_INDEX > mList?.size ?: 0) 0 else mList?.size ?: 0
+        intent.putExtra(RssWidget.WIDGET_TITLE, mList!![index]!!.itemTitle)
+        intent.putExtra(RssWidget.WIDGET_PIC, mList!![index]!!.itemPic)
+        intent.putExtra(RssWidget.WIDGET_DATE, mList!![index]!!.itemDate)
+        intent.putExtra(RssWidget.WIDGET_FEED, mList!![index]!!.feedTitle)
+        intent.setComponent(ComponentName(context!!, RssWidget::class.java))
+        context?.sendBroadcast(intent)
     }
 }

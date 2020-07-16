@@ -76,7 +76,7 @@ class ReadOPML {
          * 写入操作
          * @param fileName
          */
-        fun write(fileName: String?, list: MutableList<RSSFeedEntity>) {
+        fun write(fileName: String?, list: MutableList<RSSFeedEntity>): Boolean {
             val document = DocumentHelper.createDocument() //建立document对象，用来操作xml文件
             val opmlElement: Element = document.addElement("opml") //建立根节点
             opmlElement.addAttribute("version", "1.0")
@@ -106,8 +106,10 @@ class ReadOPML {
                 val writer = XMLWriter(FileWriter(fileName))
                 writer.write(document)
                 writer.close()
+                return true
             } catch (e: Exception) {
                 e.printStackTrace()
+                return false
             }
         }
     }

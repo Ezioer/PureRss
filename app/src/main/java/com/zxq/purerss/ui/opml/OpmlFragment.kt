@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.snackbar.Snackbar
 import com.zxq.purerss.R
 import com.zxq.purerss.data.entity.FilePathInfo
 import com.zxq.purerss.databinding.FragmentOpmlBinding
@@ -80,6 +81,7 @@ class OpmlFragment : Fragment() {
 
     private fun import() {
         mViewModel.insertFeed(mAdapter?.data?.filter { it.state }?.toMutableList())
+        Snackbar.make(root, "成功导入", 600).show()
     }
 
     private fun selectNone() {

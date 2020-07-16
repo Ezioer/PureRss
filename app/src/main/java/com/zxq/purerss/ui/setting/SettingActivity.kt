@@ -1,5 +1,6 @@
 package com.zxq.purerss.ui.setting
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Environment
@@ -8,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.snackbar.Snackbar
 import com.zxq.purerss.R
 import com.zxq.purerss.databinding.ActivitySettingBinding
 import com.zxq.purerss.ui.dialog.ExportOpmlNotiDialog
@@ -16,6 +18,7 @@ import kotlinx.android.synthetic.main.activity_setting.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.File
+import java.time.Duration
 
 class SettingActivity : AppCompatActivity() {
     private val mViewModel: SettingViewModel by viewModels {
@@ -77,13 +80,15 @@ class SettingActivity : AppCompatActivity() {
             }
             mViewModel.list.observe(this@SettingActivity, Observer {
                 val filePath = getExternalFilesDir("opml")!!.getAbsolutePath()
-                ReadOPML.write(
-                    filePath + File.separator + "purerss_opml.xml", it
-                )
+                mViewModel.exportOpml(filePath + File.separator + "purerss_opml.xml", it)
+            })
+            mViewModel.success.observe(this@SettingActivity, Observer {
+                if (it) {
+                    Snackbar.make(root, "导出成功", 600).show()
+                }
             })
         }
     }
-
 
     private var mDialog: ExportOpmlNotiDialog? = null
     private fun exportOpml() {
