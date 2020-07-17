@@ -4,7 +4,7 @@
     android:initialLayout="@layout/rss_widget"
     android:minWidth="250dp"
     android:minHeight="100dp"
-    android:updatePeriodMillis="5000"
+    android:updatePeriodMillis="0"
     android:previewImage="@drawable/example_appwidget_preview"
     android:resizeMode="horizontal|vertical"
     android:widgetCategory="home_screen|keyguard"></appwidget-provider>

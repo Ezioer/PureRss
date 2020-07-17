@@ -22,9 +22,19 @@ class MainPageViewModel(
     val feedsList = MutableLiveData<MutableList<RSSFeedEntity>>()
     val searchFeedsList = MutableLiveData<MutableList<RSSFeedEntity>>()
     val folders = MutableLiveData<MutableList<RSSFolderEntity>>()
+    val saveComplete = MutableLiveData<Int>()
     fun getFeedsList(id: Long) {
         launch({
             val result = repository.getRssListFromDbX(id)
+            feedsList.value = result
+        }, {
+
+        })
+    }
+
+    fun getFeedsList(id: Long, sortId: Int) {
+        launch({
+            val result = repository.getRssListFromDbX(id, sortId)
             feedsList.value = result
         }, {
 
@@ -76,6 +86,16 @@ class MainPageViewModel(
     fun updateFeeds(title: String, subTitle: String, link: String, parentId: Long, id: Long) {
         launch({
             val result = repository.updateFeed(title, subTitle, link, parentId, id)
+            saveComplete.value = 1
+        }, {
+
+        })
+    }
+
+    fun updateFeeds(count: Int, id: Long) {
+        launch({
+            val result = repository.updateFeed(count, id)
+            saveComplete.value = 1
         }, {
 
         })

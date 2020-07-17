@@ -22,6 +22,14 @@ class FolderRepository private constructor(
         }
     }
 
+    suspend fun deleteFolder(id: Long) = withContext(Dispatchers.IO) {
+        folderDao.delete(id)
+    }
+
+    suspend fun updateFolder(id: Long, title: String) = withContext(Dispatchers.IO) {
+        folderDao.update(title, id)
+    }
+
     suspend fun getFolderFromDb(): MutableList<RSSFolderEntity> = withContext(Dispatchers.IO) {
         folderDao.selectFolder()
     }

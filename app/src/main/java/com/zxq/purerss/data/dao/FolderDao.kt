@@ -24,4 +24,9 @@ interface FolderDao {
     @Query("select * from rssfolder where folder_title =:title")
     fun folderExist(title: String): RSSFolderEntity
 
+    @Query("delete  from rssfolder where folder_id =:id")
+    fun delete(id: Long)
+
+    @Query("update rssfolder set folder_title =:title  where folder_id =:id")
+    fun update(title: String, id: Long)
 }

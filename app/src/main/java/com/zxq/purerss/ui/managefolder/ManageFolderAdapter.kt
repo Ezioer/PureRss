@@ -26,6 +26,8 @@ class ManageFolderAdapter() :
             return
         }
         val binding = holder.getBinding<ItemManageFolderBinding>()
+        addChildClickViewIds(R.id.iv_edit)
+        addChildClickViewIds(R.id.iv_delete_folder)
         binding?.item = item
         binding?.executePendingBindings()
     }

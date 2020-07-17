@@ -49,16 +49,32 @@ class ManageFolderFragment : Fragment() {
                 }
                 true
             }
-            val adapter = ManageFolderAdapter()
-            recyclerview.adapter = adapter
-            adapter.setDiffCallback(RssFolderDiffCallback())
+            val mAdapter = ManageFolderAdapter()
+            recyclerview.adapter = mAdapter
+            mAdapter.setOnItemChildClickListener { adapter, view, position ->
+                if (view.id == R.id.iv_edit) {
+                    val dialog = NewFolderDialog(context!!)
+                    dialog.setListener(object : NewFolderDialog.AddFolderListener {
+                        override fun success(title: String) {
+                            mViewModel.updateFolder(mAdapter.data[position].folderId, title)
+                            mAdapter.data[position].folderTitle = title
+                            mAdapter.notifyItemChanged(position)
+                        }
+                    })
+                    dialog.show()
+                } else {
+                    mViewModel.deleteFolder(mAdapter.data[position].folderId)
+                    mAdapter.notifyItemRemoved(position)
+                }
+            }
+            mAdapter.setDiffCallback(RssFolderDiffCallback())
             recyclerview.itemAnimator = SpringAddItemAnimator()
             mViewModel.folders.observe(this@ManageFolderFragment, Observer {
-                adapter.setDiffNewData(it)
+                mAdapter.setDiffNewData(it)
             })
 
             mViewModel.folder.observe(this@ManageFolderFragment, Observer {
-                adapter.addData(RSSFolderEntity(it, mTitle))
+                mAdapter.addData(RSSFolderEntity(it, mTitle))
             })
         }
         return binding.root

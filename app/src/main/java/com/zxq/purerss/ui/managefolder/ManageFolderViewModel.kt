@@ -41,6 +41,22 @@ class ManageFolderViewModel(private val repository: FolderRepository) : ViewMode
         })
     }
 
+    fun deleteFolder(id: Long) {
+        launch({
+            val result = repository.deleteFolder(id)
+        }, {
+
+        })
+    }
+
+    fun updateFolder(id: Long, title: String) {
+        launch({
+            val result = repository.updateFolder(id, title)
+        }, {
+
+        })
+    }
+
     private fun launch(block: suspend () -> Unit, error: suspend (Throwable) -> Unit) =
         viewModelScope.launch {
             try {

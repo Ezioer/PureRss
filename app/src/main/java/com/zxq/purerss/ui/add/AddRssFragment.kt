@@ -96,10 +96,21 @@ class AddRssFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCall
 
             val addClick = object : AddFeedClickListener {
                 override fun onClick(view: View, rss: RSSSourceEntity) {
-                    mViewModel.insertRss(RSSFeedEntity(0, rss.feedTitle, rss.feedLink, "", "", 0))
+                    mViewModel.insertRss(
+                        RSSFeedEntity(
+                            0,
+                            rss.feedTitle,
+                            rss.feedLink,
+                            "",
+                            "",
+                            0,
+                            0
+                        )
+                    )
                 }
             }
             val sourceAdapter = SearchSourceListAdapter(addClick)
+            rvSource.itemAnimator = SpringAddItemAnimator()
             rvSource.adapter = sourceAdapter
             sourceAdapter.setDiffCallback(RssSourceDiffCallback())
             rvSource.itemAnimator = SpringAddItemAnimator()
@@ -139,7 +150,17 @@ class AddRssFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCall
                 }
             }
             ivAdd.setOnClickListener {
-                mViewModel.insertRss(RSSFeedEntity(0, info!!.title, link, info!!.subTitle, "", 0))
+                mViewModel.insertRss(
+                    RSSFeedEntity(
+                        0,
+                        info!!.title,
+                        link,
+                        info!!.subTitle,
+                        "",
+                        0,
+                        0
+                    )
+                )
             }
 
             mViewModel.addComplete.observe(this@AddRssFragment, Observer {

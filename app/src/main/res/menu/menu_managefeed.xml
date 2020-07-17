@@ -9,14 +9,16 @@
         android:title="@string/folder" />
 
     <item
+        android:id="@+id/sort_addtime"
+        app:showAsAction="never"
+        android:icon="@drawable/list_48px"
+        android:title="按添加时间" />
+
+    <item
         android:id="@+id/sort_seecount"
         app:showAsAction="never"
         android:icon="@drawable/list_48px"
-        android:title="按次数" />
+        android:title="按浏览次数" />
 
-    <item
-        android:id="@+id/sort"
-        app:showAsAction="never"
-        android:icon="@drawable/list_48px"
-        android:title="按常去" />
+
 </menu>

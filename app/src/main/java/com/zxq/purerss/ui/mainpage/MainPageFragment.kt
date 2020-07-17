@@ -44,6 +44,8 @@ class MainPageFragment : Fragment() {
     }
     private var showDialog = false
     private var dialogType = 0
+    private var typeId = 1L
+    private var sortId = 1
     private var rssItem: RSSFeedEntity? = null
     private var folderDialog: FolderDialog? = null
     private var editDialog: EditFeedsDialog? = null
@@ -55,6 +57,7 @@ class MainPageFragment : Fragment() {
         val binding = FragmentNewsBinding.inflate(inflater, container, false).apply {
             val onClick = object : MainPageAdapter.FeedClick {
                 override fun onClick(view: View, rss: RSSFeedEntity) {
+                    mainViewModel.updateFeeds(rss.seeCount + 1, rss.feedId)
                     val action = MainPageFragmentDirections.actionMainpageToList(
                         RssFeedInfo(
                             rss.feedTitle,
@@ -76,6 +79,14 @@ class MainPageFragment : Fragment() {
                     dialogType = 1
                     showDialog = true
                     mainViewModel.getFolder()
+                } else if (it.itemId == R.id.sort_addtime) {
+                    sortId = 1
+                    context?.putSpValue("sort", 1)
+                    sortFeeds()
+                } else {
+                    sortId = 2
+                    context?.putSpValue("sort", 2)
+                    sortFeeds()
                 }
                 true
             }
@@ -94,7 +105,8 @@ class MainPageFragment : Fragment() {
             tvSearch.setOnClickListener {
                 popSearchDialog()
             }
-            mainViewModel.getFeedsList(1)
+            sortId = context?.getSpValue("sort", 1) ?: 1
+            mainViewModel.getFeedsList(typeId, sortId)
             val adapter = MainPageAdapter(onClick, context?.getSpValue("slide", 0) == 0)
             adapter.setOnDeleteListener(object : MainPageAdapter.OnDeleteListener {
                 override fun delete(item: RSSFeedEntity) {
@@ -120,7 +132,8 @@ class MainPageFragment : Fragment() {
                 override fun onClick(view: View, rss: RSSFolderEntity) {
                     folderDialog?.dismiss()
                     feedBar.title = rss.folderTitle
-                    mainViewModel.getFeedsList(rss.folderId)
+                    typeId = rss.folderId
+                    mainViewModel.getFeedsList(rss.folderId, sortId)
                 }
             }
 
@@ -150,6 +163,11 @@ class MainPageFragment : Fragment() {
                     }
                 }
             })
+            mainViewModel.saveComplete.observe(this@MainPageFragment, Observer {
+                if (it == 1) {
+                    mainViewModel.getFeedsList(typeId, sortId)
+                }
+            })
         }
         postponeEnterTransition(10L, TimeUnit.MILLISECONDS)
         val backward = MaterialSharedAxis.create(MaterialSharedAxis.Y, false)
@@ -158,6 +176,10 @@ class MainPageFragment : Fragment() {
         val forward = MaterialSharedAxis.create(MaterialSharedAxis.Y, true)
         exitTransition = forward
         return binding.root
+    }
+
+    private fun sortFeeds() {
+        mainViewModel.getFeedsList(typeId, sortId)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
