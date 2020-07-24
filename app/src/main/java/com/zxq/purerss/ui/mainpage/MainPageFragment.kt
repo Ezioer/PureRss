@@ -55,6 +55,19 @@ class MainPageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentNewsBinding.inflate(inflater, container, false).apply {
+            if (arguments?.getLong("id") != null && context!!.getSpValue("fromshortcuts", 0) == 1) {
+                context!!.putSpValue("fromshortcuts", 0)
+                val action = MainPageFragmentDirections.actionMainpageToList(
+                    RssFeedInfo(
+                        arguments?.getString("title")!!,
+                        arguments?.getString("link")!!,
+                        arguments?.getString("des")!!,
+                        "",
+                        arguments?.getLong("id")!!
+                    )
+                )
+                findNavController().navigate(action)
+            }
             val onClick = object : MainPageAdapter.FeedClick {
                 override fun onClick(view: View, rss: RSSFeedEntity) {
                     mainViewModel.updateFeeds(rss.seeCount + 1, rss.feedId)

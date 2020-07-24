@@ -1,8 +1,10 @@
 package com.zxq.purerss.listener
 
+import android.content.pm.ShortcutInfo
 import androidx.recyclerview.widget.DiffUtil
 import com.zxq.purerss.data.entity.RssItem
 import com.zxq.purerss.data.entity.RssOpmlInfo
+import com.zxq.purerss.data.entity.ShortCutsInfo
 import com.zxq.purerss.data.entity.table.RSSFeedEntity
 import com.zxq.purerss.data.entity.table.RSSFolderEntity
 import com.zxq.purerss.data.entity.table.RSSItemEntity
@@ -66,6 +68,16 @@ class OpmlItemDiffCallback : DiffUtil.ItemCallback<RssOpmlInfo>() {
     }
 }
 
+class SelectCutsItemDiffCallback : DiffUtil.ItemCallback<RSSFeedEntity>() {
+    override fun areItemsTheSame(oldItem: RSSFeedEntity, newItem: RSSFeedEntity): Boolean {
+        return oldItem.state == newItem.state
+    }
+
+    override fun areContentsTheSame(oldItem: RSSFeedEntity, newItem: RSSFeedEntity): Boolean {
+        return oldItem.state == newItem.state
+    }
+}
+
 class RssDiffCallback : DiffUtil.ItemCallback<RSSFeedEntity>() {
     override fun areItemsTheSame(oldItem: RSSFeedEntity, newItem: RSSFeedEntity): Boolean {
         return oldItem.feedTitle == newItem.feedTitle
@@ -93,6 +105,16 @@ class RssFolderDiffCallback : DiffUtil.ItemCallback<RSSFolderEntity>() {
 
     override fun areContentsTheSame(oldItem: RSSFolderEntity, newItem: RSSFolderEntity): Boolean {
         return oldItem.folderTitle == newItem.folderTitle
+    }
+}
+
+class ShortCutsDiffCallback : DiffUtil.ItemCallback<ShortcutInfo>() {
+    override fun areItemsTheSame(oldItem: ShortcutInfo, newItem: ShortcutInfo): Boolean {
+        return oldItem.longLabel == newItem.longLabel
+    }
+
+    override fun areContentsTheSame(oldItem: ShortcutInfo, newItem: ShortcutInfo): Boolean {
+        return oldItem.longLabel == newItem.longLabel
     }
 }
 

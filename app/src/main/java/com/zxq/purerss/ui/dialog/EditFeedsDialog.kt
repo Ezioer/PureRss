@@ -23,7 +23,11 @@ class EditFeedsDialog(
     private var viewModel: MainPageViewModel
 ) : BaseDialog(mContext, Gravity.BOTTOM, R.style.anim_bottom2top, true, 1.0, 0.0) {
     private lateinit var mView: View
-    private var parentId = 1L
+
+    companion object {
+        var parentId = 1L
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mView = LayoutInflater.from(mContext).inflate(R.layout.dialog_edit, null)
@@ -50,12 +54,7 @@ class EditFeedsDialog(
             dismiss()
             findNavController.navigate(R.id.action_mainpage_to_managefolder)
         }
-        val adapter = EditFeedsAdapter(object : FolderClickListener {
-            override fun onClick(view: View, rss: RSSFolderEntity) {
-                parentId = rss.folderId
-                tv_foldervalue.setText(rss.folderTitle)
-            }
-        })
+        val adapter = EditFeedsAdapter(item.parentId)
         rv_folders.adapter = adapter
         adapter.setDiffCallback(RssFolderDiffCallback())
         adapter.setDiffNewData(list)

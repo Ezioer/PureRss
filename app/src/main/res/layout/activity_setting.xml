@@ -216,6 +216,18 @@
                     android:background="@drawable/bg_setting"
                     android:id="@+id/tv_select"
                     android:text="选择桌面widget源"
+                    android:visibility="gone"
+                    android:gravity="center_vertical"
+                    android:textAppearance="@style/TextAppearance.Owl.Headline7"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp" />
+
+                <TextView
+                    android:layout_margin="10dp"
+                    android:paddingLeft="20dp"
+                    android:background="@drawable/bg_setting"
+                    android:id="@+id/tv_appshortcuts"
+                    android:text="App shortcuts"
                     android:gravity="center_vertical"
                     android:textAppearance="@style/TextAppearance.Owl.Headline7"
                     android:layout_width="match_parent"

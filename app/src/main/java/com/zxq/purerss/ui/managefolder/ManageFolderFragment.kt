@@ -63,8 +63,10 @@ class ManageFolderFragment : Fragment() {
                     })
                     dialog.show()
                 } else {
-                    mViewModel.deleteFolder(mAdapter.data[position].folderId)
+                    val data = mAdapter.data[position]
+                    mAdapter.data.remove(data)
                     mAdapter.notifyItemRemoved(position)
+                    mViewModel.deleteFolder(data.folderId)
                 }
             }
             mAdapter.setDiffCallback(RssFolderDiffCallback())

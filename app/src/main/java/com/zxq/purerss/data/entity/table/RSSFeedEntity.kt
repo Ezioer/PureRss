@@ -20,7 +20,7 @@ data class RSSFeedEntity(
     @ColumnInfo(name = "see_count") var seeCount: Int,
     @ColumnInfo(name = "add_time") var addTime: Long = System.currentTimeMillis()
 ) {
-
+    var state = false
 }
 
 val goods = listOf(
