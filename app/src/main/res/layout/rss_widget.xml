@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <AdapterViewFlipper
+        <StackView
             android:id="@+id/avp"
             android:autoStart="true"
             android:flipInterval="5000"
@@ -19,6 +19,7 @@
     </LinearLayout>
 
     <RelativeLayout
+        android:visibility="gone"
         android:id="@+id/rl_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

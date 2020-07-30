@@ -7,6 +7,8 @@ import com.zxq.purerss.data.RssFeedRepository
 import com.zxq.purerss.data.entity.SourceRepository
 import com.zxq.purerss.data.entity.table.RSSFeedEntity
 import com.zxq.purerss.data.entity.table.RSSFolderEntity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 /**
@@ -102,7 +104,7 @@ class MainPageViewModel(
     }
 
     private fun launch(block: suspend () -> Unit, error: suspend (Throwable) -> Unit) =
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.Main) {
             try {
                 block()
             } catch (e: Throwable) {

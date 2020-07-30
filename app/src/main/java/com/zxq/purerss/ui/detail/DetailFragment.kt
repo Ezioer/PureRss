@@ -23,10 +23,7 @@ import com.zxq.purerss.App
 import com.zxq.purerss.R
 import com.zxq.purerss.data.entity.RssItemInfo
 import com.zxq.purerss.databinding.FragmentDetailBinding
-import com.zxq.purerss.utils.InjectorUtil
-import com.zxq.purerss.utils.MImageGetter
-import com.zxq.purerss.utils.getSpValue
-import com.zxq.purerss.utils.putSpValue
+import com.zxq.purerss.utils.*
 import kotlinx.android.synthetic.main.dialog_readsetting.*
 import kotlinx.android.synthetic.main.fragment_detail.*
 
@@ -267,6 +264,7 @@ class DetailFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
                     tv_title.setTextColor(context!!.getColor(R.color.otherbgtext))
                     tv_author.setTextColor(context!!.getColor(R.color.otherbgtext))
                 }
+                RippleAnimation.create(bgList!![item]).setDuration(800).start()
                 appbarlayout.setBackgroundResource(bgReaderColor!![item])
                 ctl_root.setBackgroundResource(bgReaderColor!![item])
                 activity?.putSpValue("readbg", item)

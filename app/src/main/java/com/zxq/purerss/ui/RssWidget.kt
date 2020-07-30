@@ -132,7 +132,7 @@ internal fun updateAppWidget(
     )
     val intent = Intent(context, WidgetService::class.java)
     intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-    intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
+    intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)))
     views.setRemoteAdapter(R.id.avp, intent)
 
     val nextIntent = Intent(

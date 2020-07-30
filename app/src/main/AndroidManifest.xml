@@ -16,6 +16,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.MainActivity"
+            android:launchMode="singleInstance"
             android:exported="true">
             <nav-graph android:value="@navigation/navigation" />
             <intent-filter>
@@ -41,6 +42,7 @@
             android:permission="android.permission.BIND_REMOTEVIEWS" />
         <activity
             android:name=".ui.setting.SettingActivity"
+            android:theme="@style/settingtheme"
             android:exported="true" />
     </application>
 

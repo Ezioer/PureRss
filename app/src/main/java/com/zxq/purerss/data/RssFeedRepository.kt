@@ -256,6 +256,14 @@ class RssFeedRepository private constructor(
             itemDao.selectById(id)
         }
 
+
+    suspend fun getres(id: Long): MutableList<RSSItemEntity> {
+        val result = withContext(Dispatchers.IO) {
+            itemDao.selectById(id)
+        }
+        return result
+    }
+
     suspend fun collectItem(item: RSSItemEntity): Int = withContext(Dispatchers.IO) {
         if (itemDao.collectIsExist(item.itemTitle) == null) {
             itemDao.insertCollect(

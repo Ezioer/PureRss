@@ -52,6 +52,9 @@
             android:id="@+id/action_mainpage_to_managefolder"
             app:destination="@id/managefolder"
             app:exitAnim="@null" />
+        <deepLink
+            android:id="@+id/mainpage_deep"
+            app:uri="des://mainpage" />
     </fragment>
 
     <fragment
