@@ -38,12 +38,10 @@ class ManageFolderFragment : Fragment() {
             toolbar.setOnMenuItemClickListener {
                 if (it.itemId == R.id.menu_newfolder) {
                     val dialog = NewFolderDialog(context!!)
-                    dialog.setListener(object : NewFolderDialog.AddFolderListener {
-                        override fun success(title: String) {
-                            mTitle = title
-                            mViewModel.newFolder(title)
-                        }
-                    })
+                    dialog.setListener {
+                        mTitle = it
+                        mViewModel.newFolder(it)
+                    }
                     dialog.show()
                     dialog?.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
                 }

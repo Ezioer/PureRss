@@ -168,7 +168,11 @@ class Puzzle(context: Context, attributeSet: AttributeSet?) : View(context, attr
         linearGradient.setLocalMatrix(mGradientMatrix)
 
         mBitmap =
-            resizeBitmap(BitmapFactory.decodeResource(resources, R.drawable.we), mWidth, mHeight)
+            resizeBitmap(
+                BitmapFactory.decodeResource(resources, R.drawable.default_two),
+                mWidth,
+                mHeight
+            )
         mBackgroundBitmap = getBackgroundBitmap(mBitmap)
         mPuzzleBitmap = getPuzzleBitmap(getBlurBitmap(mBitmap))
     }

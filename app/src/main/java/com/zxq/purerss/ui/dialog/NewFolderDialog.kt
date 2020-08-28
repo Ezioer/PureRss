@@ -24,7 +24,7 @@ class NewFolderDialog(
         KeyBoardUtil.showKeyboard(et_folder)
         tv_ok.setOnClickListener {
             if (et_folder.text.toString().isNotEmpty()) {
-                listener?.success(et_folder.text.toString())
+                listener?.invoke(et_folder.text.toString())
                 dismiss()
             }
         }
@@ -32,12 +32,8 @@ class NewFolderDialog(
         tv_cancel.setOnClickListener { dismiss() }
     }
 
-    private var listener: AddFolderListener? = null
-    fun setListener(l: AddFolderListener) {
-        listener = l
-    }
-
-    interface AddFolderListener {
-        fun success(title: String)
+    private var listener: ((String) -> Unit)? = null
+    fun setListener(success: (String) -> Unit) {
+        listener = success
     }
 }

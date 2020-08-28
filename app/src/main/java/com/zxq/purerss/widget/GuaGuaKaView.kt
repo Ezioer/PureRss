@@ -2,7 +2,6 @@ package com.zxq.purerss.widget
 
 import android.content.Context
 import android.graphics.*
-import android.graphics.Bitmap.createBitmap
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -30,7 +29,7 @@ class GuaGuaKaView(context: Context, attributeSet: AttributeSet?) : View(context
         mTranPaint.setXfermode(PorterDuffXfermode(PorterDuff.Mode.SRC_IN))
         mTranPath = Path()
 
-        mBgBitmap = BitmapFactory.decodeResource(resources, R.drawable.we)
+        mBgBitmap = BitmapFactory.decodeResource(resources, R.drawable.default_two)
         mMaskBitmap =
             Bitmap.createBitmap(mBgBitmap.width, mBgBitmap.height, Bitmap.Config.ARGB_8888)
         mCanvas = Canvas(mMaskBitmap)
