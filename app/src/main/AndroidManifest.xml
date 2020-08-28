@@ -16,9 +16,9 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.MainActivity"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTop"
+            android:configChanges="keyboard|orientation|keyboardHidden|screenSize"
             android:exported="true">
-            <nav-graph android:value="@navigation/navigation" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

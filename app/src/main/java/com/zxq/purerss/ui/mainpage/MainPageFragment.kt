@@ -68,17 +68,12 @@ class MainPageFragment : Fragment() {
                 )
                 findNavController().navigate(action)
             }
+            context!!.putSpValue("isMainPage", 0)
             val onClick = object : MainPageAdapter.FeedClick {
                 override fun onClick(view: View, rss: RSSFeedEntity) {
                     mainViewModel.updateFeeds(rss.seeCount + 1, rss.feedId)
                     val action = MainPageFragmentDirections.actionMainpageToList(
-                        RssFeedInfo(
-                            rss.feedTitle,
-                            rss.feedLink,
-                            rss.feedDesc,
-                            "",
-                            rss.feedId
-                        )
+                        RssFeedInfo(rss.feedTitle, rss.feedLink, rss.feedDesc, "", rss.feedId)
                     )
                     findNavController().navigate(action)
                 }
@@ -166,11 +161,7 @@ class MainPageFragment : Fragment() {
                     if (showDialog) {
                         showDialog = false
                         editDialog = EditFeedsDialog(
-                            context!!,
-                            it,
-                            rssItem!!,
-                            findNavController(),
-                            mainViewModel
+                            context!!, it, rssItem!!, findNavController(), mainViewModel
                         )
                         editDialog?.show()
                     }

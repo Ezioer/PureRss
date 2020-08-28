@@ -78,7 +78,7 @@ dependencies {
     implementation project(":livedatabus")
     
     implementation 'org.greenrobot:eventbus:3.2.0'
-
+    implementation 'com.github.leavesC:EventLiveData:0.1.0'
     implementation files('libs/dom4j-2.0.3.jar')
     implementation files('libs/jaxen-1.2.0.jar')
 }
