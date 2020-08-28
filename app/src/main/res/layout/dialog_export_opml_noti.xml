@@ -22,7 +22,7 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="10dp"
         android:id="@+id/noti"
-        android:text="opml文件可以导入导出rss数据，导出后的文件位置为根目录下的purerss_opml.xml"
+        android:text="opml文件可以导入导出rss数据，文件位于Android/data/com.zxq.purerss/file/purerss_opml.xml，卸载应用会清空该目录，请及时保存"
         android:textAppearance="@style/TextAppearance.Owl.Subtitle1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

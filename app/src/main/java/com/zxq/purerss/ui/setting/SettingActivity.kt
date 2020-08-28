@@ -1,26 +1,29 @@
 package com.zxq.purerss.ui.setting
 
-import android.content.Intent
+import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
-import android.os.Environment
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
+import com.google.android.material.snackbar.Snackbar
+import com.zxq.livedatabus.LiveDataBus
 import com.zxq.purerss.R
-import com.zxq.purerss.data.entity.table.goods
+import com.zxq.purerss.data.MessEvent
 import com.zxq.purerss.databinding.ActivitySettingBinding
 import com.zxq.purerss.ui.dialog.ExportOpmlNotiDialog
+import com.zxq.purerss.ui.dialog.ShortCutsDialog
 import com.zxq.purerss.utils.*
 import kotlinx.android.synthetic.main.activity_setting.*
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import org.greenrobot.eventbus.EventBus
+import java.io.File
 
 class SettingActivity : AppCompatActivity() {
     private val mViewModel: SettingViewModel by viewModels {
         InjectorUtil.getSettingFactory(this)
     }
+    var type = 1
+    private lateinit var mContext: Context
     private val binding: ActivitySettingBinding by contentView(R.layout.activity_setting)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,15 +33,30 @@ class SettingActivity : AppCompatActivity() {
         } else {
             StatusBarUtil.StatusBarDarkMode(this)
         }
+        mContext = this
         binding.apply {
-            setSupportActionBar(toolbar)
-            ctlLayout.title = getString(R.string.setting)
-            ctlLayout.isTitleEnabled = true
-            ctlLayout.setExpandedTitleColor(getColor(R.color.c_008f68))
-            ctlLayout.setCollapsedTitleTextColor(getColor(R.color.c_008f68))
-            toolbar.setNavigationOnClickListener { finish() }
+            mViewModel.list.observe(this@SettingActivity, Observer {
+                if (type == 1) {
+                    val filePath = getExternalFilesDir("opml")!!.getAbsolutePath()
+                    mViewModel.exportOpml(filePath + File.separator + "purerss_opml.xml", it)
+                } else {
+                    val dialog = ShortCutsDialog(mContext, it)
+                    dialog.show()
+                }
+            })
+            tvBack.setOnClickListener { onBackPressed() }
+            mViewModel.success.observe(this@SettingActivity, Observer {
+                if (it) {
+                    Snackbar.make(root, "导出成功", 600).show()
+                }
+            })
             tvExport.setOnClickListener {
+                type = 1
                 exportOpml()
+            }
+            tvAppshortcuts.setOnClickListener {
+                type = 2
+                mViewModel.getAllFeeds()
             }
             if (getSpValue("nightmodel", 0) == 1) {
                 rbDark.isChecked = true
@@ -75,14 +93,8 @@ class SettingActivity : AppCompatActivity() {
                 rbLeft.isChecked = false
                 slide(1)
             }
-            mViewModel.list.observe(this@SettingActivity, Observer {
-                ReadOPML.write(
-                    Environment.getExternalStorageDirectory().getPath() + "/OPML/opml.xml", it
-                )
-            })
         }
     }
-
 
     private var mDialog: ExportOpmlNotiDialog? = null
     private fun exportOpml() {
@@ -107,7 +119,6 @@ class SettingActivity : AppCompatActivity() {
             swipe_right.smoothExpand()
             swipe_left.smoothClose()
         }
-
     }
 
     private fun checkMode(i: Int) {
@@ -118,13 +129,35 @@ class SettingActivity : AppCompatActivity() {
             rb_day.isChecked = false
             rb_dark.isChecked = true
         }
-        lifecycleScope.launch {
-            delay(200)
-            startActivity(Intent(this@SettingActivity, SettingActivity::class.java))
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
-            finish()
+        RippleAnimation.create(if (i == 0) rb_day else rb_dark).setDuration(1000).start()
+        if (i == 0) {
+            StatusBarUtil.StatusBarLightMode(this)
+        } else {
+            StatusBarUtil.StatusBarDarkMode(this)
+        }
+        if (i == 0) nsv.setBackgroundColor(Color.WHITE) else nsv.setBackgroundColor(Color.BLACK)
+        if (i == 0) {
+            tv_theme.setTextColor(Color.BLACK)
+            tv_slide.setTextColor(Color.BLACK)
+            tv_export.setTextColor(Color.BLACK)
+            tv_appshortcuts.setTextColor(Color.BLACK)
+            tv_select.setTextColor(Color.BLACK)
+        } else {
+            tv_theme.setTextColor(Color.WHITE)
+            tv_slide.setTextColor(Color.WHITE)
+            tv_export.setTextColor(Color.WHITE)
+            tv_appshortcuts.setTextColor(Color.WHITE)
+            tv_select.setTextColor(Color.WHITE)
         }
         putSpValue("nightmodel", i)
-        AppCompatDelegate.setDefaultNightMode(if (i == 1) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO)
+        /*    lifecycleScope.launch {
+                delay(1000)
+                startActivity(Intent(this@SettingActivity, SettingActivity::class.java))
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+                finish()
+            }*/
+        LiveDataBus.get<Int>("nightmodel").postValue(i)
+//        AppCompatDelegate.setDefaultNightMode(if (i == 1) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO)
     }
+
 }

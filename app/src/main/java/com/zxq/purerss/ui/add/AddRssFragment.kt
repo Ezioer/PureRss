@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.DiffUtil
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialSharedAxis
 import com.zxq.purerss.R
+import com.zxq.purerss.data.entity.FilePathInfo
 import com.zxq.purerss.data.entity.RssItem
 import com.zxq.purerss.data.entity.RssItemInfo
 import com.zxq.purerss.data.entity.table.RSSFeedEntity
@@ -95,10 +96,21 @@ class AddRssFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCall
 
             val addClick = object : AddFeedClickListener {
                 override fun onClick(view: View, rss: RSSSourceEntity) {
-                    mViewModel.insertRss(RSSFeedEntity(0, rss.feedTitle, rss.feedLink, "", "", 0))
+                    mViewModel.insertRss(
+                        RSSFeedEntity(
+                            0,
+                            rss.feedTitle,
+                            rss.feedLink,
+                            "",
+                            "",
+                            0,
+                            0
+                        )
+                    )
                 }
             }
             val sourceAdapter = SearchSourceListAdapter(addClick)
+            rvSource.itemAnimator = SpringAddItemAnimator()
             rvSource.adapter = sourceAdapter
             sourceAdapter.setDiffCallback(RssSourceDiffCallback())
             rvSource.itemAnimator = SpringAddItemAnimator()
@@ -138,7 +150,17 @@ class AddRssFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCall
                 }
             }
             ivAdd.setOnClickListener {
-                mViewModel.insertRss(RSSFeedEntity(0, info!!.title, link, info!!.subTitle, "", 0))
+                mViewModel.insertRss(
+                    RSSFeedEntity(
+                        0,
+                        info!!.title,
+                        link,
+                        info!!.subTitle,
+                        "",
+                        0,
+                        0
+                    )
+                )
             }
 
             mViewModel.addComplete.observe(this@AddRssFragment, Observer {
@@ -219,20 +241,30 @@ class AddRssFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCall
             var path = ""
             val uri = data?.getData()
             val resolver = activity?.getContentResolver()
-            val cursor = resolver?.query(uri!!, null, null, null, null)
-            if (cursor == null) {
-                path = uri?.path ?: ""
+            if (Build.VERSION.SDK_INT >= 29) {
+                val fileDescriptor =
+                    resolver?.openFileDescriptor(uri!!, "r") ?: return
+                val action =
+                    AddRssFragmentDirections.actionAddToOpml(FilePathInfo("", fileDescriptor))
+                findNavController().navigate(action)
             } else {
-                if (cursor!!.moveToFirst()) {
-                    // 多媒体文件，从数据库中获取文件的真实路径
-                    path = cursor!!.getString(cursor!!.getColumnIndex("_data"))
+                val cursor = resolver?.query(uri!!, null, null, null, null)
+                if (cursor == null) {
+                    path = uri?.path ?: ""
+                } else {
+                    if (cursor!!.moveToFirst()) {
+                        // 多媒体文件，从数据库中获取文件的真实路径
+                        path = cursor!!.getString(cursor!!.getColumnIndex("_data"))
+                    }
                 }
+                if (path.isNullOrEmpty()) {
+                    return
+                }
+                val action = AddRssFragmentDirections.actionAddToOpml(FilePathInfo(path, null))
+                findNavController().navigate(action)
             }
-            if (path.isNullOrEmpty()) {
-                return
-            }
-            val action = AddRssFragmentDirections.actionAddToOpml(path)
-            findNavController().navigate(action)
+
+
         }
     }
 }

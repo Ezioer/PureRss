@@ -10,6 +10,7 @@ import com.zxq.purerss.utils.RssFeed_SAXParser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.FileDescriptor
 
 /**
  *  created by xiaoqing.zhou
@@ -21,6 +22,15 @@ class OpmlViewModel(private val repository: RssFeedRepository) : ViewModel() {
     val opml = MutableLiveData<MutableList<RssOpmlInfo>>()
 
     fun read(filepath: String) {
+        launch({
+            val result = repository.readOpml(filepath)
+            opml.value = result
+        }, {
+
+        })
+    }
+
+    fun read(filepath: FileDescriptor) {
         launch({
             val result = repository.readOpml(filepath)
             opml.value = result

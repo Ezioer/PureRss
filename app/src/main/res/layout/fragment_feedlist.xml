@@ -50,6 +50,8 @@
                     android:layout_marginRight="15dp"
                     tools:text="少数派"
                     android:text="@{feedinfo.title}"
+                    android:maxLines="2"
+                    android:ellipsize="end"
                     android:textAppearance="@style/TextAppearance.Owl.Headline4"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"

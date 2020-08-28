@@ -1,16 +1,15 @@
 package com.zxq.purerss.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
+import com.zxq.livedatabus.LiveDataBus
 import com.zxq.purerss.R
 import com.zxq.purerss.databinding.ActivityMainBinding
-import com.zxq.purerss.ui.add.AddRssFragment
-import com.zxq.purerss.utils.StatusBarUtil
-import com.zxq.purerss.utils.ViewUtils
-import com.zxq.purerss.utils.contentView
-import com.zxq.purerss.utils.getSpValue
+import com.zxq.purerss.utils.*
 
 class MainActivity : AppCompatActivity(), ActivityCompat.OnRequestPermissionsResultCallback {
 
@@ -19,17 +18,37 @@ class MainActivity : AppCompatActivity(), ActivityCompat.OnRequestPermissionsRes
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ViewUtils.settranslucent(this)
-        if (getSpValue("nightmodel", 0) != 1) {
+        val i = getSpValue("nightmodel", 0)
+        if (i != 1) {
             StatusBarUtil.StatusBarLightMode(this)
         } else {
             StatusBarUtil.StatusBarDarkMode(this)
         }
         binding.apply {
+            LiveDataBus.get<Int>("nightmodel").observe(this@MainActivity, Observer {
+                putSpValue("isMainPage", 1)
+                AppCompatDelegate.setDefaultNightMode(if (it == 1) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO)
+            })
             val nav = Navigation.findNavController(this@MainActivity, R.id.nav_host_fragment)
-            if (true) {
-                nav.navigate(R.id.chooserssfragment)
+            if (intent.action == "android.intent.action.shortcuts") {
+                putSpValue("fromshortcuts", 1)
+                val bundle = Bundle().apply {
+                    putLong("id", intent.getLongExtra("feedid", 0))
+                    putString("link", intent.getStringExtra("link"))
+                    putString("title", intent.getStringExtra("title"))
+                    putString("des", intent.getStringExtra("des"))
+                }
+                nav.navigate(R.id.mainpage, bundle)
             } else {
-                nav.navigate(R.id.mainpage)
+                if (getSpValue("isMainPage", 0) == 1) {
+//                    nav.navigate(R.id.mainpage)
+                } else {
+                    if (true) {
+                        nav.navigate(R.id.launch)
+                    } else {
+                        nav.navigate(R.id.mainpage)
+                    }
+                }
             }
         }
     }

@@ -8,6 +8,7 @@ import org.dom4j.Element
 import org.dom4j.io.SAXReader
 import org.dom4j.io.XMLWriter
 import java.io.File
+import java.io.FileDescriptor
 import java.io.FileInputStream
 import java.io.FileWriter
 
@@ -55,11 +56,27 @@ class ReadOPML {
             return list
         }
 
+        fun read(filepath: FileDescriptor): MutableList<RssOpmlInfo>? {
+            val list = mutableListOf<RssOpmlInfo>()
+            val reader = SAXReader()
+            val fis = FileInputStream(filepath)
+            val doc = reader.read(fis)
+            val elm = doc.rootElement
+            val body = elm.selectSingleNode("body") as Element
+            val elementIterator = body.elementIterator("outline")
+            for (item in elementIterator) {
+                val title = item.attributeValue("text")
+                val url = item.attributeValue("xmlUrl")
+                list.add(RssOpmlInfo(title, url))
+            }
+            return list
+        }
+
         /**
          * 写入操作
          * @param fileName
          */
-        fun write(fileName: String?, list: MutableList<RSSFeedEntity>) {
+        fun write(fileName: String?, list: MutableList<RSSFeedEntity>): Boolean {
             val document = DocumentHelper.createDocument() //建立document对象，用来操作xml文件
             val opmlElement: Element = document.addElement("opml") //建立根节点
             opmlElement.addAttribute("version", "1.0")
@@ -89,8 +106,10 @@ class ReadOPML {
                 val writer = XMLWriter(FileWriter(fileName))
                 writer.write(document)
                 writer.close()
+                return true
             } catch (e: Exception) {
                 e.printStackTrace()
+                return false
             }
         }
     }

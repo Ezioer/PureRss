@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.zxq.purerss"
-        minSdkVersion 23
+        minSdkVersion 25
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -62,7 +62,6 @@ dependencies {
 
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
-
     api 'jp.wasabeef:glide-transformations:4.1.0'
 
     implementation "com.squareup.okhttp3:okhttp:4.6.0"
@@ -75,8 +74,11 @@ dependencies {
     implementation 'com.makeramen:roundedimageview:2.3.0'
 
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
-    implementation project(":livedatabus")
-    implementation files('libs/dom4j-2.0.3.jar')
 
+    implementation project(":livedatabus")
+    
+    implementation 'org.greenrobot:eventbus:3.2.0'
+    implementation 'com.github.leavesC:EventLiveData:0.1.0'
+    implementation files('libs/dom4j-2.0.3.jar')
     implementation files('libs/jaxen-1.2.0.jar')
 }

@@ -18,7 +18,7 @@
     <string name="search">搜索</string>
     <string name="unread">标记未读</string>
 
-    <string name="rsslink">输入rss源地址</string>
+    <string name="rsslink">手动添加rss地址或搜索rss名称</string>
     <string name="parse">解析</string>
     <string name="searchyourrss">搜索订阅列表</string>
     <string name="searchtype">搜索当前源</string>
@@ -50,7 +50,7 @@
 
     <string name="openinbrowser">在浏览器中打开</string>
 
-    <string name="nothingfound">手动添加rss地址或搜索rss名称进行搜索</string>
+    <string name="nothingfound">解析失败，请输入正确的rss地址</string>
     <string name="addsuccess">已添加到我的rss，可在首页查看</string>
 
     <string name="empty">空荡荡的</string>

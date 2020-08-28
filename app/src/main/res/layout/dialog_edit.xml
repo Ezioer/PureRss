@@ -99,40 +99,29 @@
     <TextView
         android:text="分组"
         android:id="@+id/tv_folder"
+        android:layout_marginTop="10dp"
         android:textAppearance="@style/TextAppearance.Owl.Subtitle2"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_foldervalue"
-        app:layout_constraintBottom_toBottomOf="@id/tv_foldervalue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:text="全部"
-        android:paddingLeft="10dp"
-        android:id="@+id/tv_foldervalue"
-        android:textAppearance="@style/TextAppearance.Owl.Subtitle1"
-        app:layout_constraintLeft_toRightOf="@id/tv_folder"
         app:layout_constraintTop_toBottomOf="@id/tv_subtitlevalue"
-        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <TextView
         android:text="分组管理"
         android:paddingLeft="10dp"
+        android:layout_marginTop="10dp"
         android:id="@+id/tv_folder_manage"
         android:textColor="@color/c_008f68"
         android:textAppearance="@style/TextAppearance.Owl.Subtitle1"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_subtitlevalue"
-        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_folders"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/tv_foldervalue"
+        app:layout_constraintTop_toBottomOf="@id/tv_folder_manage"
         tools:listitem="@layout/item_folder_dialog_list"
         app:spanCount="2"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"

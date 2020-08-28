@@ -1,5 +1,6 @@
 package com.zxq.purerss.ui.mainpage
 
+import android.content.ComponentName
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,9 +16,11 @@ import com.zxq.purerss.R
 import com.zxq.purerss.data.entity.RssFeedInfo
 import com.zxq.purerss.data.entity.table.RSSFeedEntity
 import com.zxq.purerss.data.entity.table.RSSFolderEntity
+import com.zxq.purerss.data.entity.table.RSSItemEntity
 import com.zxq.purerss.databinding.FragmentNewsBinding
 import com.zxq.purerss.listener.FolderClickListener
 import com.zxq.purerss.listener.RssDiffCallback
+import com.zxq.purerss.ui.RssWidget
 import com.zxq.purerss.ui.dialog.EditFeedsDialog
 import com.zxq.purerss.ui.dialog.FolderDialog
 import com.zxq.purerss.ui.dialog.SearchFeedsDialog
@@ -41,6 +44,8 @@ class MainPageFragment : Fragment() {
     }
     private var showDialog = false
     private var dialogType = 0
+    private var typeId = 1L
+    private var sortId = 1
     private var rssItem: RSSFeedEntity? = null
     private var folderDialog: FolderDialog? = null
     private var editDialog: EditFeedsDialog? = null
@@ -50,16 +55,25 @@ class MainPageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentNewsBinding.inflate(inflater, container, false).apply {
+            if (arguments?.getLong("id") != null && context!!.getSpValue("fromshortcuts", 0) == 1) {
+                context!!.putSpValue("fromshortcuts", 0)
+                val action = MainPageFragmentDirections.actionMainpageToList(
+                    RssFeedInfo(
+                        arguments?.getString("title")!!,
+                        arguments?.getString("link")!!,
+                        arguments?.getString("des")!!,
+                        "",
+                        arguments?.getLong("id")!!
+                    )
+                )
+                findNavController().navigate(action)
+            }
+            context!!.putSpValue("isMainPage", 0)
             val onClick = object : MainPageAdapter.FeedClick {
                 override fun onClick(view: View, rss: RSSFeedEntity) {
+                    mainViewModel.updateFeeds(rss.seeCount + 1, rss.feedId)
                     val action = MainPageFragmentDirections.actionMainpageToList(
-                        RssFeedInfo(
-                            rss.feedTitle,
-                            rss.feedLink,
-                            rss.feedDesc,
-                            "",
-                            rss.feedId
-                        )
+                        RssFeedInfo(rss.feedTitle, rss.feedLink, rss.feedDesc, "", rss.feedId)
                     )
                     findNavController().navigate(action)
                 }
@@ -73,6 +87,14 @@ class MainPageFragment : Fragment() {
                     dialogType = 1
                     showDialog = true
                     mainViewModel.getFolder()
+                } else if (it.itemId == R.id.sort_addtime) {
+                    sortId = 1
+                    context?.putSpValue("sort", 1)
+                    sortFeeds()
+                } else {
+                    sortId = 2
+                    context?.putSpValue("sort", 2)
+                    sortFeeds()
                 }
                 true
             }
@@ -91,7 +113,8 @@ class MainPageFragment : Fragment() {
             tvSearch.setOnClickListener {
                 popSearchDialog()
             }
-            mainViewModel.getFeedsList(1)
+            sortId = context?.getSpValue("sort", 1) ?: 1
+            mainViewModel.getFeedsList(typeId, sortId)
             val adapter = MainPageAdapter(onClick, context?.getSpValue("slide", 0) == 0)
             adapter.setOnDeleteListener(object : MainPageAdapter.OnDeleteListener {
                 override fun delete(item: RSSFeedEntity) {
@@ -117,8 +140,13 @@ class MainPageFragment : Fragment() {
                 override fun onClick(view: View, rss: RSSFolderEntity) {
                     folderDialog?.dismiss()
                     feedBar.title = rss.folderTitle
-                    mainViewModel.getFeedsList(rss.folderId)
+                    typeId = rss.folderId
+                    mainViewModel.getFeedsList(rss.folderId, sortId)
                 }
+            }
+
+            feedBar.setOnClickListener {
+                recyclerview.smoothScrollToPosition(0)
             }
 
             mainViewModel.folders.observe(this@MainPageFragment, Observer {
@@ -133,14 +161,15 @@ class MainPageFragment : Fragment() {
                     if (showDialog) {
                         showDialog = false
                         editDialog = EditFeedsDialog(
-                            context!!,
-                            it,
-                            rssItem!!,
-                            findNavController(),
-                            mainViewModel
+                            context!!, it, rssItem!!, findNavController(), mainViewModel
                         )
                         editDialog?.show()
                     }
+                }
+            })
+            mainViewModel.saveComplete.observe(this@MainPageFragment, Observer {
+                if (it == 1) {
+                    mainViewModel.getFeedsList(typeId, sortId)
                 }
             })
         }
@@ -151,6 +180,10 @@ class MainPageFragment : Fragment() {
         val forward = MaterialSharedAxis.create(MaterialSharedAxis.Y, true)
         exitTransition = forward
         return binding.root
+    }
+
+    private fun sortFeeds() {
+        mainViewModel.getFeedsList(typeId, sortId)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -179,5 +212,16 @@ class MainPageFragment : Fragment() {
     private fun onTypeClick(i: Int) {
         val action = MainPageFragmentDirections.actionMainpageToType(i)
         findNavController().navigate(action)
+    }
+
+    private fun updateWidget(mList: MutableList<RSSItemEntity>) {
+        val intent = Intent("action_update_ui")
+        val index = if (RssWidget.WIDGET_INDEX > mList?.size ?: 0) 0 else mList?.size ?: 0
+        intent.putExtra(RssWidget.WIDGET_TITLE, mList!![index]!!.itemTitle)
+        intent.putExtra(RssWidget.WIDGET_PIC, mList!![index]!!.itemPic)
+        intent.putExtra(RssWidget.WIDGET_DATE, mList!![index]!!.itemDate)
+        intent.putExtra(RssWidget.WIDGET_FEED, mList!![index]!!.feedTitle)
+        intent.setComponent(ComponentName(context!!, RssWidget::class.java))
+        context?.sendBroadcast(intent)
     }
 }

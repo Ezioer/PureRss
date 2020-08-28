@@ -34,22 +34,4 @@ class OpmlAdapter :
         binding?.item = item
         binding?.executePendingBindings()
     }
-
-    private var onCollectListener: OnCollectListener? = null
-    fun setOnCollectListener(l: OnCollectListener) {
-        onCollectListener = l
-    }
-
-    interface OnCollectListener {
-        fun collect(item: RssItem)
-    }
-
-    private var onLaterListener: OnLaterListener? = null
-    fun setOnLaterListener(l: OnLaterListener) {
-        onLaterListener = l
-    }
-
-    interface OnLaterListener {
-        fun later(item: RssItem)
-    }
 }

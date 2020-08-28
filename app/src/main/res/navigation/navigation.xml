@@ -4,7 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
     app:startDestination="@id/mainpage">
-
+    <fragment
+        android:id="@+id/launch"
+        android:name="com.zxq.purerss.ui.LaunchFragment"
+        android:label="fragment_launch"
+        tools:layout="@layout/fragment_launch">
+        <action
+            android:id="@+id/action_launch_to_home"
+            app:destination="@id/mainpage"
+            app:popUpTo="@id/mainpage" />
+        <action
+            android:id="@+id/action_launch_to_choose"
+            app:destination="@id/chooserssfragment"
+            app:popUpTo="@id/mainpage" />
+    </fragment>
     <fragment
         android:id="@+id/chooserssfragment"
         android:name="com.zxq.purerss.ui.chooserss.ChooseRssFragment"
@@ -39,8 +52,10 @@
             android:id="@+id/action_mainpage_to_managefolder"
             app:destination="@id/managefolder"
             app:exitAnim="@null" />
+        <deepLink
+            android:id="@+id/mainpage_deep"
+            app:uri="des://mainpage" />
     </fragment>
-
 
     <fragment
         android:id="@+id/feedlist"
@@ -94,6 +109,9 @@
             android:id="@+id/action_add_to_opml"
             app:destination="@id/opml"
             app:exitAnim="@null" />
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="feedlist.convention" />
     </fragment>
 
     <fragment
@@ -103,7 +121,7 @@
         tools:layout="@layout/fragment_opml">
         <argument
             android:name="filepath"
-            app:argType="string" />
+            app:argType="com.zxq.purerss.data.entity.FilePathInfo" />
     </fragment>
 
     <fragment

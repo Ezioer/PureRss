@@ -7,6 +7,8 @@ import com.zxq.purerss.data.RssFeedRepository
 import com.zxq.purerss.data.entity.SourceRepository
 import com.zxq.purerss.data.entity.table.RSSFeedEntity
 import com.zxq.purerss.data.entity.table.RSSFolderEntity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 /**
@@ -22,9 +24,19 @@ class MainPageViewModel(
     val feedsList = MutableLiveData<MutableList<RSSFeedEntity>>()
     val searchFeedsList = MutableLiveData<MutableList<RSSFeedEntity>>()
     val folders = MutableLiveData<MutableList<RSSFolderEntity>>()
+    val saveComplete = MutableLiveData<Int>()
     fun getFeedsList(id: Long) {
         launch({
             val result = repository.getRssListFromDbX(id)
+            feedsList.value = result
+        }, {
+
+        })
+    }
+
+    fun getFeedsList(id: Long, sortId: Int) {
+        launch({
+            val result = repository.getRssListFromDbX(id, sortId)
             feedsList.value = result
         }, {
 
@@ -76,13 +88,23 @@ class MainPageViewModel(
     fun updateFeeds(title: String, subTitle: String, link: String, parentId: Long, id: Long) {
         launch({
             val result = repository.updateFeed(title, subTitle, link, parentId, id)
+            saveComplete.value = 1
+        }, {
+
+        })
+    }
+
+    fun updateFeeds(count: Int, id: Long) {
+        launch({
+            val result = repository.updateFeed(count, id)
+            saveComplete.value = 1
         }, {
 
         })
     }
 
     private fun launch(block: suspend () -> Unit, error: suspend (Throwable) -> Unit) =
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.Main) {
             try {
                 block()
             } catch (e: Throwable) {
