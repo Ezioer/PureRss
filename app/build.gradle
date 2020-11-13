@@ -5,7 +5,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
     buildToolsVersion "29.0.3"
 
     defaultConfig {
@@ -41,7 +41,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
@@ -72,11 +72,15 @@ dependencies {
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
 
     implementation 'com.makeramen:roundedimageview:2.3.0'
-
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta1'
+    implementation 'com.ypx.yimagepicker:androidx:3.1.4'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
-
+    implementation 'com.github.florent37:shapeofview:1.4.7'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.ycjiang:ImagePreview:2.3.5'
     implementation project(":livedatabus")
-    
+
+    implementation 'com.tencent:mmkv-static:1.2.2'
     implementation 'org.greenrobot:eventbus:3.2.0'
     implementation 'com.github.leavesC:EventLiveData:0.1.0'
     implementation files('libs/dom4j-2.0.3.jar')

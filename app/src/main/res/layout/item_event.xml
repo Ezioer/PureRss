@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.zxq.purerss.data.entity.StatusInfo" />
+
+        <variable
+            name="clickHandle"
+            type="com.zxq.purerss.listener.StatusClickListener" />
+    </data>
+
+    <RelativeLayout
+        android:background="?android:selectableItemBackground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{(v) -> clickHandle.onClick(v, item)}"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_avatar"
+            android:src="@drawable/men"
+            android:layout_width="60dp"
+            android:layout_height="60dp" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            tools:text="Ezio"
+            android:text="@{item.name}"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/iv_avatar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_content"
+            tools:text="This is my first status,Welcome to here,You can like my statue or repost it,you can write your status in there"
+            android:textSize="16sp"
+            android:text="@{item.content}"
+            android:layout_below="@id/tv_name"
+            android:layout_toRightOf="@id/iv_avatar"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_pics"
+            tools:itemCount="9"
+            app:spanCount="3"
+            android:layout_below="@id/tv_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="70dp"
+            tools:listitem="@layout/item_statuspic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            tools:text="2020-10-11"
+            android:textSize="12sp"
+            android:textColor="#999999"
+            android:text="@{item.date}"
+            android:layout_toRightOf="@id/iv_avatar"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="8dp"
+            android:layout_below="@id/rv_pics"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:layout_below="@id/tv_time"
+            android:layout_marginTop="10dp"
+            android:background="@color/root_color"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+    </RelativeLayout>
+</layout>

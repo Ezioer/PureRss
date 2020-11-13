@@ -14,6 +14,7 @@
     <string name="laterread">Later</string>
     <string name="collect">Collect</string>
     <string name="add">Add</string>
+    <string name="send">Send</string>
     <string name="remove">Remove</string>
     <string name="search">Search</string>
     <string name="unread">Mark Unread</string>

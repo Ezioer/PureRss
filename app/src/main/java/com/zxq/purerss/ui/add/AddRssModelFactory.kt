@@ -3,7 +3,7 @@ package com.zxq.purerss.ui.add
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.zxq.purerss.data.RssFeedRepository
-import com.zxq.purerss.data.entity.SourceRepository
+import com.zxq.purerss.data.SourceRepository
 
 /**
  *  created by xiaoqing.zhou

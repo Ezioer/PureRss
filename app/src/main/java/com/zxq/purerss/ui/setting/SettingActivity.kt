@@ -1,6 +1,7 @@
 package com.zxq.purerss.ui.setting
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -9,13 +10,11 @@ import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.zxq.livedatabus.LiveDataBus
 import com.zxq.purerss.R
-import com.zxq.purerss.data.MessEvent
 import com.zxq.purerss.databinding.ActivitySettingBinding
 import com.zxq.purerss.ui.dialog.ExportOpmlNotiDialog
 import com.zxq.purerss.ui.dialog.ShortCutsDialog
 import com.zxq.purerss.utils.*
 import kotlinx.android.synthetic.main.activity_setting.*
-import org.greenrobot.eventbus.EventBus
 import java.io.File
 
 class SettingActivity : AppCompatActivity() {
@@ -28,12 +27,21 @@ class SettingActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (getSpValue("nightmodel", 0) != 1) {
+        /*if (Build.VERSION.SDK_INT >= 28) {
+            //适配P以上的全面屏
+            val lp = window.attributes
+            lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+            window.attributes = lp
+        }*/
+       /* if (getSpValue("nightmodel", 0) != 1) {
             StatusBarUtil.StatusBarLightMode(this)
         } else {
             StatusBarUtil.StatusBarDarkMode(this)
-        }
+        }*/
+        StatusBarUtils.transparencyBar(this)
+//        StatusBarUtils.showOrHide(false,this)
         mContext = this
+
         binding.apply {
             mViewModel.list.observe(this@SettingActivity, Observer {
                 if (type == 1) {
@@ -44,7 +52,11 @@ class SettingActivity : AppCompatActivity() {
                     dialog.show()
                 }
             })
-            tvBack.setOnClickListener { onBackPressed() }
+
+            tvBack.setOnClickListener {
+//                onBackPressed()
+                startActivity(Intent(this@SettingActivity,TestActivity::class.java))
+            }
             mViewModel.success.observe(this@SettingActivity, Observer {
                 if (it) {
                     Snackbar.make(root, "导出成功", 600).show()

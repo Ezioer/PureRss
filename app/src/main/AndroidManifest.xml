@@ -44,6 +44,8 @@
             android:name=".ui.setting.SettingActivity"
             android:theme="@style/settingtheme"
             android:exported="true" />
+        <activity
+            android:name=".ui.setting.TestActivity" />
     </application>
 
 </manifest>

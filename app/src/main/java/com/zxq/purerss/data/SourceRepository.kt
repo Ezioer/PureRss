@@ -1,4 +1,4 @@
-package com.zxq.purerss.data.entity
+package com.zxq.purerss.data
 
 import com.zxq.purerss.data.dao.SourceDao
 import com.zxq.purerss.data.entity.table.RSSSourceEntity
@@ -36,7 +36,9 @@ class SourceRepository private constructor(
 
         fun getInstance(sourceDao: SourceDao) =
             instance ?: synchronized(this) {
-                instance ?: SourceRepository(sourceDao).also { instance = it }
+                instance
+                    ?: SourceRepository(sourceDao)
+                        .also { instance = it }
             }
     }
 }

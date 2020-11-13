@@ -44,6 +44,11 @@
             app:exitAnim="@null" />
 
         <action
+            android:id="@+id/action_mainpage_to_circle"
+            app:destination="@id/circlefriend"
+            app:exitAnim="@null" />
+
+        <action
             android:id="@+id/action_mainpage_to_add"
             app:destination="@id/add"
             app:exitAnim="@null" />
@@ -129,4 +134,19 @@
         android:name="com.zxq.purerss.ui.managefolder.ManageFolderFragment"
         android:label="managefolder"
         tools:layout="@layout/fragment_managefolder"></fragment>
+
+    <fragment android:id="@+id/circlefriend"
+        android:name="com.zxq.purerss.ui.friends.FriendsCircleFragment"
+        android:label="circle"
+        tools:layout="@layout/fragment_friendscircle">
+        <action
+            android:id="@+id/action_list_to_add"
+            app:destination="@id/addstatus"
+            app:exitAnim="@null" />
+    </fragment>
+
+    <fragment android:id="@+id/addstatus"
+        android:name="com.zxq.purerss.ui.friends.AddStatusFragment"
+        android:label="addstatus"
+        tools:layout="@layout/fragment_addstatus"></fragment>
 </navigation>

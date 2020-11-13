@@ -40,7 +40,9 @@
     </style>
 
     <style name="settingtheme" parent="AppTheme">
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+        <item name="android:statusBarColor">@color/c_2a4a66</item>
+<!--        <item name="android:statusBarColor">@android:color/transparent</item>-->
     </style>
 
     <style name="anim_bottom2top">

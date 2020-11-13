@@ -27,12 +27,13 @@ class ManageFolderFragment : Fragment() {
         InjectorUtil.getFolderFactory(this)
     }
     private var mTitle = ""
+    private var binding: FragmentManagefolderBinding? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentManagefolderBinding.inflate(inflater, container, false).apply {
+        binding = FragmentManagefolderBinding.inflate(inflater, container, false).apply {
             mViewModel.getAllFolder()
             toolbar.setNavigationOnClickListener { findNavController().popBackStack() }
             toolbar.setOnMenuItemClickListener {
@@ -52,13 +53,11 @@ class ManageFolderFragment : Fragment() {
             mAdapter.setOnItemChildClickListener { adapter, view, position ->
                 if (view.id == R.id.iv_edit) {
                     val dialog = NewFolderDialog(context!!)
-                    dialog.setListener(object : NewFolderDialog.AddFolderListener {
-                        override fun success(title: String) {
-                            mViewModel.updateFolder(mAdapter.data[position].folderId, title)
-                            mAdapter.data[position].folderTitle = title
-                            mAdapter.notifyItemChanged(position)
-                        }
-                    })
+                    dialog.setListener {
+                        mViewModel.updateFolder(mAdapter.data[position].folderId, it)
+                        mAdapter.data[position].folderTitle = it
+                        mAdapter.notifyItemChanged(position)
+                    }
                     dialog.show()
                 } else {
                     val data = mAdapter.data[position]
@@ -77,6 +76,11 @@ class ManageFolderFragment : Fragment() {
                 mAdapter.addData(RSSFolderEntity(it, mTitle))
             })
         }
-        return binding.root
+        return binding?.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 }

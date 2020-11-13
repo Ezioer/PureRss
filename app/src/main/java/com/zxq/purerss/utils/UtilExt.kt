@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.content.res.Resources
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.TypedValue
 import android.view.View
 import android.widget.EditText
 import com.zxq.purerss.App
@@ -150,6 +151,13 @@ fun View.sp2px(value: Float): Int {
     val spvalue: Float = value * r.displayMetrics.scaledDensity
     return (spvalue + 0.5f).toInt()
 }
+
+val Float.dp
+    get() = TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_DIP,
+        this,
+        Resources.getSystem().displayMetrics
+    )
 
 fun EditText.addOnAfterChange(afterChange: (Editable?) -> Unit) {
     this.addTextChangedListener(object : TextWatcher {

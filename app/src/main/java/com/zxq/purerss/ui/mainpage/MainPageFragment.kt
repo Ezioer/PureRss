@@ -42,6 +42,7 @@ class MainPageFragment : Fragment() {
     private val mainViewModel: MainPageViewModel by viewModels {
         InjectorUtil.getMainFactory(this)
     }
+    private var binding: FragmentNewsBinding? = null
     private var showDialog = false
     private var dialogType = 0
     private var typeId = 1L
@@ -54,7 +55,7 @@ class MainPageFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentNewsBinding.inflate(inflater, container, false).apply {
+        binding = FragmentNewsBinding.inflate(inflater, container, false).apply {
             if (arguments?.getLong("id") != null && context!!.getSpValue("fromshortcuts", 0) == 1) {
                 context!!.putSpValue("fromshortcuts", 0)
                 val action = MainPageFragmentDirections.actionMainpageToList(
@@ -100,7 +101,7 @@ class MainPageFragment : Fragment() {
             }
             toolbar.setOnMenuItemClickListener {
                 if (it.itemId == R.id.addfeed) {
-                    findNavController().navigate(R.id.action_mainpage_to_add)
+                    findNavController().navigate(R.id.action_mainpage_to_circle)
                 }
                 true
             }
@@ -179,7 +180,12 @@ class MainPageFragment : Fragment() {
 
         val forward = MaterialSharedAxis.create(MaterialSharedAxis.Y, true)
         exitTransition = forward
-        return binding.root
+        return binding?.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 
     private fun sortFeeds() {
@@ -216,12 +222,12 @@ class MainPageFragment : Fragment() {
 
     private fun updateWidget(mList: MutableList<RSSItemEntity>) {
         val intent = Intent("action_update_ui")
-        val index = if (RssWidget.WIDGET_INDEX > mList?.size ?: 0) 0 else mList?.size ?: 0
-        intent.putExtra(RssWidget.WIDGET_TITLE, mList!![index]!!.itemTitle)
-        intent.putExtra(RssWidget.WIDGET_PIC, mList!![index]!!.itemPic)
-        intent.putExtra(RssWidget.WIDGET_DATE, mList!![index]!!.itemDate)
-        intent.putExtra(RssWidget.WIDGET_FEED, mList!![index]!!.feedTitle)
-        intent.setComponent(ComponentName(context!!, RssWidget::class.java))
+        val index = if (RssWidget.WIDGET_INDEX > mList.size) 0 else mList.size
+        intent.putExtra(RssWidget.WIDGET_TITLE, mList[index].itemTitle)
+        intent.putExtra(RssWidget.WIDGET_PIC, mList[index].itemPic)
+        intent.putExtra(RssWidget.WIDGET_DATE, mList[index].itemDate)
+        intent.putExtra(RssWidget.WIDGET_FEED, mList[index].feedTitle)
+        intent.component = ComponentName(context!!, RssWidget::class.java)
         context?.sendBroadcast(intent)
     }
 }

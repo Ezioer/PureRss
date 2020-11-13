@@ -8,7 +8,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
-import android.util.Log
 import android.widget.RemoteViews
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.SimpleTarget
@@ -48,7 +47,7 @@ class RssWidget : AppWidgetProvider() {
                 R.layout.rss_widget
             )
 
-            rv.showNext(R.id.avp)
+//            rv.showNext(R.id.avp)
 
             AppWidgetManager.getInstance(context).partiallyUpdateAppWidget(
                 intent.getIntExtra(
@@ -71,7 +70,7 @@ class RssWidget : AppWidgetProvider() {
         views.setTextViewText(R.id.widget_title, title)
         views.setTextViewText(R.id.widget_feed, feed)
         views.setTextViewText(R.id.widget_time, date)
-        views.setOnClickPendingIntent(R.id.iv_next, getPendingIntent(context!!))
+//        views.setOnClickPendingIntent(R.id.iv_next, getPendingIntent(context!!))
         Glide.with(context!!).asBitmap().load(pic).centerCrop()
             .into(object : SimpleTarget<Bitmap?>() {
                 override fun onResourceReady(
@@ -133,7 +132,7 @@ internal fun updateAppWidget(
     val intent = Intent(context, WidgetService::class.java)
     intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
     intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)))
-    views.setRemoteAdapter(R.id.avp, intent)
+//    views.setRemoteAdapter(R.id.avp, intent)
 
     val nextIntent = Intent(
         context,
@@ -146,7 +145,7 @@ internal fun updateAppWidget(
             context, 0, nextIntent,
             PendingIntent.FLAG_UPDATE_CURRENT
         )
-    views.setOnClickPendingIntent(R.id.iv_next, nextPendingIntent)
+//    views.setOnClickPendingIntent(R.id.iv_next, nextPendingIntent)
 
     appWidgetManager.updateAppWidget(appWidgetId, views)
 }

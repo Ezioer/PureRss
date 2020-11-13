@@ -4,8 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zxq.purerss.data.RssFeedRepository
+import com.zxq.purerss.data.SourceRepository
 import com.zxq.purerss.data.entity.RssFeed
-import com.zxq.purerss.data.entity.SourceRepository
 import com.zxq.purerss.data.entity.table.RSSFeedEntity
 import com.zxq.purerss.data.entity.table.RSSSourceEntity
 import com.zxq.purerss.utils.RssFeed_SAXParser

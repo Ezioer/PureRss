@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity(), ActivityCompat.OnRequestPermissionsRes
         super.onCreate(savedInstanceState)
         ViewUtils.settranslucent(this)
         val i = getSpValue("nightmodel", 0)
-        if (i != 1) {
+        if (i == 0) {
             StatusBarUtil.StatusBarLightMode(this)
         } else {
             StatusBarUtil.StatusBarDarkMode(this)
