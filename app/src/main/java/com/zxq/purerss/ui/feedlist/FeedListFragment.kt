@@ -1,9 +1,6 @@
 package com.zxq.purerss.ui.feedlist
 
-import android.content.ComponentName
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,22 +10,18 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DiffUtil
-import androidx.room.Index
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialSharedAxis
-import com.zxq.livedatabus.LiveDataBus
 import com.zxq.purerss.R
 import com.zxq.purerss.data.Constant
 import com.zxq.purerss.data.entity.RssFeedInfo
 import com.zxq.purerss.data.entity.table.RSSItemEntity
 import com.zxq.purerss.databinding.FragmentFeedlistBinding
 import com.zxq.purerss.listener.RssItemDiffCallback
-import com.zxq.purerss.ui.RssWidget
 import com.zxq.purerss.utils.InjectorUtil
 import com.zxq.purerss.utils.SpringAddItemAnimator
 import com.zxq.purerss.utils.getSpValue
 import java.util.concurrent.TimeUnit
-import java.util.logging.Logger
 
 /**
  *  created by xiaoqing.zhou
@@ -41,19 +34,20 @@ class FeedListFragment: Fragment() {
     private val viewM: FeedListViewModel by viewModels {
         InjectorUtil.getFeedsListFactory(this)
     }
+    private var binding: FragmentFeedlistBinding? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentFeedlistBinding.inflate(inflater,container,false).apply {
+        binding = FragmentFeedlistBinding.inflate(inflater, container, false).apply {
             lifecycleOwner = this@FeedListFragment
             mInfo = args.feedinfo
             feedinfo = mInfo
             toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
             viewM.getFeedsList(mInfo!!.link, mInfo!!.id, false)
             val mAdapter = FeedListAdapter(context?.getSpValue("slide", 0) == 0)
-            mAdapter.setOnLaterListener(object: FeedListAdapter.OnLaterListener{
+            mAdapter.setOnLaterListener(object : FeedListAdapter.OnLaterListener {
                 override fun later(item: RSSItemEntity) {
                     viewM.later(item)
                 }
@@ -107,6 +101,11 @@ class FeedListFragment: Fragment() {
         val backward = MaterialSharedAxis.create(MaterialSharedAxis.Y, false)
         returnTransition = backward
         postponeEnterTransition(6L, TimeUnit.MILLISECONDS)
-        return binding.root
+        return binding?.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 }

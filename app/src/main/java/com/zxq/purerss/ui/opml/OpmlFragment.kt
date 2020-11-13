@@ -1,6 +1,5 @@
 package com.zxq.purerss.ui.opml
 
-import android.app.ProgressDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -32,12 +31,13 @@ class OpmlFragment : Fragment() {
     }
     private var filePath: FilePathInfo? = null
     private var mAdapter: OpmlAdapter? = null
+    private var binding: FragmentOpmlBinding? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentOpmlBinding.inflate(inflater, container, false).apply {
+        binding = FragmentOpmlBinding.inflate(inflater, container, false).apply {
             filePath = arg.filepath
             toolbar.setNavigationOnClickListener { findNavController().popBackStack() }
             mAdapter = OpmlAdapter()
@@ -54,7 +54,12 @@ class OpmlFragment : Fragment() {
                 mAdapter?.setDiffNewData(it)
             })
         }
-        return binding.root
+        return binding?.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

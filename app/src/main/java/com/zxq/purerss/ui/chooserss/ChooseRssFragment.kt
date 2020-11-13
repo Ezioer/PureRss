@@ -24,15 +24,16 @@ class ChooseRssFragment: Fragment() {
     val viewM: SaveDBRssViewModel by viewModels {
         InjectorUtil.getRssFeedFactory(this)
     }
+    private var binding: FragmentChooserssBinding? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val bind = FragmentChooserssBinding.inflate(inflater,container,false).apply {
+        binding = FragmentChooserssBinding.inflate(inflater, container, false).apply {
 
             viewM.insertComplete.observe(this@ChooseRssFragment, Observer {
-                if (it){
+                if (it) {
                     findNavController().popBackStack()
                 }
             })
@@ -49,6 +50,11 @@ class ChooseRssFragment: Fragment() {
                 viewM.insertRss((chooseGrid.adapter as ChooseRssAdapter).getSelectList())
             }
         }
-        return bind.root
+        return binding?.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 }

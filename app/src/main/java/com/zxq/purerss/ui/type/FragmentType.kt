@@ -24,8 +24,6 @@ import com.zxq.purerss.ui.feedlist.FeedListFragmentDirections
 import com.zxq.purerss.utils.InjectorUtil
 import com.zxq.purerss.utils.SpringAddItemAnimator
 import com.zxq.purerss.utils.getSpValue
-import kotlinx.android.synthetic.main.fragment_type.*
-import kotlinx.android.synthetic.main.include_status.*
 import java.util.concurrent.TimeUnit
 
 class FragmentType: Fragment() {
@@ -34,12 +32,13 @@ class FragmentType: Fragment() {
     }
     private val args: FragmentTypeArgs by navArgs()
     private var type = 1
+    private var binding: FragmentTypeBinding? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentTypeBinding.inflate(inflater,container,false).apply {
+        binding = FragmentTypeBinding.inflate(inflater, container, false).apply {
             type = args.type
             when (type) {
                 1 -> {
@@ -104,13 +103,18 @@ class FragmentType: Fragment() {
 
         val backward = MaterialSharedAxis.create(MaterialSharedAxis.Y, false)
         returnTransition = backward
-        return binding.root
+        return binding?.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 
     private var mSearchDialog: SearchItemDialog? = null
     private fun showSearchDialog(onClick: ItemTypeClickListener) {
-        if (mSearchDialog == null){
-            mSearchDialog = SearchItemDialog(context!!,viewM,this@FragmentType,type,onClick)
+        if (mSearchDialog == null) {
+            mSearchDialog = SearchItemDialog(context!!, viewM, this@FragmentType, type, onClick)
         }
 
         mSearchDialog?.show()

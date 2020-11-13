@@ -46,12 +46,13 @@ class AddRssFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCall
         InjectorUtil.getAddRssFactory(this)
     }
     private var link = ""
+    private var binding: DialogAddrssBinding? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = DialogAddrssBinding.inflate(inflater, null, false).apply {
+        binding = DialogAddrssBinding.inflate(inflater, null, false).apply {
             lifecycleOwner = this@AddRssFragment
             ivParse.setOnClickListener {
                 val text = etInput.text.toString()
@@ -177,7 +178,12 @@ class AddRssFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCall
 
         val backward = MaterialSharedAxis.create(MaterialSharedAxis.Y, false)
         returnTransition = backward
-        return binding.root
+        return binding?.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 
     private fun addOpml() {

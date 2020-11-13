@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.animation.doOnEnd
 import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
 import androidx.fragment.app.Fragment
@@ -13,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import com.zxq.purerss.R
 import com.zxq.purerss.databinding.FragmentLaunchBinding
 import com.zxq.purerss.utils.PixelUtil
-import kotlinx.coroutines.delay
 
 
 /**
@@ -22,12 +20,13 @@ import kotlinx.coroutines.delay
  *  fun
  */
 class LaunchFragment : Fragment() {
+    private var binding: FragmentLaunchBinding? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentLaunchBinding.inflate(inflater, container, false).apply {
+        binding = FragmentLaunchBinding.inflate(inflater, container, false).apply {
             val list = arrayListOf<SpringAnimation>()
             for (i in 0 until llName.childCount) {
                 val view = llName.getChildAt(i)
@@ -103,6 +102,11 @@ class LaunchFragment : Fragment() {
                 logoAlphaAnim.start()
             }, 500)
         }
-        return binding.root
+        return binding?.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 }

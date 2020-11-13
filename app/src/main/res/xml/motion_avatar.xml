@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        app:constraintSetStart="@+id/start"
+        app:constraintSetEnd="@+id/end"
+        app:motionInterpolator="easeInOut"
+        app:duration="5200">
+        <KeyFrameSet>
+            <KeyCycle
+                app:motionTarget="@+id/iv_avatar1"
+                app:framePosition="10"
+                android:rotationY="22"
+                app:wavePeriod="2"
+                app:waveShape="sin"
+                app:waveOffset="1" />
+            <KeyCycle
+                app:motionTarget="@+id/iv_avatar1"
+                app:framePosition="30"
+                android:rotationX="15"
+                app:wavePeriod="1"
+                app:waveShape="sin"
+                app:waveOffset="0" />
+            <KeyCycle
+                app:motionTarget="@+id/iv_avatar1"
+                app:framePosition="65"
+                android:rotationY="14"
+                app:wavePeriod="1"
+                app:waveShape="sin"
+                app:waveOffset="0" />
+            <KeyCycle
+                app:motionTarget="@+id/iv_avatar1"
+                app:framePosition="92"
+                android:rotationY="0"
+                android:rotationX="2"
+                app:wavePeriod="0"
+                app:waveShape="sin"
+                app:waveOffset="0" />
+            <KeyAttribute
+                app:motionTarget="@+id/iv_avatar1"
+                app:framePosition="50"
+                android:scaleX="1.3"
+                android:scaleY="1.3"
+                android:alpha="1" />
+            <KeyAttribute></KeyAttribute>
+        </KeyFrameSet>
+
+        <OnClick
+            app:targetId="@+id/iv_avatar1"
+            app:clickAction="toggle" />
+    </Transition>
+    <ConstraintSet android:id="@+id/start">
+        <Constraint
+            android:id="@+id/iv_avatar1"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="20dp"
+            android:alpha="0"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:id="@+id/iv_avatar1"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:alpha="0"
+            android:scaleX="1"
+            android:scaleY="1"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="20dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </ConstraintSet>
+</MotionScene>

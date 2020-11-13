@@ -38,12 +38,13 @@ class DetailFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
     }
     private val arg: DetailFragmentArgs by navArgs()
     private var mRssItemInfo: RssItemInfo? = null
+    private var bind: FragmentDetailBinding? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val bind = FragmentDetailBinding.inflate(inflater, container, false).apply {
+        bind = FragmentDetailBinding.inflate(inflater, container, false).apply {
             mRssItemInfo = arg.itemcontent
             lifecycleOwner = this@DetailFragment
             info = mRssItemInfo
@@ -97,7 +98,12 @@ class DetailFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
             duration = 800L
             interpolator = interp
         }
-        return bind.root
+        return bind?.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        bind = null
     }
 
     private fun openInBrowser() {
