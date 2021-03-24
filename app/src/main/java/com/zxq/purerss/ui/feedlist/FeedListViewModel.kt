@@ -44,6 +44,7 @@ class FeedListViewModel(private val repository: RssFeedRepository) : ViewModel()
 
     fun later(item: RSSItemEntity) {
         launch({
+            val currentVersion = "test"
             val result = repository.laterItem(item)
             laterResult.value = result
         }, {
