@@ -170,6 +170,7 @@ public class PileLayout extends ViewGroup {
         }
     }
 
+    //根据x坐标来调整缩放值
     private void adjustScale(View itemView) {
         float scale = 1.0f;
         int position4 = originX.get(4);
@@ -216,7 +217,7 @@ public class PileLayout extends ViewGroup {
                         scrollMode = MODE_HORIZONTAL;
                         return true;
                     } else if (yDistance > xDistance && yDistance > mTouchSlop) {
-                        // 垂直滑动
+                        // 垂直滑动，不做处理
                         scrollMode = MODE_VERTICAL;
                     }
                 }

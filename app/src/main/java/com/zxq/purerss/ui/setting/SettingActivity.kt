@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -33,14 +34,18 @@ class SettingActivity : AppCompatActivity() {
             lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
             window.attributes = lp
         }*/
-       /* if (getSpValue("nightmodel", 0) != 1) {
-            StatusBarUtil.StatusBarLightMode(this)
-        } else {
-            StatusBarUtil.StatusBarDarkMode(this)
-        }*/
-        StatusBarUtils.transparencyBar(this)
+        /* if (getSpValue("nightmodel", 0) != 1) {
+             StatusBarUtil.StatusBarLightMode(this)
+         } else {
+             StatusBarUtil.StatusBarDarkMode(this)
+         }*/
+//        StatusBarUtils.transparencyBar(this)
 //        StatusBarUtils.showOrHide(false,this)
         mContext = this
+        //隐藏导航栏的默认背景颜色，与页面融为一体
+        binding.nsv.setSystemUiVisibility(
+            View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        )
 
         binding.apply {
             mViewModel.list.observe(this@SettingActivity, Observer {

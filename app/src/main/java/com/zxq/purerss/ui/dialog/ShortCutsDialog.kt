@@ -19,7 +19,6 @@ import com.chad.library.adapter.base.listener.OnItemDragListener
 import com.chad.library.adapter.base.listener.OnItemSwipeListener
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.zxq.purerss.R
-import com.zxq.purerss.data.entity.ShortCutsInfo
 import com.zxq.purerss.data.entity.table.RSSFeedEntity
 import com.zxq.purerss.listener.ShortCutsDiffCallback
 import com.zxq.purerss.ui.MainActivity
@@ -136,20 +135,19 @@ class ShortCutsDialog(
         adapter.draggableModule.itemTouchHelperCallback.setDragMoveFlags(ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT or ItemTouchHelper.UP or ItemTouchHelper.DOWN)
         tv_addcuts.setOnClickListener {
             val selectDialog = SelectShortCutsDialog(mContext, mList, feedList)
-            selectDialog.setListener(object : SelectShortCutsDialog.OnSelectResultListener {
-                override fun select(list: MutableList<RSSFeedEntity>) {
-                    mList.clear()
-                    for (item in list) {
-                        val intent = Intent(mContext, MainActivity::class.java)
-                        intent.putExtra("feedid", item.feedId)
-                        intent.putExtra("link", item.feedLink)
-                        intent.putExtra("title", item.feedTitle)
-                        intent.putExtra("des", item.feedDesc)
-                        intent.setAction("android.intent.action.shortcuts")
-                        mList.add(
-                            ShortcutInfo.Builder(mContext, "ID${list.indexOf(item)}")
-                                .setLongLabel(item.feedTitle)
-                                .setShortLabel(item.feedTitle)
+            selectDialog.setListener {
+                mList.clear()
+                for (item in it) {
+                    val intent = Intent(mContext, MainActivity::class.java)
+                    intent.putExtra("feedid", item.feedId)
+                    intent.putExtra("link", item.feedLink)
+                    intent.putExtra("title", item.feedTitle)
+                    intent.putExtra("des", item.feedDesc)
+                    intent.setAction("android.intent.action.shortcuts")
+                    mList.add(
+                        ShortcutInfo.Builder(mContext, "ID${it.indexOf(item)}")
+                            .setLongLabel(item.feedTitle)
+                            .setShortLabel(item.feedTitle)
                                 .setIntent(intent)
                                 .setIcon(Icon.createWithResource(mContext, R.mipmap.ic_launcher))
                                 .build()
@@ -157,7 +155,7 @@ class ShortCutsDialog(
                     }
                     adapter.notifyDataSetChanged()
                 }
-            })
+
             selectDialog.show()
         }
 

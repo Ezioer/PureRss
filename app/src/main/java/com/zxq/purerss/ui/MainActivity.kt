@@ -9,7 +9,10 @@ import androidx.navigation.Navigation
 import com.zxq.livedatabus.LiveDataBus
 import com.zxq.purerss.R
 import com.zxq.purerss.databinding.ActivityMainBinding
-import com.zxq.purerss.utils.*
+import com.zxq.purerss.utils.StatusBarUtil
+import com.zxq.purerss.utils.contentView
+import com.zxq.purerss.utils.getSpValue
+import com.zxq.purerss.utils.putSpValue
 
 class MainActivity : AppCompatActivity(), ActivityCompat.OnRequestPermissionsResultCallback {
 
@@ -17,7 +20,7 @@ class MainActivity : AppCompatActivity(), ActivityCompat.OnRequestPermissionsRes
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ViewUtils.settranslucent(this)
+//        ViewUtils.settranslucent(this)
         val i = getSpValue("nightmodel", 0)
         if (i == 0) {
             StatusBarUtil.StatusBarLightMode(this)

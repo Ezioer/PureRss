@@ -35,6 +35,10 @@ import com.zxq.purerss.utils.SpringAddItemAnimator
 import com.zxq.purerss.utils.getSpValue
 import com.zxq.purerss.utils.putSpValue
 import kotlinx.android.synthetic.main.fragment_friendscircle.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class FriendsCircleFragment : Fragment() {
@@ -55,6 +59,11 @@ class FriendsCircleFragment : Fragment() {
                 findNavController().navigate(R.id.action_list_to_add, null, null, extras)
             }
             lifecycleOwner = this@FriendsCircleFragment
+            MainScope().launch(Dispatchers.IO) {
+                withContext(Dispatchers.IO) {
+                    ivTest.setImageResource(R.drawable.men)
+                }
+            }
             viewM.getAllStatus()
             val mAdapter = StatusListAdapter()
             // 侧滑监听

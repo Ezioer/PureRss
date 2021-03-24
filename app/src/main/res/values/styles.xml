@@ -5,10 +5,13 @@
         <item name="colorPrimary">@color/c_008f68</item>
         <item name="colorPrimaryDark">@color/root_color</item>
         <item name="colorAccent">@color/c_008f68</item>
+        <!--        导航栏小横条透明-->
         <item name="android:navigationBarColor">@android:color/transparent</item>
-<!--        <item name="android:statusBarColor">@android:color/transparent</item>-->
+        <item name="android:statusBarColor">@android:color/transparent</item>
 
-        <item name="bottomAppBarStyle">@style/Widget.MaterialComponents.BottomAppBar.PrimarySurface</item>
+        <item name="bottomAppBarStyle">
+            @style/Widget.MaterialComponents.BottomAppBar.PrimarySurface
+        </item>
         <item name="bottomSheetStyle">@style/Widget.MaterialComponents.BottomSheet.Modal</item>
         <item name="navigationViewStyle">@style/Widget.Reply.NavigationView</item>
         <!--Material type attributes-->
@@ -40,9 +43,14 @@
     </style>
 
     <style name="settingtheme" parent="AppTheme">
-        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
-        <item name="android:statusBarColor">@color/c_2a4a66</item>
-<!--        <item name="android:statusBarColor">@android:color/transparent</item>-->
+        //全屏模式，会隐藏状态栏，下滑显示，会自动隐藏
+        <!--        <item name="android:windowFullscreen">true</item>-->
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        //状态栏透明，布局会显示到状态栏里面去
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <!--                <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>-->
+        <!--                <item name="android:statusBarColor">@color/c_2a4a66</item>-->
+        <!--        <item name="android:statusBarColor">@android:color/transparent</item>-->
     </style>
 
     <style name="anim_bottom2top">

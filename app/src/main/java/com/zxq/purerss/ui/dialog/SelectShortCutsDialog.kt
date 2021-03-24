@@ -6,17 +6,9 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import androidx.navigation.NavController
 import com.zxq.purerss.R
-import com.zxq.purerss.data.entity.ShortCutsInfo
 import com.zxq.purerss.data.entity.table.RSSFeedEntity
-import com.zxq.purerss.data.entity.table.RSSFolderEntity
-import com.zxq.purerss.listener.FolderClickListener
-import com.zxq.purerss.listener.RssFolderDiffCallback
 import com.zxq.purerss.listener.SelectCutsItemDiffCallback
-import com.zxq.purerss.listener.ShortCutsDiffCallback
-import kotlinx.android.synthetic.main.dialog_appshortcuts.*
-import kotlinx.android.synthetic.main.dialog_folder.*
 import kotlinx.android.synthetic.main.dialog_folder.tv_ok
 import kotlinx.android.synthetic.main.dialog_selectshortcuts.*
 
@@ -35,7 +27,7 @@ class SelectShortCutsDialog(
 
     private fun initView() {
         tv_ok.setOnClickListener {
-            listener?.select(feedList.filter { it.state ?: true }.toMutableList())
+            listener?.invoke(feedList.filter { it.state ?: true }.toMutableList())
             dismiss()
         }
 
@@ -48,12 +40,12 @@ class SelectShortCutsDialog(
 
     }
 
-    private var listener: OnSelectResultListener? = null
-    fun setListener(l: OnSelectResultListener) {
-        listener = l
+    private var listener: ((MutableList<RSSFeedEntity>) -> Unit)? = null
+    fun setListener(select: (MutableList<RSSFeedEntity>) -> Unit) {
+        listener = select
     }
 
-    interface OnSelectResultListener {
+    /*interface OnSelectResultListener {
         fun select(list: MutableList<RSSFeedEntity>)
-    }
+    }*/
 }

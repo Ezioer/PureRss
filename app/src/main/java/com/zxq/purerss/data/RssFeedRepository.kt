@@ -10,6 +10,8 @@ import com.zxq.purerss.data.entity.table.*
 import com.zxq.purerss.utils.DateUtils
 import com.zxq.purerss.utils.ReadOPML
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import java.io.FileDescriptor
 
@@ -253,9 +255,9 @@ class RssFeedRepository private constructor(
 
     suspend fun getRssItemFromDB(id: Long): MutableList<RSSItemEntity> =
         withContext(Dispatchers.IO) {
+            delay(10000)
             itemDao.selectById(id)
         }
-
 
     suspend fun getres(id: Long): MutableList<RSSItemEntity> {
         val result = withContext(Dispatchers.IO) {
@@ -346,7 +348,8 @@ class RssFeedRepository private constructor(
         }
 
     suspend fun deleteFeed(item: RSSFeedEntity) = withContext(Dispatchers.IO) {
-        feedDao.deleteFeed(item.feedId)
+        async { feedDao.deleteFeed(item.feedId) }
+
         itemDao.deleteById(item.feedId)
     }
 

@@ -39,6 +39,7 @@ abstract class DataBase : RoomDatabase() {
             return Room.databaseBuilder(
                 context.applicationContext,
                 DataBase::class.java,
+
                 "purerss_db"
             ).addCallback(object : RoomDatabase.Callback() {
                 override fun onCreate(db: SupportSQLiteDatabase) {
