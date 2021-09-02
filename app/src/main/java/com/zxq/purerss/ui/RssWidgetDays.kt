@@ -15,15 +15,16 @@ import com.bumptech.glide.request.transition.Transition
 import com.zxq.purerss.R
 import com.zxq.purerss.utils.getSpValue
 import com.zxq.purerss.utils.putSpValue
+import java.util.*
 
 
 /**
  * Implementation of App Widget functionality.
  */
-class RssWidget : AppWidgetProvider() {
+class RssWidgetDays : AppWidgetProvider() {
     companion object {
         val NEXT_ACTION = "NEXT"
-        var ACTION_UPDATE_UI = "action_update_ui"
+        var ACTION_UPDATE_UI = "action_update_ui_days"
         var WIDGET_TITLE = "widget_title"
         var WIDGET_DATE = "widget_date"
         var WIDGET_FEED = "widget_feed"
@@ -87,7 +88,7 @@ class RssWidget : AppWidgetProvider() {
                     transition: Transition<in Bitmap?>?
                 ) {
                     views.setImageViewBitmap(R.id.widget_pic, resource)
-                    val componentName = ComponentName(context, RssWidget::class.java)
+                    val componentName = ComponentName(context, RssWidgetDays::class.java)
                     AppWidgetManager.getInstance(context).updateAppWidget(componentName, views)
                 }
             })
@@ -97,7 +98,7 @@ class RssWidget : AppWidgetProvider() {
         WIDGET_INDEX++
         val intent = Intent()
         //注意这个intent构造的是显式intent，直接将这个广播发送给MyAppWidgetProvider
-        intent.setClass(context, RssWidget::class.java)
+        intent.setClass(context, RssWidgetDays::class.java)
         intent.addCategory(Intent.CATEGORY_ALTERNATIVE)
         val pendingIntent =
             PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
@@ -138,9 +139,10 @@ class RssWidget : AppWidgetProvider() {
     ) {
         views = RemoteViews(
             context.packageName,
-            R.layout.rss_widget
+            R.layout.rss_widge_days
         )
-
+        views?.setTextViewText(R.id.widget_text_week, getWeek())
+        views?.setTextViewText(R.id.widget_text_day, getDays())
         drawViews(context)
         val intent = Intent(context, WidgetService::class.java)
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
@@ -149,7 +151,7 @@ class RssWidget : AppWidgetProvider() {
 
         val nextIntent = Intent(
             context,
-            RssWidget::class.java
+            RssWidgetDays::class.java
         )
         nextIntent.action = RssWidget.NEXT_ACTION
         nextIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
@@ -165,8 +167,45 @@ class RssWidget : AppWidgetProvider() {
 
     fun drawViews(context: Context) {
         //绘制图片
-        var bitmapclock = DrawUtils.drawClock(context, 0)
-        //更新图片
-        views?.setImageViewBitmap(R.id.widget_pic, bitmapclock)
+//        var bitmapclock = DrawUtils.drawClock(context,2)
+//        更新图片
+//        views?.setImageViewBitmap(R.id.widget_pic_days, bitmapclock)
+    }
+
+    fun getWeek(): String {
+        val calendar = Calendar.getInstance()
+        val weeks = calendar.get(Calendar.DAY_OF_WEEK)
+        var week = ""
+        when (weeks) {
+            1 -> {
+                week = "Sun"
+            }
+            2 -> {
+                week = "Mon"
+            }
+            3 -> {
+                week = "Tue"
+            }
+            4 -> {
+                week = "Wed"
+            }
+            5 -> {
+                week = "Thu"
+            }
+            6 -> {
+                week = "Fri"
+            }
+            7 -> {
+                week = "Sat"
+            }
+            //绘制日期
+        }
+        return week
+    }
+
+    fun getDays(): String {
+        val calendar = Calendar.getInstance()
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        return day.toString()
     }
 }

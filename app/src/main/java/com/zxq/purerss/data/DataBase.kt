@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.zxq.purerss.data.dao.*
 import com.zxq.purerss.data.entity.table.*
@@ -45,6 +46,12 @@ abstract class DataBase : RoomDatabase() {
                 override fun onCreate(db: SupportSQLiteDatabase) {
                     super.onCreate(db)
                 }
+            }).addMigrations(object : Migration(1, 2) {
+                override fun migrate(database: SupportSQLiteDatabase) {
+                    //数据库从1升级到2时需要执行的操作，比如给某个表增加字段或增加某个表等等
+                    database.execSQL("")
+                }
+
             }).build()
         }
     }

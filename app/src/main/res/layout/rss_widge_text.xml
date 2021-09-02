@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/bg_widget_trans"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/widget_pic_text"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:scaleType="centerCrop" />
+
+    <!--<RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@id/widget_pic"
+        android:background="#40000000"
+        android:gravity="bottom">
+
+        <TextView
+            android:id="@+id/widget_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="ssssssssssssssssssssssssssssssssssssssssssssssss"
+            android:textAppearance="@style/TextAppearance.Owl.Headline7"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/widget_feed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/widget_title"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="10dp"
+            android:text="数字时代"
+            android:textAppearance="@style/TextAppearance.Owl.Subtitle2"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/widget_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/widget_title"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toRightOf="@id/widget_feed"
+            android:text="07-16"
+            android:textAppearance="@style/TextAppearance.Owl.Subtitle2"
+            android:textColor="@color/white" />-->
+
+    <!-- <ImageView
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_below="@id/widget_title"
+         android:layout_alignParentRight="true"
+         android:layout_marginTop="2dp"
+         android:id="@+id/iv_next"
+         android:layout_marginRight="10dp"
+         android:paddingLeft="10dp"
+         android:paddingTop="4dp"
+         android:paddingRight="10dp"
+         android:paddingBottom="4dp"
+         android:src="@drawable/more_than_64px" />-->
+    <!--    </RelativeLayout>-->
+    <!--<LinearLayout
+        android:id="@+id/ll_root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <StackView
+            android:id="@+id/avp"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_weight="1"
+            android:autoStart="true"
+            android:flipInterval="5000"
+            android:loopViews="true" />
+    </LinearLayout>-->
+
+    <!-- <RelativeLayout
+         android:visibility="gone"
+         android:id="@+id/rl_root"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_alignBottom="@id/ll_root"
+         android:background="#60000000"
+         android:gravity="bottom">
+
+         <Button
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_alignParentRight="true"
+             android:layout_marginTop="2dp"
+             android:id="@+id/iv_next"
+             android:layout_marginRight="10dp"
+             android:paddingLeft="10dp"
+             android:paddingTop="4dp"
+             android:paddingRight="10dp"
+             android:paddingBottom="4dp" />
+     </RelativeLayout>-->
+</RelativeLayout>

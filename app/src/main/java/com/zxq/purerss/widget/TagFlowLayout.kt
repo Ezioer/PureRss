@@ -22,12 +22,18 @@ class TagFlowLayout(context: Context, attributes: AttributeSet?) : ViewGroup(con
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val widthModel = MeasureSpec.getMode(widthMeasureSpec)
+        //父view期待的宽度
         val widthSize = MeasureSpec.getSize(widthMeasureSpec)
         val heightModel = MeasureSpec.getMode(heightMeasureSpec)
+        //父view期待的高度
         val heightSize = MeasureSpec.getSize(heightMeasureSpec)
+        //最终要设置的宽度
         var wWidth = 0
+        //最终要设置的高度
         var wHeight = 0
+        //一行的宽度
         var lineW = 0
+        //一行的高度
         var lineH = 0
 
         var marginLayoutParams: MarginLayoutParams? = null
@@ -35,7 +41,9 @@ class TagFlowLayout(context: Context, attributes: AttributeSet?) : ViewGroup(con
         for (i in 0 until count) {
             var child = getChildAt(i)
             if (child.visibility == View.GONE) {
+                //如果当前子view不可见，则不管，继续下一个子view的测量
                 if (i == count - 1) {
+                    //如果最后一个子view是不可见状态，宽取当前最大的宽和当前行的宽最大值
                     wWidth = Math.max(lineW, wWidth)
                     wHeight += lineH
                 }
@@ -73,9 +81,16 @@ class TagFlowLayout(context: Context, attributes: AttributeSet?) : ViewGroup(con
         )
     }
 
+    //总共行数
     private var mLines = mutableListOf<MutableList<View>>()
+
+    //每一行的view
     private var lineViews = mutableListOf<View>()
+
+    //每一行的宽
     private var mLineHeights = mutableListOf<Int>()
+
+    //每一行的高
     private var mLineWidth = mutableListOf<Int>()
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
         lineViews.clear()
@@ -98,7 +113,7 @@ class TagFlowLayout(context: Context, attributes: AttributeSet?) : ViewGroup(con
             val childW = child.measuredWidth
             val childH = child.measuredHeight
             if (lineW + childW + lp.leftMargin + lp.rightMargin > wWidth - paddingLeft - paddingRight) {
-                //新启一行
+                //新启一行，将前一行的行宽和行高存进数组
                 mLineHeights.add(lineH)
                 mLineWidth.add(lineW)
                 mLines.add(lineViews)
@@ -112,8 +127,10 @@ class TagFlowLayout(context: Context, attributes: AttributeSet?) : ViewGroup(con
             lineViews.add(child)
         }
 
+        //将最后一行的行宽和行高存进数组
         mLineHeights.add(lineH)
         mLineWidth.add(lineW)
+        //将最后一行的子view数组存进数组
         mLines.add(lineViews)
         for (i in mLines.indices) {
             val views = mLines[i]
@@ -123,6 +140,7 @@ class TagFlowLayout(context: Context, attributes: AttributeSet?) : ViewGroup(con
             leftStart = if (!isCenter) {
                 paddingLeft
             } else {
+                //将当前子view居中
                 (wWidth - currentW) / 2 + paddingLeft
             }
             for (view in views) {
@@ -136,7 +154,7 @@ class TagFlowLayout(context: Context, attributes: AttributeSet?) : ViewGroup(con
                 //在一行内，左边距是累加的
                 leftStart += view.measuredWidth + lp.leftMargin + lp.rightMargin
             }
-            //新启一行后，距顶骨距离需要累加之前行的高度
+            //新启一行后，距顶部距离需要累加之前行的高度
             topStart += lineH
         }
     }

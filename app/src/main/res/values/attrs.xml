@@ -33,4 +33,13 @@
         <attr name="scaleStep" format="float" />
         <attr name="displayCount" format="float" />
     </declare-styleable>
+
+    <declare-styleable name="InnerRules">
+        <attr name="lineColor" format="color" />
+        <attr name="pointColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="RotateIcon">
+        <attr name="icon_drawable" format="reference"></attr>
+    </declare-styleable>
 </resources>

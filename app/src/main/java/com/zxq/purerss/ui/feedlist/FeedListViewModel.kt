@@ -11,7 +11,6 @@ import com.zxq.purerss.data.RssFeedRepository
 import com.zxq.purerss.data.entity.table.RSSItemEntity
 import com.zxq.purerss.utils.RssFeed_SAXParser
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -43,7 +42,9 @@ class FeedListViewModel(private val repository: RssFeedRepository) : ViewModel()
     }
 
     fun later(item: RSSItemEntity) {
+
         launch({
+            val currentVersion = "test"
             val result = repository.laterItem(item)
             laterResult.value = result
         }, {
@@ -70,11 +71,16 @@ class FeedListViewModel(private val repository: RssFeedRepository) : ViewModel()
         //默认是主线程，可以指定为io线程
         viewModelScope.launch(Dispatchers.Main) {
             //launch或者async都是开启一个协程，切换线程
-            val result = async { repository.getRssItemFromDB(id) }
+            val result = repository.getRssItemFromDB(112L)
+            launch {
+                //开启一个协程把获取到的数据存到数据库
+            }
+
+//            val result = launch { repository.getRssItemFromDB(112L) }
             //开启一个协程后都是异步操作，后面的操作会马上执行
-            val data = async { repository.getRssItemFromDB(id) }
+//            val data = async { repository.getRssItemFromDB(id) }
             //async可以异步请求最后合并数据
-            val info = result.await() + data.await()
+//            val info = result.await() + data.await()
             Toast.makeText(
                 App.instance,
                 "currentthrea=" + Thread.currentThread(),
@@ -146,10 +152,25 @@ class FeedListViewModel(private val repository: RssFeedRepository) : ViewModel()
         viewModelScope.launch {
             try {
                 var result = block(1)
-                var i = 9
+                var i = result
             } catch (e: Throwable) {
                 error(e)
             }
+        }
+    }
+
+    inline fun hello(preA: () -> Unit) {
+        print("hello")
+        //preA不能在类似于runonuithread里面进行间接调用，要想调用需要加crossinline
+        //此时会导致lambda函数中的return无法确定结束哪个方法，所以此时lambda函数中不能有return语句
+        preA()
+    }
+
+    fun main() {
+        hello {
+            print("prea")
+            //此处的return结束的不是hello，而是最外层的main
+            return
         }
     }
 
@@ -158,6 +179,11 @@ class FeedListViewModel(private val repository: RssFeedRepository) : ViewModel()
             val i = 9
             return par.toString()
         })
+
+        launch11 {
+            val i = 9
+            it.toString()
+        }
     }
 
     suspend fun getData() {
