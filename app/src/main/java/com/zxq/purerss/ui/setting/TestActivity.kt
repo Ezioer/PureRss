@@ -1,5 +1,9 @@
 package com.zxq.purerss.ui.setting
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.zxq.purerss.R
@@ -11,6 +15,26 @@ class TestActivity : AppCompatActivity() {
         setContentView(R.layout.activity_test)
 //        val shootView = findViewById<ShootView>(R.id.shootview)
         val clockView = findViewById<RotateIconView>(R.id.rulerview)
+        val aniOne = ObjectAnimator.ofFloat(clockView, "degreeY", 0f, -45f)
+        aniOne.duration = 1000
+        aniOne.startDelay = 500
+        val aniTwo = ObjectAnimator.ofFloat(clockView, "degreeZ", 0f, 270f)
+        aniTwo.duration = 10000
+        aniTwo.startDelay = 500
+
+        val aniThree = ObjectAnimator.ofFloat(clockView, "fixDegreeY", 0f, 30f)
+        aniThree.duration = 500
+        aniThree.startDelay = 500
+        var animatorSet = AnimatorSet()
+        animatorSet.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator?) {
+                super.onAnimationEnd(animation)
+                clockView.reset()
+                animatorSet.start()
+            }
+        })
+        animatorSet.playSequentially(aniOne, aniTwo, aniThree)
+        animatorSet.start()
         /* clockView.setScaleCallback(object: RulerView.ScaleCallback{
              override fun scaleValue(scale: Float) {
                  tv_scale.text = "${scale / 10}"

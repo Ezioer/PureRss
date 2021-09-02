@@ -57,14 +57,43 @@ class RotateIconView @JvmOverloads constructor(
         canvas?.save()
 
         camera?.save() // 保存 Camera 的状态
-        camera?.rotateY(45f) // 旋转 Camera 的三维空间
         canvas?.translate(centerX.toFloat(), centerY.toFloat()) // 旋转之后把投影移动回来
+        canvas?.rotate(-degreeZ)//转动270° 顺时针为正方向
+        camera?.rotateY(degreeY) // 旋转 Camera 的三维空间
         camera?.applyToCanvas(canvas) // 把旋转投影到 Canvas
+        mPaint.color = Color.GREEN
+        canvas?.drawRect(0f, -centerY.toFloat(), centerX.toFloat(), centerY.toFloat(), mPaint)
+        canvas?.clipRect(0f, -centerY.toFloat(), centerX.toFloat(), centerY.toFloat())
+        canvas?.rotate(degreeZ)
         canvas?.translate(-centerX.toFloat(), -centerY.toFloat()) // 旋转之前把绘制内容移动到轴心（原点）
         camera?.restore() // 恢复 Camera 的状态
 
         canvas?.drawBitmap(bitmap!!, bitmapX.toFloat(), bitmapY.toFloat(), mPaint)
         canvas?.restore()
+
+//        return
+        //画不变换的另一半
+        canvas?.save()
+        camera?.save()
+        canvas?.translate(centerX.toFloat(), centerY.toFloat())
+        canvas?.rotate(-degreeZ)
+        //计算裁切参数时清注意，此时的canvas的坐标系已经移动
+        canvas?.clipRect(-centerX, -centerY, 0, centerY)
+        //此时的canvas的坐标系已经旋转，所以这里是rotateY
+        camera?.rotateY(fixDegreeY)
+        camera?.applyToCanvas(canvas)
+        canvas?.rotate(degreeZ)
+        canvas?.translate(-centerX.toFloat(), -centerY.toFloat())
+        camera?.restore()
+        canvas?.drawBitmap(bitmap!!, bitmapX.toFloat(), bitmapY.toFloat(), mPaint)
+        canvas?.restore()
+    }
+
+    fun reset() {
+        fixDegreeY = 0f
+        degreeY = 0f
+        fixDegreeY = 0f
+        invalidate()
     }
 
     fun setFixDegreeY(fixDegreeY: Float) {
