@@ -57,5 +57,18 @@ class GuaGuaKaView(context: Context, attributeSet: AttributeSet?) : View(context
         super.onDraw(canvas)
         canvas?.drawBitmap(mBgBitmap, 0f, 0f, null)
         canvas?.drawBitmap(mMaskBitmap, 0f, 0f, null)
+        val paints = Paint()
+        paints.style = Paint.Style.STROKE
+        canvas?.save()
+        //保存当前画布的设置，用于一些特殊的绘制，比如旋转画布等，重置后不影响接下来的正常绘制
+        paints.pathEffect = DashPathEffect(floatArrayOf(1f, 1f), 0f)
+        canvas?.drawCircle(0f, 0f, 10f, paints)
+        canvas?.restore()
+        //重置画布的设置为初始值
+        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.men)
+        val bitmapShader = BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
+        paints.setShader(bitmapShader)
+        //绘制带圆角的bitmap
+        canvas?.drawRoundRect(0f, 0f, 100f, 100f, 5f, 5f, paints)
     }
 }

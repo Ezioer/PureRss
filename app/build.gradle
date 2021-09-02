@@ -4,6 +4,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
+apply plugin: 'my-local-plu'
 android {
     compileSdkVersion 30
     buildToolsVersion "29.0.3"
@@ -172,4 +173,7 @@ dependencies {
     implementation 'com.github.leavesC:EventLiveData:0.1.0'
     implementation files('libs/dom4j-2.0.3.jar')
     implementation files('libs/jaxen-1.2.0.jar')
+    implementation 'com.guolindev.permissionx:permissionx:1.5.0'
+    implementation 'com.android.support:palette-v7:30.0.0'
+    compile 'com.yanzhikai:BooheeRuler:0.0.7'
 }

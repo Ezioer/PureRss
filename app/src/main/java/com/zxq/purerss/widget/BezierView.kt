@@ -14,12 +14,12 @@ import com.zxq.purerss.utils.PixelUtil
  *  fun
  */
 class BezierView(context: Context, attributeSet: AttributeSet?) : View(context, attributeSet) {
-    private lateinit var paint: Paint
+    private var paint: Paint
     private var centerX = 0
     private var centerY = 0
-    private lateinit var start: PointF
-    private lateinit var end: PointF
-    private lateinit var control: PointF
+    private var start: PointF
+    private var end: PointF
+    private var control: PointF
     private var mAnima: ValueAnimator? = null
 
     init {

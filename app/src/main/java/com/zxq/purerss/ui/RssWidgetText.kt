@@ -20,10 +20,10 @@ import com.zxq.purerss.utils.putSpValue
 /**
  * Implementation of App Widget functionality.
  */
-class RssWidget : AppWidgetProvider() {
+class RssWidgetText : AppWidgetProvider() {
     companion object {
         val NEXT_ACTION = "NEXT"
-        var ACTION_UPDATE_UI = "action_update_ui"
+        var ACTION_UPDATE_UI = "action_update_ui_text"
         var WIDGET_TITLE = "widget_title"
         var WIDGET_DATE = "widget_date"
         var WIDGET_FEED = "widget_feed"
@@ -87,7 +87,7 @@ class RssWidget : AppWidgetProvider() {
                     transition: Transition<in Bitmap?>?
                 ) {
                     views.setImageViewBitmap(R.id.widget_pic, resource)
-                    val componentName = ComponentName(context, RssWidget::class.java)
+                    val componentName = ComponentName(context, RssWidgetText::class.java)
                     AppWidgetManager.getInstance(context).updateAppWidget(componentName, views)
                 }
             })
@@ -97,7 +97,7 @@ class RssWidget : AppWidgetProvider() {
         WIDGET_INDEX++
         val intent = Intent()
         //注意这个intent构造的是显式intent，直接将这个广播发送给MyAppWidgetProvider
-        intent.setClass(context, RssWidget::class.java)
+        intent.setClass(context, RssWidgetText::class.java)
         intent.addCategory(Intent.CATEGORY_ALTERNATIVE)
         val pendingIntent =
             PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
@@ -138,7 +138,7 @@ class RssWidget : AppWidgetProvider() {
     ) {
         views = RemoteViews(
             context.packageName,
-            R.layout.rss_widget
+            R.layout.rss_widge_text
         )
 
         drawViews(context)
@@ -149,7 +149,7 @@ class RssWidget : AppWidgetProvider() {
 
         val nextIntent = Intent(
             context,
-            RssWidget::class.java
+            RssWidgetText::class.java
         )
         nextIntent.action = RssWidget.NEXT_ACTION
         nextIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
@@ -165,8 +165,8 @@ class RssWidget : AppWidgetProvider() {
 
     fun drawViews(context: Context) {
         //绘制图片
-        var bitmapclock = DrawUtils.drawClock(context, 0)
+        var bitmapclock = DrawUtils.drawClock(context, 1)
         //更新图片
-        views?.setImageViewBitmap(R.id.widget_pic, bitmapclock)
+        views?.setImageViewBitmap(R.id.widget_pic_text, bitmapclock)
     }
 }
