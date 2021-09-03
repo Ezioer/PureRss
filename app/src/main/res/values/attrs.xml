@@ -42,4 +42,11 @@
     <declare-styleable name="RotateIcon">
         <attr name="icon_drawable" format="reference"></attr>
     </declare-styleable>
+
+    <declare-styleable name="PieLayoutX">
+        <attr name="pieInterval" format="dimension" />
+        <attr name="pieCount" format="float" />
+        <attr name="pieHRatio" format="float" />
+        <attr name="pieScaleSize" format="float" />
+    </declare-styleable>
 </resources>

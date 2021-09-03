@@ -61,8 +61,8 @@ class RotateIconView @JvmOverloads constructor(
         canvas?.rotate(-degreeZ)//转动270° 顺时针为正方向，此处为逆时针旋转，所以为负值
         camera?.rotateY(degreeY) // 旋转 Camera 的三维空间
         camera?.applyToCanvas(canvas) // 把旋转投影到 Canvas
-        /*mPaint.color = Color.GREEN
-        canvas?.drawRect(0f, -centerY.toFloat(), centerX.toFloat(), centerY.toFloat(), mPaint)*/
+        mPaint.color = Color.GREEN
+        canvas?.drawRect(0f, -centerY.toFloat(), centerX.toFloat(), centerY.toFloat(), mPaint)
         canvas?.clipRect(0f, -centerY.toFloat(), centerX.toFloat(), centerY.toFloat())
         canvas?.rotate(degreeZ)
         canvas?.translate(-centerX.toFloat(), -centerY.toFloat()) // 旋转之前把绘制内容移动到轴心（原点）
