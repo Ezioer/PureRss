@@ -19,7 +19,7 @@ class TestActivity : AppCompatActivity() {
         aniOne.duration = 1000
         aniOne.startDelay = 500
         val aniTwo = ObjectAnimator.ofFloat(clockView, "degreeZ", 0f, 270f)
-        aniTwo.duration = 10000
+        aniTwo.duration = 1000
         aniTwo.startDelay = 500
 
         val aniThree = ObjectAnimator.ofFloat(clockView, "fixDegreeY", 0f, 30f)

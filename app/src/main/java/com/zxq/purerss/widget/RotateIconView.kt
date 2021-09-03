@@ -54,24 +54,22 @@ class RotateIconView @JvmOverloads constructor(
         var centerY = height / 2
         var bitmapX = centerX - bitmapW!! / 2
         var bitmapY = centerY - bitmapH!! / 2
-        canvas?.save()
 
+        canvas?.save()
         camera?.save() // 保存 Camera 的状态
         canvas?.translate(centerX.toFloat(), centerY.toFloat()) // 旋转之后把投影移动回来
-        canvas?.rotate(-degreeZ)//转动270° 顺时针为正方向
+        canvas?.rotate(-degreeZ)//转动270° 顺时针为正方向，此处为逆时针旋转，所以为负值
         camera?.rotateY(degreeY) // 旋转 Camera 的三维空间
         camera?.applyToCanvas(canvas) // 把旋转投影到 Canvas
-        mPaint.color = Color.GREEN
-        canvas?.drawRect(0f, -centerY.toFloat(), centerX.toFloat(), centerY.toFloat(), mPaint)
+        /*mPaint.color = Color.GREEN
+        canvas?.drawRect(0f, -centerY.toFloat(), centerX.toFloat(), centerY.toFloat(), mPaint)*/
         canvas?.clipRect(0f, -centerY.toFloat(), centerX.toFloat(), centerY.toFloat())
         canvas?.rotate(degreeZ)
         canvas?.translate(-centerX.toFloat(), -centerY.toFloat()) // 旋转之前把绘制内容移动到轴心（原点）
         camera?.restore() // 恢复 Camera 的状态
-
         canvas?.drawBitmap(bitmap!!, bitmapX.toFloat(), bitmapY.toFloat(), mPaint)
         canvas?.restore()
 
-//        return
         //画不变换的另一半
         canvas?.save()
         camera?.save()
