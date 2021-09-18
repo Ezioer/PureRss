@@ -14,6 +14,7 @@ import com.zxq.purerss.R
 import com.zxq.purerss.databinding.ActivitySettingBinding
 import com.zxq.purerss.ui.dialog.ExportOpmlNotiDialog
 import com.zxq.purerss.ui.dialog.ShortCutsDialog
+import com.zxq.purerss.ui.wxboom.WxBoomActivity
 import com.zxq.purerss.utils.*
 import kotlinx.android.synthetic.main.activity_setting.*
 import java.io.File
@@ -60,7 +61,7 @@ class SettingActivity : AppCompatActivity() {
 
             tvBack.setOnClickListener {
 //                onBackPressed()
-                startActivity(Intent(this@SettingActivity,TestActivity::class.java))
+                startActivity(Intent(this@SettingActivity, WxBoomActivity::class.java))
             }
             mViewModel.success.observe(this@SettingActivity, Observer {
                 if (it) {

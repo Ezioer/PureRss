@@ -4,10 +4,10 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
-apply plugin: 'my-local-plu'
+//apply plugin: 'my-local-plu'
 android {
     compileSdkVersion 30
-    buildToolsVersion "29.0.3"
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.zxq.purerss.free"
@@ -176,4 +176,6 @@ dependencies {
     implementation 'com.guolindev.permissionx:permissionx:1.5.0'
     implementation 'com.android.support:palette-v7:30.0.0'
     compile 'com.yanzhikai:BooheeRuler:0.0.7'
+
+    implementation 'com.airbnb.android:lottie:3.4.0'
 }

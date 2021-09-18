@@ -74,8 +74,11 @@
             android:name=".ui.setting.SettingActivity"
             android:theme="@style/settingtheme"
             android:exported="true" />
+        <activity android:name=".ui.setting.TestActivity" />
         <activity
-            android:name=".ui.setting.TestActivity" />
+            android:name=".ui.wxboom.WxBoomActivity"
+            android:theme="@style/settingtheme"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

@@ -178,6 +178,7 @@ public class PileLayout extends ViewGroup {
         if (thisLeft < position4) {
             int position3 = originX.get(3);
             if (thisLeft > position3) {
+                // everyWidth * (1 + scaleStep) + interval
                 scale = 1 + scaleStep - scaleStep * (thisLeft - position3) / (position4 - position3);
             } else {
                 int position2 = originX.get(2);
@@ -266,6 +267,7 @@ public class PileLayout extends ViewGroup {
     private void onRelease(float eventX, int velocityX) {
         animatingView = (FrameLayout) getChildAt(3);
         animateValue = animatingView.getLeft();
+
         int tag = Integer.parseInt(animatingView.getTag().toString());
 
         // 计算目标位置

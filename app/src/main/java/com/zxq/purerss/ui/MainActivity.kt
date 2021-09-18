@@ -84,14 +84,14 @@ class MainActivity : AppCompatActivity(), ActivityCompat.OnRequestPermissionsRes
                 }
             }
         }
-
+/*
         PermissionX.init(this).permissions(Manifest.permission.MANAGE_EXTERNAL_STORAGE).request(
             RequestCallback { allGranted, grantedList, deniedList ->
                 if (allGranted) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
                     }
                 }
-            })
+            })*/
     }
 
     fun getNet() {

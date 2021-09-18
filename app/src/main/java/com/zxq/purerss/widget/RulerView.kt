@@ -12,8 +12,7 @@ import com.zxq.purerss.utils.sp2px
 import kotlin.math.roundToInt
 
 class RulerView @JvmOverloads constructor(
-    context: Context, mParent: RuleGroupView, attributeSet: AttributeSet? = null
-    , def: Int = 0
+    context: Context, mParent: RuleGroupView, attributeSet: AttributeSet? = null, def: Int = 0
 ) : View(context, attributeSet, def) {
     private var mLinePaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var mTextPaint = Paint(Paint.ANTI_ALIAS_FLAG)

@@ -1,21 +1,52 @@
 package com.zxq.purerss.ui.setting
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
 import android.os.Bundle
+import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.zxq.purerss.R
-import com.zxq.purerss.widget.RotateIconView
+import com.zxq.purerss.widget.PieLayoutX
+import com.zxq.purerss.widget.PileLayout
 
 class TestActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test)
 //        val shootView = findViewById<ShootView>(R.id.shootview)
-        val clockView = findViewById<RotateIconView>(R.id.rulerview)
-        val aniOne = ObjectAnimator.ofFloat(clockView, "degreeY", 0f, -45f)
+        val clockView = findViewById<PileLayout>(R.id.rulerview)
+        clockView.setAdapter(object : PileLayout.Adapter() {
+            override fun getLayoutId(): Int {
+                return R.layout.item_pielayoutx
+            }
+
+            override fun getItemCount(): Int {
+                return 12
+            }
+
+            override fun bindView(view: View, index: Int) {
+                var viewHolder = view?.tag
+                if (viewHolder == null) {
+                    viewHolder = ViewHolder()
+                    viewHolder?.type = view?.findViewById(R.id.tv_item) as TextView
+                    view.tag = viewHolder
+                }
+                ((viewHolder) as ViewHolder).type!!.text = "num$index"
+            }
+
+            override fun displaying(position: Int) {
+            }
+
+            override fun onItemClick(view: View, position: Int) {
+            }
+
+            override fun onMove() {
+            }
+
+            override fun getWidth(width: Int) {
+            }
+
+        })
+        /*val aniOne = ObjectAnimator.ofFloat(clockView, "degreeY", 0f, -45f)
         aniOne.duration = 1000
         aniOne.startDelay = 500
         val aniTwo = ObjectAnimator.ofFloat(clockView, "degreeZ", 0f, 270f)
@@ -34,7 +65,7 @@ class TestActivity : AppCompatActivity() {
             }
         })
         animatorSet.playSequentially(aniOne, aniTwo, aniThree)
-        animatorSet.start()
+        animatorSet.start()*/
         /* clockView.setScaleCallback(object: RulerView.ScaleCallback{
              override fun scaleValue(scale: Float) {
                  tv_scale.text = "${scale / 10}"
@@ -80,5 +111,9 @@ class TestActivity : AppCompatActivity() {
 //        clockView.startAni()
 //        clockView.startTime()
 //        shootView.startPlay()
+    }
+
+    internal inner class ViewHolder {
+        var type: TextView? = null
     }
 }

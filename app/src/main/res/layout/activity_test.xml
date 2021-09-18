@@ -13,16 +13,17 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:textColor="@color/c_ff8932"
+        android:visibility="gone"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@id/rulerview"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
-    <com.zxq.purerss.widget.RotateIconView
+    <com.zxq.purerss.widget.PileLayout
         android:id="@+id/rulerview"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:icon_drawable="@drawable/flip_board"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
