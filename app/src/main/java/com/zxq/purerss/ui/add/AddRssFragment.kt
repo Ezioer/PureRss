@@ -173,11 +173,11 @@ class AddRssFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCall
             })
         }
 
-        val forward = MaterialSharedAxis.create(MaterialSharedAxis.Y, true)
+  /*      val forward = MaterialSharedAxis.Y(MaterialSharedAxis.Y, true)
         enterTransition = forward
 
-        val backward = MaterialSharedAxis.create(MaterialSharedAxis.Y, false)
-        returnTransition = backward
+        val backward = MaterialSharedAxis.Y(MaterialSharedAxis.Y, false)
+        returnTransition = backward*/
         return binding?.root
     }
 
