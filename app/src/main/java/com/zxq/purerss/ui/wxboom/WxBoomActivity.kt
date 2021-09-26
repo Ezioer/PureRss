@@ -25,7 +25,7 @@ import com.zxq.purerss.utils.lerp
 import com.zxq.purerss.widget.ControlFocusInsetsAnimationCallback
 import com.zxq.purerss.widget.RootViewDeferringInsetsCallback
 import com.zxq.purerss.widget.TranslateDeferringInsetsAnimationCallback
-import kotlinx.android.synthetic.main.activity_sticklinearlayout.*
+import kotlinx.android.synthetic.main.activity_wxboom.*
 import java.lang.Exception
 
 /**
@@ -39,7 +39,7 @@ class WxBoomActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sticklinearlayout)
+        setContentView(R.layout.activity_wxboom)
         window.setDecorFitsSystemWindows(false)
         /*root.systemUiVisibility =
             View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION*/
@@ -73,8 +73,9 @@ class WxBoomActivity : AppCompatActivity() {
         val adapter = WxBoomAdapter()
         rv_chat.adapter = adapter
         adapter.addData(list)
+        rv_chat.smoothScrollToPosition(list.size)
 
-        /*val deferringInsetsListener = RootViewDeferringInsetsCallback(
+        val deferringInsetsListener = RootViewDeferringInsetsCallback(
             persistentInsetTypes = WindowInsetsCompat.Type.systemBars(),
             deferredInsetTypes = WindowInsetsCompat.Type.ime()
         )
@@ -105,7 +106,7 @@ class WxBoomActivity : AppCompatActivity() {
         ViewCompat.setWindowInsetsAnimationCallback(
            message_edittext,
             ControlFocusInsetsAnimationCallback(message_edittext)
-        )*/
+        )
 
         /*ViewCompat.setOnApplyWindowInsetsListener(rv_chat) { v, insets ->
             v.updatePadding(bottom = insets.systemWindowInsets.bottom)

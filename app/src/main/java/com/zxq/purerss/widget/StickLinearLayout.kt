@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.Scroller
+import android.widget.TextView
 import androidx.core.view.NestedScrollingParent2
 import androidx.core.view.NestedScrollingParentHelper
 import androidx.core.view.ViewCompat
@@ -25,6 +26,7 @@ class StickLinearLayout @JvmOverloads constructor(
 
     private var mTopViewHeight = 0
     private var mRecyclerView: RecyclerView? = null
+    private var mTopView: TextView? = null
     private var mScroller: Scroller? = null
 
     private val mNestedScrollingParentHelper: NestedScrollingParentHelper =
@@ -32,16 +34,17 @@ class StickLinearLayout @JvmOverloads constructor(
 
     init {
         mScroller = Scroller(getContext())
-        this.viewTreeObserver.addOnGlobalLayoutListener {
-            if (getChildAt(0) != null) {
-                mTopViewHeight = getChildAt(0).height
-            }
-        }
     }
 
     override fun onFinishInflate() {
         super.onFinishInflate()
+        mTopView = findViewById(R.id.tv_topview)
         mRecyclerView = findViewById(R.id.rv_chat)
+    }
+
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+        mTopViewHeight = mTopView!!.measuredHeight
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -87,8 +90,17 @@ class StickLinearLayout @JvmOverloads constructor(
         }
     }
 
+    override fun onNestedFling(
+        target: View,
+        velocityX: Float,
+        velocityY: Float,
+        consumed: Boolean
+    ): Boolean {
+        return false
+    }
+
     override fun onNestedPreFling(target: View, velocityX: Float, velocityY: Float): Boolean {
-        //返回true表示拦截到内部的事件
+        //返回true表示拦截到内部的事件,如果返回true，则会拦截recyclerview的滑动传给外部布局滑动，导致欢动不流畅给
         return false
         if (scrollY >= mTopViewHeight) return false
         flingY(velocityY.toInt())
