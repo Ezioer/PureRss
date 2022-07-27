@@ -21,14 +21,14 @@ class MotionUtil {
                 startView = start
                 endView = end
                 duration = 600
-                pathMotion = MaterialArcMotion()
+//                pathMotion = MaterialArcMotion()
                 scrimColor = Color.TRANSPARENT
             }
-            motionTransform.addListener(onEnd = {
-                onEnd.onMotionEnd()
-            })
+            /*    motionTransform.addListener(onEnd = {
+                    onEnd.onMotionEnd()
+                })
 
-            TransitionManager.beginDelayedTransition(root, motionTransform)
+                TransitionManager.beginDelayedTransition(root, motionTransform)*/
             start.visibility = View.GONE
             end.visibility = View.VISIBLE
         }

@@ -1,8 +1,7 @@
-package com.zxq.purerss.widget
+package com.zxq.richdad.widget.imeanimation
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsAnimation
@@ -11,11 +10,27 @@ import androidx.core.view.NestedScrollingParent3
 import androidx.core.view.NestedScrollingParentHelper
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.zxq.purerss.widget.suppressLayoutCompat
 
 /**
- *  created by xiaoqing.zhou
- *  on 2021/9/22
- *  fun
+ * A [LinearLayout] which acts as a [nested scroll parent][NestedScrollingParent3] to automatically
+ * control the IME inset and visibility when running on devices with API level 30+.
+ *
+ * This class tracks scrolling, overscrolling, and flinging gestures on child scrolling views,
+ * such as a [androidx.recyclerview.widget.RecyclerView].
+ *
+ * This class triggers a request to control the IME insets via
+ * [SimpleImeAnimationController.startControlRequest] once it detect a scroll in an appropriate direction
+ * to [onNestedPreScroll] and [onNestedScroll]. Once in control, the class will inset (move)
+ * the IME in/off screen based on the user's scroll position, using
+ * [SimpleImeAnimationController.insetBy].
+ *
+ * The class supports both animating the IME onto screen (from not visible), and animating it
+ * off-screen (from visible). This can be customize through the [scrollImeOnScreenWhenNotVisible]
+ * and [scrollImeOffScreenWhenVisible] properties.
+ *
+ * Note: all of the nested scrolling logic could be extracted to a `CoordinatorLayout.Behavior`
+ * if desired.
  */
 class InsetsAnimationLinearLayout @JvmOverloads constructor(
     context: Context,

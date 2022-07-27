@@ -95,11 +95,11 @@ class FeedListFragment: Fragment() {
 
 
         }
-        val forward = MaterialSharedAxis.create(MaterialSharedAxis.Y, true)
+        /*val forward = MaterialSharedAxis.create(MaterialSharedAxis.Y, true)
         enterTransition = forward
 
         val backward = MaterialSharedAxis.create(MaterialSharedAxis.Y, false)
-        returnTransition = backward
+        returnTransition = backward*/
         postponeEnterTransition(6L, TimeUnit.MILLISECONDS)
         return binding?.root
     }

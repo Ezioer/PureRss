@@ -60,7 +60,7 @@ class BusLiveData<T>(private val mKey: String): MutableLiveData<T>() {
     @MainThread
     override fun removeObserver(observer: Observer<in T>) {
         val exist = mObserverMap.remove(observer) ?: observer
-        super.removeObserver(exist)
+        super.removeObserver(exist as Observer<in T>)
         Logger.d(TAG, "removeObserver() called with: observer = [$observer]")
     }
 

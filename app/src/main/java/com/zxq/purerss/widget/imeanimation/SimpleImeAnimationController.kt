@@ -1,4 +1,4 @@
-package com.zxq.purerss.widget
+package com.zxq.richdad.widget.imeanimation
 
 import android.os.CancellationSignal
 import android.view.View

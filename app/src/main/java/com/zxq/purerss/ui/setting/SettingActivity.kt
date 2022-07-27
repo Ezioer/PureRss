@@ -12,6 +12,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.zxq.livedatabus.LiveDataBus
 import com.zxq.purerss.R
 import com.zxq.purerss.databinding.ActivitySettingBinding
+import com.zxq.purerss.ucdemopage.UcDemoActivity
 import com.zxq.purerss.ui.dialog.ExportOpmlNotiDialog
 import com.zxq.purerss.ui.dialog.ShortCutsDialog
 import com.zxq.purerss.ui.wxboom.WxBoomActivity

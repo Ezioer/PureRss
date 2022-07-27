@@ -5,4 +5,9 @@
     <dimen name="grid_4">32dp</dimen>
     <dimen name="dp_8">8dp</dimen>
     <dimen name="dp_1">1dp</dimen>
+
+    <dimen name="uc_news_header_title_height">45dip</dimen>
+    <dimen name="uc_news_header_title_init_offset">-45dip</dimen>
+    <dimen name="uc_news_header_pager_offset">-90dip</dimen>
+    <dimen name="uc_news_tabs_height">45dip</dimen>
 </resources>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zxq.purerss.widget.InsetsAnimationLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/root"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/c_r_two"
@@ -10,24 +10,11 @@
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
-        android:background="@color/c_r_two"
-        style="@style/Widget.MaterialComponents.Toolbar.Surface"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="0dp">
-
-        <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@drawable/rss_32px" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textAppearance="?attr/textAppearanceHeadline6" />
-
-    </com.google.android.material.appbar.MaterialToolbar>
+        android:background="@color/c_r_two"
+        android:elevation="4dp"
+        app:title="测试demo" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_chat"
@@ -36,6 +23,7 @@
         android:layout_weight="1"
         android:clipToPadding="false"
         android:orientation="vertical"
+        android:overScrollMode="never"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -47,10 +35,11 @@
         android:id="@+id/message_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorSurface">
+        android:background="?android:colorSecondary"
+        android:elevation="4dp"
+        android:padding="8dp">
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
@@ -64,7 +53,6 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <ImageButton
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -74,7 +62,7 @@
             app:tint="?attr/colorPrimary" />
 
     </LinearLayout>
-</com.zxq.purerss.widget.InsetsAnimationLinearLayout><!--  <androidx.recyclerview.widget.RecyclerView
+</LinearLayout><!--  <androidx.recyclerview.widget.RecyclerView
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:layout_marginBottom="10dp"

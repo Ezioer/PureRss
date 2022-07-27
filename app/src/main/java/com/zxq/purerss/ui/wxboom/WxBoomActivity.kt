@@ -1,32 +1,18 @@
 package com.zxq.purerss.ui.wxboom
 
-import android.animation.Animator
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
-import android.animation.ValueAnimator
-import android.content.IntentFilter
-import android.graphics.PathMeasure
 import android.os.Build
 import android.os.Bundle
-import android.view.View
-import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.view.WindowInsets
-import android.view.WindowInsetsAnimation
-import android.view.animation.LinearInterpolator
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.animation.addListener
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsAnimationCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
 import com.zxq.purerss.R
-import com.zxq.purerss.utils.lerp
-import com.zxq.purerss.widget.ControlFocusInsetsAnimationCallback
-import com.zxq.purerss.widget.RootViewDeferringInsetsCallback
-import com.zxq.purerss.widget.TranslateDeferringInsetsAnimationCallback
+import com.zxq.richdad.widget.imeanimation.ControlFocusInsetsAnimationCallback
+import com.zxq.richdad.widget.imeanimation.RootViewDeferringInsetsCallback
+import com.zxq.richdad.widget.imeanimation.TranslateDeferringInsetsAnimationCallback
 import kotlinx.android.synthetic.main.activity_wxboom.*
-import java.lang.Exception
 
 /**
  *  created by xiaoqing.zhou
@@ -57,56 +43,64 @@ class WxBoomActivity : AppCompatActivity() {
         list.add(ImMsgInfo(0, "\uD83D\uDCA9"))
         list.add(ImMsgInfo(0, "\uD83D\uDCA9"))
         list.add(ImMsgInfo(0, "\uD83D\uDCA9"))
-        list.add(ImMsgInfo(0, "\uD83D\uDCA9"))
-        list.add(ImMsgInfo(1, "\uD83D\uDCA3"))
-        list.add(ImMsgInfo(1, "\uD83D\uDCA3"))
-        list.add(ImMsgInfo(1, "\uD83D\uDCA3"))
-        list.add(ImMsgInfo(1, "\uD83D\uDCA3"))
-        list.add(ImMsgInfo(1, "\uD83D\uDCA3"))
-        list.add(ImMsgInfo(1, "\uD83D\uDCA3"))
-        list.add(ImMsgInfo(1, "\uD83D\uDCA3"))
-        list.add(ImMsgInfo(1, "\uD83D\uDCA3"))
-        list.add(ImMsgInfo(1, "\uD83D\uDCA3"))
         list.add(ImMsgInfo(1, "\uD83D\uDCA3"))
         list.add(ImMsgInfo(1, "\uD83D\uDCA3"))
         list.add(ImMsgInfo(1, "\uD83D\uDCA3"))
         val adapter = WxBoomAdapter()
         rv_chat.adapter = adapter
         adapter.addData(list)
-        rv_chat.smoothScrollToPosition(list.size)
 
-        val deferringInsetsListener = RootViewDeferringInsetsCallback(
-            persistentInsetTypes = WindowInsetsCompat.Type.systemBars(),
-            deferredInsetTypes = WindowInsetsCompat.Type.ime()
-        )
-        ViewCompat.setWindowInsetsAnimationCallback(root, deferringInsetsListener)
-        ViewCompat.setOnApplyWindowInsetsListener(root, deferringInsetsListener)
-
-        ViewCompat.setWindowInsetsAnimationCallback(
-            message_holder,
-            TranslateDeferringInsetsAnimationCallback(
-                view =message_holder,
-                persistentInsetTypes = WindowInsetsCompat.Type.systemBars(),
-                deferredInsetTypes = WindowInsetsCompat.Type.ime(),
-                // We explicitly allow dispatch to continue down to binding.messageHolder's
-                // child views, so that step 2.5 below receives the call
-                dispatchMode = WindowInsetsAnimationCompat.Callback.DISPATCH_MODE_CONTINUE_ON_SUBTREE
+        container.setOnApplyWindowInsetsListener { view, windowInsets ->
+            var barime =
+                windowInsets.getInsets(WindowInsets.Type.systemBars() or WindowInsets.Type.ime())
+            view.setPadding(barime.left, barime.top, barime.right, barime.bottom)
+            WindowInsets.CONSUMED
+        }
+        rv_chat.setWindowInsetsAnimationCallback(
+            TranslateViewInsetsAnimationListener(
+                rv_chat,
+                WindowInsets.Type.ime()
             )
         )
-
-        ViewCompat.setWindowInsetsAnimationCallback(
-            rv_chat,
-            TranslateDeferringInsetsAnimationCallback(
-                view = rv_chat,
-                persistentInsetTypes = WindowInsetsCompat.Type.systemBars(),
-                deferredInsetTypes = WindowInsetsCompat.Type.ime()
+        message_holder.setWindowInsetsAnimationCallback(
+            TranslateViewInsetsAnimationListener(
+                message_holder,
+                WindowInsets.Type.ime()
             )
         )
+        rv_chat.setOnTouchListener(InsetsAnimationOverscrollingTouchListener())
+        /* val deferringInsetsListener = RootViewDeferringInsetsCallback(
+             persistentInsetTypes = WindowInsetsCompat.Type.systemBars(),
+             deferredInsetTypes = WindowInsetsCompat.Type.ime()
+         )
+         ViewCompat.setWindowInsetsAnimationCallback(root, deferringInsetsListener)
+         ViewCompat.setOnApplyWindowInsetsListener(root, deferringInsetsListener)
 
-        ViewCompat.setWindowInsetsAnimationCallback(
-           message_edittext,
-            ControlFocusInsetsAnimationCallback(message_edittext)
-        )
+         ViewCompat.setWindowInsetsAnimationCallback(
+             message_holder,
+             TranslateDeferringInsetsAnimationCallback(
+                 view =message_holder,
+                 persistentInsetTypes = WindowInsetsCompat.Type.systemBars(),
+                 deferredInsetTypes = WindowInsetsCompat.Type.ime(),
+                 // We explicitly allow dispatch to continue down to binding.messageHolder's
+                 // child views, so that step 2.5 below receives the call
+                 dispatchMode = WindowInsetsAnimationCompat.Callback.DISPATCH_MODE_CONTINUE_ON_SUBTREE
+             )
+         )
+
+         ViewCompat.setWindowInsetsAnimationCallback(
+             rv_chat,
+             TranslateDeferringInsetsAnimationCallback(
+                 view = rv_chat,
+                 persistentInsetTypes = WindowInsetsCompat.Type.systemBars(),
+                 deferredInsetTypes = WindowInsetsCompat.Type.ime()
+             )
+         )
+
+         ViewCompat.setWindowInsetsAnimationCallback(
+            message_edittext,
+             ControlFocusInsetsAnimationCallback(message_edittext)
+         )*/
 
         /*ViewCompat.setOnApplyWindowInsetsListener(rv_chat) { v, insets ->
             v.updatePadding(bottom = insets.systemWindowInsets.bottom)

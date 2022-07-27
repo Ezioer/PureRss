@@ -5,6 +5,11 @@
     <string name="app_bar_save">保存</string>
     <string name="app_bar_share">分享</string>
     <string name="choose_your_rss">选择你感兴趣的rss源</string>
+    <string name="simpletitlebahavior">com.zxq.purerss.widget.diybehavior.SimpleTitleBehavior</string>
+    <string name="behavior_contents">com.zxq.purerss.ucdemopage.UcNewsContentBehavior</string>
+    <string name="behavior_uc_news_tab">com.zxq.purerss.ucdemopage.UcNewsTabBehavior</string>
+    <string name="behavior_uc_title">com.zxq.purerss.ucdemopage.UcNewsTitleBehavior</string>
+    <string name="behavior_uc_header_pager">com.zxq.purerss.ucdemopage.UcNewsHeaderPagerBehavior</string>
 
     <string name="news">订阅</string>
     <string name="mine">我的</string>

@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity(), ActivityCompat.OnRequestPermissionsRes
             StatusBarUtil.StatusBarDarkMode(this)
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-            getWallpaperBitmap()
+//            getWallpaperBitmap()
         }
         val arraylist: Array<TextView> = arrayOf(TextView(this), TextView(this), TextView(this))
         val imge = ImageView(this)

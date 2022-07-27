@@ -175,11 +175,11 @@ class MainPageFragment : Fragment() {
             })
         }
         postponeEnterTransition(10L, TimeUnit.MILLISECONDS)
-        val backward = MaterialSharedAxis.create(MaterialSharedAxis.Y, false)
+      /*  val backward = MaterialSharedAxis.create(MaterialSharedAxis.Y, false)
         reenterTransition = backward
 
         val forward = MaterialSharedAxis.create(MaterialSharedAxis.Y, true)
-        exitTransition = forward
+        exitTransition = forward*/
         return binding?.root
     }
 
@@ -221,13 +221,13 @@ class MainPageFragment : Fragment() {
     }
 
     private fun updateWidget(mList: MutableList<RSSItemEntity>) {
-        val intent = Intent("action_update_ui")
-        val index = if (RssWidget.WIDGET_INDEX > mList.size) 0 else mList.size
-        intent.putExtra(RssWidget.WIDGET_TITLE, mList[index].itemTitle)
-        intent.putExtra(RssWidget.WIDGET_PIC, mList[index].itemPic)
-        intent.putExtra(RssWidget.WIDGET_DATE, mList[index].itemDate)
-        intent.putExtra(RssWidget.WIDGET_FEED, mList[index].feedTitle)
-        intent.component = ComponentName(context!!, RssWidget::class.java)
-        context?.sendBroadcast(intent)
+        /* val intent = Intent("action_update_ui")
+         val index = if (RssWidget.WIDGET_INDEX > mList.size) 0 else mList.size
+         intent.putExtra(RssWidget.WIDGET_TITLE, mList[index].itemTitle)
+         intent.putExtra(RssWidget.WIDGET_PIC, mList[index].itemPic)
+         intent.putExtra(RssWidget.WIDGET_DATE, mList[index].itemDate)
+         intent.putExtra(RssWidget.WIDGET_FEED, mList[index].feedTitle)
+         intent.component = ComponentName(context!!, RssWidget::class.java)
+         context?.sendBroadcast(intent)*/
     }
 }

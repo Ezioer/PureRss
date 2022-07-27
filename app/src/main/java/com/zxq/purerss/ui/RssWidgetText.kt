@@ -1,6 +1,7 @@
 package com.zxq.purerss.ui
 
 import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
@@ -94,14 +95,15 @@ class RssWidgetText : AppWidgetProvider() {
     }
 
     private fun getPendingIntent(context: Context): PendingIntent? {
-        WIDGET_INDEX++
-        val intent = Intent()
-        //注意这个intent构造的是显式intent，直接将这个广播发送给MyAppWidgetProvider
-        intent.setClass(context, RssWidgetText::class.java)
-        intent.addCategory(Intent.CATEGORY_ALTERNATIVE)
-        val pendingIntent =
-            PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-        return pendingIntent
+        /*     WIDGET_INDEX++
+             val intent = Intent()
+             //注意这个intent构造的是显式intent，直接将这个广播发送给MyAppWidgetProvider
+             intent.setClass(context, RssWidgetText::class.java)
+             intent.addCategory(Intent.CATEGORY_ALTERNATIVE)
+             val pendingIntent =
+                 PendingIntent.getBroadcast(context, 0, intent, FLAG_IMMUTABLE)
+             return pendingIntent*/
+        return null
     }
 
     override fun onUpdate(
@@ -153,11 +155,11 @@ class RssWidgetText : AppWidgetProvider() {
         )
         nextIntent.action = RssWidget.NEXT_ACTION
         nextIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-        val nextPendingIntent = PendingIntent
-            .getBroadcast(
-                context, 0, nextIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT
-            )
+        /*   val nextPendingIntent = PendingIntent
+               .getBroadcast(
+                   context, 0, nextIntent,
+                   PendingIntent.FLAG_UPDATE_CURRENT
+               )*/
 //    views.setOnClickPendingIntent(R.id.iv_next, nextPendingIntent)
 
         appWidgetManager.updateAppWidget(appWidgetId, views)

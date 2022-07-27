@@ -98,11 +98,11 @@ class FragmentType: Fragment() {
             })
         }
         postponeEnterTransition(10L, TimeUnit.MILLISECONDS)
-        val forward = MaterialSharedAxis.create(MaterialSharedAxis.Y, true)
+       /* val forward = MaterialSharedAxis.create(MaterialSharedAxis.Y, true)
         enterTransition = forward
 
         val backward = MaterialSharedAxis.create(MaterialSharedAxis.Y, false)
-        returnTransition = backward
+        returnTransition = backward*/
         return binding?.root
     }
 

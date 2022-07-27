@@ -17,13 +17,14 @@
             android:id="@+id/tv_back"
             android:paddingLeft="10dp"
             android:text="@string/setting"
+            android:paddingTop="25dp"
             android:background="@color/c_2a4a66"
             android:drawablePadding="10dp"
             android:textAppearance="@style/TextAppearance.Owl.Headline6"
             android:drawableLeft="@drawable/ic_arrow_back_black_24dp"
             android:gravity="center_vertical"
             android:layout_width="match_parent"
-            android:layout_height="60dp" />
+            android:layout_height="85dp" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"

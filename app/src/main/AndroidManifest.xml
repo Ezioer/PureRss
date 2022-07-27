@@ -28,6 +28,7 @@
         </activity>
 
         <receiver
+            android:exported="true"
             android:name=".ui.RssWidget"
             android:label="波浪时钟">
             <intent-filter>
@@ -40,6 +41,7 @@
                 android:resource="@xml/rss_widget_info" />
         </receiver>
         <receiver
+            android:exported="true"
             android:name=".ui.RssWidgetText"
             android:label="文字时钟">
             <intent-filter>
@@ -52,6 +54,7 @@
                 android:resource="@xml/rss_widget_info_text" />
         </receiver>
         <receiver
+            android:exported="true"
             android:name=".ui.RssWidgetDays"
             android:label="日期">
             <intent-filter>
@@ -64,7 +67,9 @@
                 android:resource="@xml/rss_widget_info_days" />
         </receiver>
 
-        <service android:name=".ui.WidgetUpdateService" />
+        <service
+            android:exported="true"
+            android:name=".ui.WidgetUpdateService" />
         <service
             android:name=".ui.WidgetService"
             android:exported="false"
@@ -74,11 +79,17 @@
             android:name=".ui.setting.SettingActivity"
             android:theme="@style/settingtheme"
             android:exported="true" />
-        <activity android:name=".ui.setting.TestActivity" />
         <activity
+            android:name=".ui.setting.TestActivity"
+            android:exported="true" />
+        <activity
+            android:exported="true"
             android:name=".ui.wxboom.WxBoomActivity"
+            android:theme="@style/settingtheme" />
+        <activity
+            android:name=".ucdemopage.UcDemoActivity"
             android:theme="@style/settingtheme"
-            android:windowSoftInputMode="adjustResize" />
+            android:exported="true" />
     </application>
 
 </manifest>

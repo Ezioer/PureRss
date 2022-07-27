@@ -1,15 +1,22 @@
-package com.zxq.purerss.widget
+package com.zxq.richdad.widget.imeanimation
 
 import android.view.View
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsAnimationCompat
-import androidx.core.view.WindowInsetsAnimationCompat.Callback.DISPATCH_MODE_STOP
 import androidx.core.view.WindowInsetsCompat
 
 /**
- *  created by xiaoqing.zhou
- *  on 2021/9/22
- *  fun
+ * A [WindowInsetsAnimationCompat.Callback] which will request and clear focus on the given view,
+ * depending on the [WindowInsetsCompat.Type.ime] visibility state when an IME
+ * [WindowInsetsAnimationCompat] has finished.
+ *
+ * This is primarily used when animating the [WindowInsetsCompat.Type.ime], so that the
+ * appropriate view is focused for accepting input from the IME.
+ *
+ * @param view the view to request/clear focus
+ * @param dispatchMode The dispatch mode for this callback.
+ *
+ * @see WindowInsetsAnimationCompat.Callback.getDispatchMode
  */
 class ControlFocusInsetsAnimationCallback(
     private val view: View,

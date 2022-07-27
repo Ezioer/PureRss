@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.previewlibrary.ZoomMediaLoader
 import com.tencent.mmkv.MMKV
 import com.zxq.purerss.ui.friends.preview.GlideImageLoader
+import com.zxq.purerss.utils.TypefaceUtil
 import com.zxq.purerss.utils.getSpValue
 import com.zxq.purerss.utils.putSpValue
 
@@ -24,6 +25,7 @@ class App : Application() {
         instance = this
         MMKV.initialize(this)
 //        SystemUtil.enableGray(true)
+        TypefaceUtil.replaceSystemDefaultFont(this, "fonts/kaiti.ttf")
         ZoomMediaLoader.getInstance().init(GlideImageLoader())
 //        val ls = MmkvUtils.getInstance().getValue("111",String)
         lookActivityEvent()
