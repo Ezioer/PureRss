@@ -34,6 +34,7 @@ class ManageFolderFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentManagefolderBinding.inflate(inflater, container, false).apply {
+            lifecycleOwner = viewLifecycleOwner
             mViewModel.getAllFolder()
             toolbar.setNavigationOnClickListener { findNavController().popBackStack() }
             toolbar.setOnMenuItemClickListener {
@@ -68,11 +69,11 @@ class ManageFolderFragment : Fragment() {
             }
             mAdapter.setDiffCallback(RssFolderDiffCallback())
             recyclerview.itemAnimator = SpringAddItemAnimator()
-            mViewModel.folders.observe(this@ManageFolderFragment, Observer {
+            mViewModel.folders.observe(viewLifecycleOwner, Observer {
                 mAdapter.setDiffNewData(it)
             })
 
-            mViewModel.folder.observe(this@ManageFolderFragment, Observer {
+            mViewModel.folder.observe(viewLifecycleOwner, Observer {
                 mAdapter.addData(RSSFolderEntity(it, mTitle))
             })
         }

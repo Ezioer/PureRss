@@ -16,7 +16,6 @@ import com.zxq.purerss.databinding.FragmentOpmlBinding
 import com.zxq.purerss.listener.OpmlItemDiffCallback
 import com.zxq.purerss.utils.InjectorUtil
 import com.zxq.purerss.utils.SpringAddItemAnimator
-import kotlinx.android.synthetic.main.fragment_opml.*
 import java.io.FileDescriptor
 
 /**
@@ -38,6 +37,7 @@ class OpmlFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentOpmlBinding.inflate(inflater, container, false).apply {
+            lifecycleOwner = viewLifecycleOwner
             filePath = arg.filepath
             toolbar.setNavigationOnClickListener { findNavController().popBackStack() }
             mAdapter = OpmlAdapter()
@@ -49,7 +49,7 @@ class OpmlFragment : Fragment() {
             } else {
                 mViewModel.read(filePath?.des?.fileDescriptor ?: FileDescriptor())
             }
-            mViewModel.opml.observe(this@OpmlFragment, Observer {
+            mViewModel.opml.observe(viewLifecycleOwner, Observer {
                 toolbar.title = "共${it.size}条订阅源"
                 mAdapter?.setDiffNewData(it)
             })
@@ -68,7 +68,7 @@ class OpmlFragment : Fragment() {
     }
 
     private fun initListener() {
-        toolbar.setOnMenuItemClickListener {
+        binding?.toolbar?.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.menu_importopml -> {
                     import()
@@ -86,7 +86,7 @@ class OpmlFragment : Fragment() {
 
     private fun import() {
         mViewModel.insertFeed(mAdapter?.data?.filter { it.state }?.toMutableList())
-        Snackbar.make(root, "成功导入", 600).show()
+        Snackbar.make(binding?.root!!, "成功导入", 600).show()
     }
 
     private fun selectNone() {

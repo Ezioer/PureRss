@@ -1,7 +1,6 @@
 package com.zxq.purerss.ui.setting
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
@@ -12,12 +11,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.zxq.livedatabus.LiveDataBus
 import com.zxq.purerss.R
 import com.zxq.purerss.databinding.ActivitySettingBinding
-import com.zxq.purerss.ucdemopage.UcDemoActivity
 import com.zxq.purerss.ui.dialog.ExportOpmlNotiDialog
 import com.zxq.purerss.ui.dialog.ShortCutsDialog
-import com.zxq.purerss.ui.wxboom.WxBoomActivity
 import com.zxq.purerss.utils.*
-import kotlinx.android.synthetic.main.activity_setting.*
 import java.io.File
 
 class SettingActivity : AppCompatActivity() {
@@ -61,8 +57,7 @@ class SettingActivity : AppCompatActivity() {
             })
 
             tvBack.setOnClickListener {
-//                onBackPressed()
-                startActivity(Intent(this@SettingActivity, WxBoomActivity::class.java))
+                onBackPressed()
             }
             mViewModel.success.observe(this@SettingActivity, Observer {
                 if (it) {
@@ -132,41 +127,44 @@ class SettingActivity : AppCompatActivity() {
 
     private fun slide(i: Int) {
         if (i == 0) {
-            swipe_left.smoothExpand()
-            swipe_right.smoothClose()
+            binding?.swipeLeft?.smoothExpand()
+            binding?.swipeRight?.smoothClose()
         } else {
-            swipe_right.smoothExpand()
-            swipe_left.smoothClose()
+            binding?.swipeRight?.smoothExpand()
+            binding?.swipeLeft?.smoothClose()
         }
     }
 
     private fun checkMode(i: Int) {
         if (i == 0) {
-            rb_day.isChecked = true
-            rb_dark.isChecked = false
+            binding?.rbDay?.isChecked = true
+            binding?.rbDark?.isChecked = false
         } else {
-            rb_day.isChecked = false
-            rb_dark.isChecked = true
+            binding?.rbDay?.isChecked = false
+            binding?.rbDark?.isChecked = true
         }
-        RippleAnimation.create(if (i == 0) rb_day else rb_dark).setDuration(1000).start()
+        RippleAnimation.create(if (i == 0) binding?.rbDay!! else binding?.rbDark!!)
+            .setDuration(1000).start()
         if (i == 0) {
             StatusBarUtil.StatusBarLightMode(this)
         } else {
             StatusBarUtil.StatusBarDarkMode(this)
         }
-        if (i == 0) nsv.setBackgroundColor(Color.WHITE) else nsv.setBackgroundColor(Color.BLACK)
+        if (i == 0) binding?.nsv?.setBackgroundColor(Color.WHITE) else binding?.nsv.setBackgroundColor(
+            Color.BLACK
+        )
         if (i == 0) {
-            tv_theme.setTextColor(Color.BLACK)
-            tv_slide.setTextColor(Color.BLACK)
-            tv_export.setTextColor(Color.BLACK)
-            tv_appshortcuts.setTextColor(Color.BLACK)
-            tv_select.setTextColor(Color.BLACK)
+            binding?.tvTheme?.setTextColor(Color.BLACK)
+            binding?.tvSlide?.setTextColor(Color.BLACK)
+            binding?.tvExport?.setTextColor(Color.BLACK)
+            binding?.tvAppshortcuts?.setTextColor(Color.BLACK)
+            binding?.tvSelect?.setTextColor(Color.BLACK)
         } else {
-            tv_theme.setTextColor(Color.WHITE)
-            tv_slide.setTextColor(Color.WHITE)
-            tv_export.setTextColor(Color.WHITE)
-            tv_appshortcuts.setTextColor(Color.WHITE)
-            tv_select.setTextColor(Color.WHITE)
+            binding?.tvTheme?.setTextColor(Color.WHITE)
+            binding?.tvSlide?.setTextColor(Color.WHITE)
+            binding?.tvExport?.setTextColor(Color.WHITE)
+            binding?.tvAppshortcuts?.setTextColor(Color.WHITE)
+            binding?.tvSelect?.setTextColor(Color.WHITE)
         }
         putSpValue("nightmodel", i)
         /*    lifecycleScope.launch {

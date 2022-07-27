@@ -39,6 +39,7 @@ class FragmentType: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentTypeBinding.inflate(inflater, container, false).apply {
+            lifecycleOwner = viewLifecycleOwner
             type = args.type
             when (type) {
                 1 -> {
@@ -88,12 +89,12 @@ class FragmentType: Fragment() {
             recyclerview.adapter = adapter
             recyclerview.itemAnimator = SpringAddItemAnimator()
             adapter.setDiffCallback(ItemTypeDiffCallback())
-            viewM.feedsList.observe(this@FragmentType, Observer {
+            viewM.feedsList.observe(viewLifecycleOwner, Observer {
                 status = Constant.SUCCESS
                 adapter.setDiffNewData(it)
             })
 
-            viewM.status.observe(this@FragmentType, Observer {
+            viewM.status.observe(viewLifecycleOwner, Observer {
                 status = it
             })
         }
@@ -114,7 +115,8 @@ class FragmentType: Fragment() {
     private var mSearchDialog: SearchItemDialog? = null
     private fun showSearchDialog(onClick: ItemTypeClickListener) {
         if (mSearchDialog == null) {
-            mSearchDialog = SearchItemDialog(context!!, viewM, this@FragmentType, type, onClick)
+            mSearchDialog =
+                SearchItemDialog(requireContext(), viewM, this@FragmentType, type, onClick)
         }
 
         mSearchDialog?.show()

@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DiffUtil
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.transition.MaterialSharedAxis
 import com.zxq.purerss.R
 import com.zxq.purerss.data.Constant
 import com.zxq.purerss.data.entity.RssFeedInfo
@@ -41,7 +40,7 @@ class FeedListFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentFeedlistBinding.inflate(inflater, container, false).apply {
-            lifecycleOwner = this@FeedListFragment
+            lifecycleOwner = viewLifecycleOwner
             mInfo = args.feedinfo
             feedinfo = mInfo
             toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
@@ -60,7 +59,7 @@ class FeedListFragment: Fragment() {
             })
             recyclerview.adapter = mAdapter
             recyclerview.itemAnimator = SpringAddItemAnimator()
-            viewM.feedsList.observe(this@FeedListFragment, Observer {
+            viewM.feedsList.observe(viewLifecycleOwner, Observer {
                 status = Constant.SUCCESS
                 val diffResult =
                     DiffUtil.calculateDiff(RssItemDiffCallback(mAdapter.data, it), false)
@@ -71,14 +70,14 @@ class FeedListFragment: Fragment() {
                 }
             })
 
-            viewM.collectResult.observe(this@FeedListFragment, Observer {
+            viewM.collectResult.observe(viewLifecycleOwner, Observer {
                 if (it == 1) {
                     Snackbar.make(recyclerview, R.string.collectsuccess, 600).show()
                 } else {
                     Snackbar.make(recyclerview, R.string.collectfail, 600).show()
                 }
             })
-            viewM.laterResult.observe(this@FeedListFragment, Observer {
+            viewM.laterResult.observe(viewLifecycleOwner, Observer {
                 if (it == 1) {
                     Snackbar.make(recyclerview, R.string.latersuccess, 600).show()
                 } else {
@@ -89,7 +88,7 @@ class FeedListFragment: Fragment() {
                 viewM.getFeedsList(mInfo!!.link, mInfo!!.id, true)
             }
 
-            viewM.status.observe(this@FeedListFragment, Observer {
+            viewM.status.observe(viewLifecycleOwner, Observer {
                 status = it
             })
 

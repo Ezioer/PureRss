@@ -46,17 +46,8 @@ class MainActivity : AppCompatActivity(), ActivityCompat.OnRequestPermissionsRes
             StatusBarUtil.StatusBarDarkMode(this)
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-//            getWallpaperBitmap()
+
         }
-        val arraylist: Array<TextView> = arrayOf(TextView(this), TextView(this), TextView(this))
-        val imge = ImageView(this)
-        val li = LinearLayout(this)
-        val anylist: Array<Any> = arrayOf("1", "2", "3")
-        //out 定义的范型必须是赋值的父类
-        val anys: Array<out View> = arraylist
-        val str: Any = anys.get(0)
-        //in 定义的范型必须是赋值的子类
-        val lll: Array<in String> = anylist
         binding.apply {
             LiveDataBus.get<Int>("nightmodel").observe(this@MainActivity, Observer {
                 putSpValue("isMainPage", 1)
@@ -83,45 +74,6 @@ class MainActivity : AppCompatActivity(), ActivityCompat.OnRequestPermissionsRes
                     }
                 }
             }
-        }
-/*
-        PermissionX.init(this).permissions(Manifest.permission.MANAGE_EXTERNAL_STORAGE).request(
-            RequestCallback { allGranted, grantedList, deniedList ->
-                if (allGranted) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-                    }
-                }
-            })*/
-    }
-
-    fun getNet() {
-        val okhttpClient = OkHttpClient.Builder()
-            .readTimeout(5000L, TimeUnit.MILLISECONDS)
-            .build()
-        val request = Request.Builder()
-            .addHeader("", "")
-            .url("")
-            .build()
-        okhttpClient.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-            }
-        })
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O_MR1)
-    @SuppressLint("MissingPermission")
-    fun getWallpaperBitmap() {
-        val wallpaperManager = WallpaperManager.getInstance(this)//获取WallpaperManager实例
-        val mParcelFileDescriptor = wallpaperManager.drawable
-        val fileDescriptor = (mParcelFileDescriptor as BitmapDrawable).bitmap
-        var bitmap = BitmapFactory.decodeResource(resources, R.drawable.spring)
-        val palette = Palette.from(bitmap).generate {
-            val vibrantColor = it?.getDarkVibrantColor(Color.GREEN)
-            val dominantColor = it?.getDominantColor(Color.GREEN)
-            putSpValue("bgcolor", vibrantColor)
         }
     }
 }

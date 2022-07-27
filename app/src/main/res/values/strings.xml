@@ -1,15 +1,15 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">PureRss</string>
     <string name="app_bar_search">搜索</string>
     <string name="app_bar_textsize">字体</string>
     <string name="app_bar_save">保存</string>
     <string name="app_bar_share">分享</string>
     <string name="choose_your_rss">选择你感兴趣的rss源</string>
-    <string name="simpletitlebahavior">com.zxq.purerss.widget.diybehavior.SimpleTitleBehavior</string>
-    <string name="behavior_contents">com.zxq.purerss.ucdemopage.UcNewsContentBehavior</string>
-    <string name="behavior_uc_news_tab">com.zxq.purerss.ucdemopage.UcNewsTabBehavior</string>
-    <string name="behavior_uc_title">com.zxq.purerss.ucdemopage.UcNewsTitleBehavior</string>
-    <string name="behavior_uc_header_pager">com.zxq.purerss.ucdemopage.UcNewsHeaderPagerBehavior</string>
+    <string name="simpletitlebahavior" tools:ignore="MissingTranslation">com.zxq.purerss.widget.diybehavior.SimpleTitleBehavior</string>
+    <string name="behavior_contents" tools:ignore="MissingTranslation">com.zxq.purerss.ucdemopage.UcNewsContentBehavior</string>
+    <string name="behavior_uc_news_tab" tools:ignore="MissingTranslation">com.zxq.purerss.ucdemopage.UcNewsTabBehavior</string>
+    <string name="behavior_uc_title" tools:ignore="MissingTranslation">com.zxq.purerss.ucdemopage.UcNewsTitleBehavior</string>
+    <string name="behavior_uc_header_pager" tools:ignore="MissingTranslation">com.zxq.purerss.ucdemopage.UcNewsHeaderPagerBehavior</string>
 
     <string name="news">订阅</string>
     <string name="mine">我的</string>
@@ -61,7 +61,7 @@
 
     <string name="empty">空荡荡的</string>
     <string name="error">出错了</string>
-    <string name="gamenoti">注: 每个格子中都可以且仅能住一个细胞,每个细胞都会与自身相邻的8个细胞发生交互，
+    <string name="gamenoti" tools:ignore="MissingTranslation">注: 每个格子中都可以且仅能住一个细胞,每个细胞都会与自身相邻的8个细胞发生交互，
         \n1:當前細胞為存活狀態時，當周圍的存活細胞低於2個時（不包含2個），該細胞變成死亡狀態。（模擬生命數量稀少）
    \n2:當前細胞為存活狀態時，當周圍有2個或3個存活細胞時，該細胞保持原樣。
    \n3:當前細胞為存活狀態時，當周圍有超過3個存活細胞時，該細胞變成死亡狀態。（模擬生命數量過多）

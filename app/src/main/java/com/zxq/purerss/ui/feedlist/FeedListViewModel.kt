@@ -69,7 +69,7 @@ class FeedListViewModel(private val repository: RssFeedRepository) : ViewModel()
 
     fun getFeedsList(url: String, id: Long, isRefresh: Boolean) {
         //默认是主线程，可以指定为io线程
-        viewModelScope.launch(Dispatchers.Main) {
+        /*viewModelScope.launch(Dispatchers.Main) {
             //launch或者async都是开启一个协程，切换线程
             val result = repository.getRssItemFromDB(112L)
             launch {
@@ -86,10 +86,9 @@ class FeedListViewModel(private val repository: RssFeedRepository) : ViewModel()
                 "currentthrea=" + Thread.currentThread(),
                 Toast.LENGTH_LONG
             ).show()
-        }
-        return
+        }*/
         launch({
-            createFlow()
+            /*createFlow()
                 //发射数据的线程切为io线程
                 .flowOn(Dispatchers.IO).catch {
                     //捕获异常
@@ -99,7 +98,7 @@ class FeedListViewModel(private val repository: RssFeedRepository) : ViewModel()
                     //消费的线程取决与启动协程的调度器，触发到collect方法时才会开始发射数据，
                     // 每个数据都是经过 emit、filter 、map和 collect 这一套完整的处理流程后，下个数据才会开始处理，
                     // 而不是所有的数据都先统一 emit，完了再统一 filter，接着 map，最后再 collect
-                    /*lifecycleScope.launch {
+                    *//*lifecycleScope.launch {
                         // 1. 生成一个 Channel
                         val channel = Channel<Int>()
 
@@ -117,8 +116,8 @@ class FeedListViewModel(private val repository: RssFeedRepository) : ViewModel()
                             for( y in channel)
                                 Log.e(TAG, "get $y")
                         }
-                    }*/
-                }
+                    }*//*
+                }*/
 
             val list = repository.getRssItemFromDB(id)
             if (list.isNullOrEmpty() || isRefresh) {

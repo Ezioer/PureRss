@@ -5,7 +5,6 @@ import androidx.databinding.DataBindingUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.zxq.purerss.R
-import com.zxq.purerss.data.entity.RssItem
 import com.zxq.purerss.data.entity.table.RSSFeedEntity
 import com.zxq.purerss.databinding.ItemFeedListBinding
 import com.zxq.purerss.widget.SwipeMenuLayout

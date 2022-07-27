@@ -15,7 +15,7 @@ import com.zxq.purerss.data.entity.table.*
  *  fun
  */
 @Database(
-    entities = [RSSFeedEntity::class, RSSItemEntity::class, RSSLaterEntity::class, RSSReadedEntity::class, RSSCollectEntity::class, RSSSourceEntity::class, RSSFolderEntity::class,CircleItemEntity::class],
+    entities = [RSSFeedEntity::class, RSSItemEntity::class, RSSLaterEntity::class, RSSReadedEntity::class, RSSCollectEntity::class, RSSSourceEntity::class, RSSFolderEntity::class],
     version = 1,
     exportSchema = false
 )
@@ -24,7 +24,6 @@ abstract class DataBase : RoomDatabase() {
     abstract fun itemDao(): ItemDao
     abstract fun sourceDao(): SourceDao
     abstract fun folderDao(): FolderDao
-    abstract fun circleDao(): CircleDao
 
     companion object {
         @Volatile

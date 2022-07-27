@@ -36,16 +36,16 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation
  * use elevation as the design calls for no shadow.
  */
 
-@BindingAdapter("app:imageUrl")
-fun loadImage(
+/*@BindingAdapter("app:imageUrl")
+fun View.loadImage(
     imageView: RoundedImageView,
     url: String?
-): Unit {
+) {
     Glide.with(imageView.context)
         .load(url)
         .apply(RequestOptions().placeholder(R.drawable.default_two).error(R.drawable.default_two))
         .into(imageView)
-}
+}*/
 
 @BindingAdapter("elevationOverlay")
 fun View.bindElevationOverlay(previousElevation: Float, elevation: Float) {

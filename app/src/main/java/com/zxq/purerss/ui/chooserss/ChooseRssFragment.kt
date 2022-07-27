@@ -31,8 +31,8 @@ class ChooseRssFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentChooserssBinding.inflate(inflater, container, false).apply {
-
-            viewM.insertComplete.observe(this@ChooseRssFragment, Observer {
+            lifecycleOwner = viewLifecycleOwner
+            viewM.insertComplete.observe(viewLifecycleOwner, Observer {
                 if (it) {
                     findNavController().popBackStack()
                 }

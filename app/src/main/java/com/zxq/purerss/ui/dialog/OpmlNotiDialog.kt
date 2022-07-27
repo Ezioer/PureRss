@@ -5,16 +5,10 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import androidx.lifecycle.Observer
+import android.widget.CheckBox
+import android.widget.TextView
 import com.zxq.purerss.R
-import com.zxq.purerss.listener.ItemTypeClickListener
-import com.zxq.purerss.listener.ItemTypeDiffCallback
-import com.zxq.purerss.ui.type.FragmentType
-import com.zxq.purerss.ui.type.TypeAdapter
-import com.zxq.purerss.ui.type.TypeViewModel
 import com.zxq.purerss.utils.*
-import kotlinx.android.synthetic.main.dialog_opml_noti.*
-import kotlinx.android.synthetic.main.dialog_search.*
 
 class OpmlNotiDialog(
     private val mContext: Context
@@ -28,8 +22,8 @@ class OpmlNotiDialog(
     }
 
     private fun initView() {
-        tv_ok.setOnClickListener { dismiss() }
-        cb_nonoti.setOnCheckedChangeListener { buttonView, isChecked ->
+        findViewById<TextView>(R.id.tv_ok).setOnClickListener { dismiss() }
+        findViewById<CheckBox>(R.id.cb_nonoti).setOnCheckedChangeListener { buttonView, isChecked ->
             mContext.putSpValue("opmlnoti", isChecked)
         }
     }

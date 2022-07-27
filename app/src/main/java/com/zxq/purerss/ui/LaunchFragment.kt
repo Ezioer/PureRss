@@ -30,7 +30,7 @@ class LaunchFragment : Fragment() {
             val list = arrayListOf<SpringAnimation>()
             for (i in 0 until llName.childCount) {
                 val view = llName.getChildAt(i)
-                view.translationY = PixelUtil.getScreenHeight(context!!).toFloat()
+                view.translationY = PixelUtil.getScreenHeight(requireContext()).toFloat()
                 val letterAnimY = SpringAnimation(view, SpringAnimation.TRANSLATION_Y, 0f)
                 letterAnimY.spring.stiffness = SpringForce.STIFFNESS_VERY_LOW
                 letterAnimY.spring.dampingRatio = SpringForce.DAMPING_RATIO_LOW_BOUNCY

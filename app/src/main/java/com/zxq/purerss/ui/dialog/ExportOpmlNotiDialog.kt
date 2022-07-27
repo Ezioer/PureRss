@@ -5,9 +5,10 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.CheckBox
+import android.widget.TextView
 import com.zxq.purerss.R
 import com.zxq.purerss.utils.putSpValue
-import kotlinx.android.synthetic.main.dialog_opml_noti.*
 
 class ExportOpmlNotiDialog(
     private val mContext: Context
@@ -21,8 +22,8 @@ class ExportOpmlNotiDialog(
     }
 
     private fun initView() {
-        tv_ok.setOnClickListener { dismiss() }
-        cb_nonoti.setOnCheckedChangeListener { buttonView, isChecked ->
+        findViewById<TextView>(R.id.tv_ok).setOnClickListener { dismiss() }
+        findViewById<CheckBox>(R.id.cb_nonoti).setOnCheckedChangeListener { buttonView, isChecked ->
             mContext.putSpValue("exportopmlnoti", isChecked)
         }
     }

@@ -7,7 +7,6 @@ import com.zxq.purerss.ui.add.AddRssModelFactory
 import com.zxq.purerss.ui.chooserss.SaveDBRssModelFactory
 import com.zxq.purerss.ui.detail.DetailModelFactory
 import com.zxq.purerss.ui.feedlist.FeedListModelFactory
-import com.zxq.purerss.ui.friends.FriendsCircleModelFactory
 import com.zxq.purerss.ui.mainpage.MainPageModelFactory
 import com.zxq.purerss.ui.managefolder.ManageFolderModelFactory
 import com.zxq.purerss.ui.opml.OpmlModelFactory
@@ -101,12 +100,6 @@ object InjectorUtil {
     fun getFolderFactory(activity: Fragment) = ManageFolderModelFactory(
         FolderRepository.getInstance(
             DataBase.getInstance(activity.requireContext()).folderDao()
-        )
-    )
-
-    fun getFriendsFactory(activity: Fragment) = FriendsCircleModelFactory(
-        StatusRepository.getInstance(
-            DataBase.getInstance(activity.requireContext()).circleDao()
         )
     )
 }

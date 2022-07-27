@@ -1,6 +1,7 @@
 package com.zxq.purerss.ui.add
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -53,7 +54,7 @@ class AddRssFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCall
         savedInstanceState: Bundle?
     ): View? {
         binding = DialogAddrssBinding.inflate(inflater, null, false).apply {
-            lifecycleOwner = this@AddRssFragment
+            lifecycleOwner = viewLifecycleOwner
             ivParse.setOnClickListener {
                 val text = etInput.text.toString()
                 if (text.isNotEmpty()) {
@@ -115,7 +116,7 @@ class AddRssFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCall
             rvSource.adapter = sourceAdapter
             sourceAdapter.setDiffCallback(RssSourceDiffCallback())
             rvSource.itemAnimator = SpringAddItemAnimator()
-            mViewModel.sources.observe(this@AddRssFragment, Observer {
+            mViewModel.sources.observe(viewLifecycleOwner, Observer {
                 rvSource.visibility = View.VISIBLE
                 ctlResult.visibility = View.GONE
                 sourceAdapter.setDiffNewData(it)
@@ -124,7 +125,7 @@ class AddRssFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCall
             val adapter = SearchListAdapter(onClick, true)
             recyclerview.adapter = adapter
             recyclerview.itemAnimator = SpringAddItemAnimator()
-            mViewModel.feedsList.observe(this@AddRssFragment, Observer {
+            mViewModel.feedsList.observe(viewLifecycleOwner, Observer {
                 info = it
                 pbLoad.visibility = View.GONE
                 rvSource.visibility = View.GONE
@@ -135,7 +136,7 @@ class AddRssFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCall
                 adapter.setDiffNewData(diffResult, it.items)
             })
 
-            mViewModel.noThingFound.observe(this@AddRssFragment, Observer {
+            mViewModel.noThingFound.observe(viewLifecycleOwner, Observer {
                 if (!it) {
                     pbLoad.visibility = View.GONE
                     ivParse.setImageResource(R.drawable.nothing_found_64px)
@@ -164,7 +165,7 @@ class AddRssFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCall
                 )
             }
 
-            mViewModel.addComplete.observe(this@AddRssFragment, Observer {
+            mViewModel.addComplete.observe(viewLifecycleOwner, Observer {
                 if (it) {
                     Snackbar.make(recyclerview, R.string.addsuccess, 2000).show()
                 } else {
@@ -241,6 +242,7 @@ class AddRssFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCall
         }
     }
 
+    @SuppressLint("Range")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {

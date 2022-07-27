@@ -4,7 +4,86 @@
     <asm skipDebug="false" skipFrames="false" skipCode="false" expandFrames="false" />
     <groovy codeStyle="LEGACY" />
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1555" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/drawable/avd_featured_off.xml" value="0.15" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/drawable/avd_featured_on.xml" value="0.15" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/drawable/avd_my_courses_off.xml" value="0.15" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/drawable/avd_my_courses_on.xml" value="0.15" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/drawable/bg_addpic.xml" value="0.1555" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/drawable/bg_chat_content.xml" value="0.2604166666666667" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/drawable/bg_dialog.xml" value="0.1555" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/drawable/bg_dialog_four.xml" value="0.1555" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/drawable/bg_edittext.xml" value="0.1555" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/drawable/bg_folder.xml" value="0.1555" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/drawable/bg_r_five_n.xml" value="0.1555" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/drawable/bg_testview.xml" value="0.1287037037037037" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/activity_main.xml" value="0.18" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/activity_setting.xml" value="0.17300724637681159" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/activity_sticklinearlayout.xml" value="0.184375" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/activity_test.xml" value="0.5" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/activity_wxboom.xml" value="0.2" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/choose_rss_item.xml" value="0.10520833333333333" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/dialog_addrss.xml" value="0.25" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/dialog_appshortcuts.xml" value="0.10797174571140263" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/dialog_edit.xml" value="0.25" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/dialog_export_opml_noti.xml" value="0.10040363269424823" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/dialog_folder.xml" value="0.10040363269424823" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/dialog_newfolder.xml" value="0.10040363269424823" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/dialog_opml_noti.xml" value="0.10040363269424823" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/dialog_readsetting.xml" value="0.10797174571140263" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/dialog_search.xml" value="0.22056159420289856" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/dialog_selectshortcuts.xml" value="0.10040363269424823" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/fragment_addstatus.xml" value="0.13496376811594202" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/fragment_chooserss.xml" value="0.10797174571140263" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/fragment_detail.xml" value="0.11639492753623189" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/fragment_feedlist.xml" value="0.10916919959473151" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/fragment_friendscircle.xml" value="0.17708333333333334" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/fragment_launch.xml" value="0.17" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/fragment_managefolder.xml" value="0.10797174571140263" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/fragment_news.xml" value="0.12047101449275362" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/fragment_preview.xml" value="0.11911231884057971" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/fragment_test.xml" value="0.15217391304347827" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/fragment_type.xml" value="0.1" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/header_news.xml" value="0.1" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/include_status.xml" value="0.1" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/item_addpic.xml" value="0.11911231884057971" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/item_app_shortcuts.xml" value="0.1" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/item_chat_left.xml" value="0.25" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/item_chat_right.xml" value="0.25" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/item_content_list.xml" value="0.192481884057971" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/item_event.xml" value="0.1" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/item_feed_list.xml" value="0.14945652173913043" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/item_folder_dialog_list.xml" value="0.1" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/item_folder_list.xml" value="0.1" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/item_manage_folder.xml" value="0.1" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/item_opml.xml" value="0.1" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/item_pielayoutx.xml" value="0.17604166666666668" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/item_search_list.xml" value="0.1" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/item_search_source_list.xml" value="0.1" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/item_selectshortcuts.xml" value="0.1" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/item_statuspic.xml" value="0.11911231884057971" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/item_type_list.xml" value="0.10797174571140263" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/layout_md3.xml" value="0.2033514492753623" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/layout_simpletitlebehavior.xml" value="0.16032608695652173" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/layout_ucnewsdemo.xml" value="0.14764492753623187" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/rss_widget.xml" value="0.1" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/layout/rss_widget_fliper.xml" value="0.1" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/menu/addopml.xml" value="0.16197916666666667" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/menu/bottom_app_bar_detail_menu.xml" value="0.16197916666666667" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/menu/bottom_app_bar_home_menu.xml" value="0.16197916666666667" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/menu/bottom_menu.xml" value="0.22291666666666668" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/menu/menu_addstatus.xml" value="0.16197916666666667" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/menu/menu_managefeed.xml" value="0.16197916666666667" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/menu/menu_managefolder.xml" value="0.16197916666666667" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/menu/menu_topbar.xml" value="0.22291666666666668" />
+        <entry key="..\:/androidProject/material-components-android-examples-develop/PureRss/app/src/main/res/menu/opml.xml" value="0.16197916666666667" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

@@ -7,9 +7,8 @@ import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.Q
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
-import com.previewlibrary.ZoomMediaLoader
+import com.google.android.material.color.DynamicColors
 import com.tencent.mmkv.MMKV
-import com.zxq.purerss.ui.friends.preview.GlideImageLoader
 import com.zxq.purerss.utils.TypefaceUtil
 import com.zxq.purerss.utils.getSpValue
 import com.zxq.purerss.utils.putSpValue
@@ -24,11 +23,12 @@ class App : Application() {
         super.onCreate()
         instance = this
         MMKV.initialize(this)
+        DynamicColors.applyToActivitiesIfAvailable(this)
 //        SystemUtil.enableGray(true)
-        TypefaceUtil.replaceSystemDefaultFont(this, "fonts/kaiti.ttf")
-        ZoomMediaLoader.getInstance().init(GlideImageLoader())
+//        TypefaceUtil.replaceSystemDefaultFont(this, "fonts/kaiti.ttf")
+//        ZoomMediaLoader.getInstance().init(GlideImageLoader())
 //        val ls = MmkvUtils.getInstance().getValue("111",String)
-        lookActivityEvent()
+//        lookActivityEvent()
         var nightMode = if (SDK_INT >= Q) {
             AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
         } else {

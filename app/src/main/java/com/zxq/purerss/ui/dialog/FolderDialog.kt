@@ -5,12 +5,13 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.TextView
 import androidx.navigation.NavController
+import androidx.recyclerview.widget.RecyclerView
 import com.zxq.purerss.R
 import com.zxq.purerss.data.entity.table.RSSFolderEntity
 import com.zxq.purerss.listener.FolderClickListener
 import com.zxq.purerss.listener.RssFolderDiffCallback
-import kotlinx.android.synthetic.main.dialog_folder.*
 class FolderDialog(
     private val mContext: Context,
     private val list: MutableList<RSSFolderEntity>,
@@ -26,15 +27,15 @@ class FolderDialog(
     }
 
     private fun initView() {
-        tv_ok.setOnClickListener {
+        findViewById<TextView>(R.id.tv_ok).setOnClickListener {
             dismiss()
         }
-        tv_managefolder.setOnClickListener {
+        findViewById<TextView>(R.id.tv_managefolder).setOnClickListener {
             findNavController.navigate(R.id.action_mainpage_to_managefolder)
             dismiss()
         }
         val adapter = FolderAdapter(onClick)
-        rv_folder.adapter = adapter
+        findViewById<RecyclerView>(R.id.rv_folder).adapter = adapter
         adapter.setDiffCallback(RssFolderDiffCallback())
         adapter.setDiffNewData(list)
     }

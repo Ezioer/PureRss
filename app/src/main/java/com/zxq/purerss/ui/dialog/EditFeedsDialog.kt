@@ -5,15 +5,14 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.TextView
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.zxq.purerss.R
 import com.zxq.purerss.data.entity.table.RSSFeedEntity
 import com.zxq.purerss.data.entity.table.RSSFolderEntity
-import com.zxq.purerss.listener.FolderClickListener
 import com.zxq.purerss.listener.RssFolderDiffCallback
 import com.zxq.purerss.ui.mainpage.MainPageViewModel
-import kotlinx.android.synthetic.main.dialog_edit.*
 
 class EditFeedsDialog(
     private val mContext: Context,
@@ -28,34 +27,46 @@ class EditFeedsDialog(
         var parentId = 1L
     }
 
+    private lateinit var tvOk: TextView
+    private lateinit var tvTitle: TextView
+    private lateinit var tvSubTitle: TextView
+    private lateinit var tvLink: TextView
+    private lateinit var tvFolder: TextView
+    private lateinit var rvFolder: RecyclerView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mView = LayoutInflater.from(mContext).inflate(R.layout.dialog_edit, null)
         setContentView(mView)
+        tvOk = findViewById(R.id.tv_ok)
+        tvTitle = findViewById(R.id.tv_titlevalue)
+        tvSubTitle = findViewById(R.id.tv_subtitlevalue)
+        tvLink = findViewById(R.id.tv_linkvalue)
+        tvFolder = findViewById(R.id.tv_folder_manage)
+        rvFolder = findViewById(R.id.rv_folders)
         initView()
     }
 
     private fun initView() {
-        tv_ok.setOnClickListener {
+        tvOk.setOnClickListener {
             //保存信息
             viewModel.updateFeeds(
-                tv_titlevalue.text.toString(),
-                tv_subtitlevalue.text.toString(),
-                tv_linkvalue.text.toString(),
+                tvTitle.text.toString(),
+                tvSubTitle.text.toString(),
+                tvLink.text.toString(),
                 parentId,
                 item.feedId
             )
             dismiss()
         }
-        tv_linkvalue.setText(item.feedLink)
-        tv_titlevalue.setText(item.feedTitle)
-        tv_subtitlevalue.setText(item.feedDesc)
-        tv_folder_manage.setOnClickListener {
+        tvLink.setText(item.feedLink)
+        tvTitle.setText(item.feedTitle)
+        tvSubTitle.setText(item.feedDesc)
+        tvFolder.setOnClickListener {
             dismiss()
             findNavController.navigate(R.id.action_mainpage_to_managefolder)
         }
         val adapter = EditFeedsAdapter(item.parentId)
-        rv_folders.adapter = adapter
+        rvFolder.adapter = adapter
         adapter.setDiffCallback(RssFolderDiffCallback())
         adapter.setDiffNewData(list)
     }

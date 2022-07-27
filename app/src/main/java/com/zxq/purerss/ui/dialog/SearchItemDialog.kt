@@ -5,7 +5,11 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.RecyclerView
 import com.zxq.purerss.R
 import com.zxq.purerss.listener.ItemTypeClickListener
 import com.zxq.purerss.listener.ItemTypeDiffCallback
@@ -16,7 +20,6 @@ import com.zxq.purerss.utils.KeyBoardUtil
 import com.zxq.purerss.utils.SpringAddItemAnimator
 import com.zxq.purerss.utils.addOnAfterChange
 import com.zxq.purerss.utils.getSpValue
-import kotlinx.android.synthetic.main.dialog_search.*
 
 class SearchItemDialog(
     private val mContext: Context,
@@ -25,24 +28,32 @@ class SearchItemDialog(
     private var type: Int,
     private var onClick: ItemTypeClickListener
 ) : BaseDialog(mContext,Gravity.BOTTOM, R.style.anim_bottom2top,true,1.0,0.5) {
-   private lateinit var mView: View
+    private lateinit var mView: View
+    private lateinit var etSearch: EditText
+    private lateinit var pageType: TextView
+    private lateinit var ivClose: ImageView
+    private lateinit var rvList: RecyclerView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mView = LayoutInflater.from(mContext).inflate(R.layout.dialog_search,null)
+        mView = LayoutInflater.from(mContext).inflate(R.layout.dialog_search, null)
         setContentView(mView)
+        etSearch = findViewById(R.id.et_search)
+        pageType = findViewById(R.id.page_type)
+        ivClose = findViewById(R.id.iv_close)
+        rvList = findViewById(R.id.recyclerview)
         initView()
     }
 
     private fun initView() {
-        KeyBoardUtil.showKeyboard(et_search)
-        et_search.addOnAfterChange {
+        KeyBoardUtil.showKeyboard(etSearch)
+        etSearch.addOnAfterChange {
             mainViewModel.searchItem(it.toString(), type)
         }
-        page_type.text = mContext.getString(R.string.searchtype)
-        iv_close.setOnClickListener { dismiss() }
+        pageType.text = mContext.getString(R.string.searchtype)
+        ivClose.setOnClickListener { dismiss() }
         val adapter = TypeAdapter(onClick, mContext?.getSpValue("slide", 0) == 0)
-        recyclerview.adapter = adapter
-        recyclerview.itemAnimator = SpringAddItemAnimator()
+        rvList.adapter = adapter
+        rvList.itemAnimator = SpringAddItemAnimator()
         adapter.setDiffCallback(ItemTypeDiffCallback())
         mainViewModel.itemList.observe(mainPageFragment, Observer {
             adapter.setDiffNewData(it)

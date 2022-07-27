@@ -13,6 +13,8 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.listener.OnItemDragListener
@@ -22,8 +24,6 @@ import com.zxq.purerss.R
 import com.zxq.purerss.data.entity.table.RSSFeedEntity
 import com.zxq.purerss.listener.ShortCutsDiffCallback
 import com.zxq.purerss.ui.MainActivity
-import kotlinx.android.synthetic.main.dialog_appshortcuts.*
-import kotlinx.android.synthetic.main.dialog_folder.tv_ok
 import java.util.*
 
 
@@ -34,22 +34,32 @@ class ShortCutsDialog(
     private lateinit var mView: View
     private lateinit var mManager: ShortcutManager
     private lateinit var mList: MutableList<ShortcutInfo>
+    private lateinit var tvOk: TextView
+    private lateinit var tvAddCuts: TextView
+    private lateinit var rvAddCuts: RecyclerView
+
+    @RequiresApi(Build.VERSION_CODES.N_MR1)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mView = LayoutInflater.from(mContext).inflate(R.layout.dialog_appshortcuts, null)
         setContentView(mView)
+        tvOk = findViewById(R.id.tv_ok)
+        tvAddCuts = findViewById(R.id.tv_addcuts)
+        rvAddCuts = findViewById(R.id.rv_shortcuts)
         mManager = mContext.getSystemService(ShortcutManager::class.java)
         mList = mManager.dynamicShortcuts
         initView()
     }
 
+    @RequiresApi(Build.VERSION_CODES.N_MR1)
     private fun initView() {
-        tv_ok.setOnClickListener {
+        tvOk.setOnClickListener {
             mManager.setDynamicShortcuts(mList)
             dismiss()
         }
         val adapter = ShortcutsAdapter()
         val onDragListener = object : OnItemDragListener {
+            @RequiresApi(Build.VERSION_CODES.N_MR1)
             override fun onItemDragMoving(
                 source: RecyclerView.ViewHolder?,
                 from: Int,
@@ -109,6 +119,7 @@ class ShortCutsDialog(
             override fun clearView(viewHolder: RecyclerView.ViewHolder?, pos: Int) {
             }
 
+            @RequiresApi(Build.VERSION_CODES.N_MR1)
             override fun onItemSwiped(viewHolder: RecyclerView.ViewHolder?, pos: Int) {
                 mManager.removeDynamicShortcuts(Arrays.asList("ID${pos}"))
             }
@@ -133,7 +144,7 @@ class ShortCutsDialog(
         adapter.draggableModule.setOnItemDragListener(onDragListener)
         adapter.draggableModule.itemTouchHelperCallback.setSwipeMoveFlags(ItemTouchHelper.START or ItemTouchHelper.END)
         adapter.draggableModule.itemTouchHelperCallback.setDragMoveFlags(ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT or ItemTouchHelper.UP or ItemTouchHelper.DOWN)
-        tv_addcuts.setOnClickListener {
+        tvAddCuts.setOnClickListener {
             val selectDialog = SelectShortCutsDialog(mContext, mList, feedList)
             selectDialog.setListener {
                 mList.clear()
@@ -148,18 +159,18 @@ class ShortCutsDialog(
                         ShortcutInfo.Builder(mContext, "ID${it.indexOf(item)}")
                             .setLongLabel(item.feedTitle)
                             .setShortLabel(item.feedTitle)
-                                .setIntent(intent)
-                                .setIcon(Icon.createWithResource(mContext, R.mipmap.ic_launcher))
-                                .build()
-                        )
-                    }
-                    adapter.notifyDataSetChanged()
+                            .setIntent(intent)
+                            .setIcon(Icon.createWithResource(mContext, R.mipmap.ic_launcher))
+                            .build()
+                    )
                 }
+                adapter.notifyDataSetChanged()
+            }
 
             selectDialog.show()
         }
 
-        rv_shortcuts.adapter = adapter
+        rvAddCuts.adapter = adapter
         adapter.setDiffCallback(ShortCutsDiffCallback())
         adapter.setDiffNewData(mList)
     }

@@ -24,9 +24,6 @@ import com.zxq.purerss.R
 import com.zxq.purerss.data.entity.RssItemInfo
 import com.zxq.purerss.databinding.FragmentDetailBinding
 import com.zxq.purerss.utils.*
-import kotlinx.android.synthetic.main.dialog_readsetting.*
-import kotlinx.android.synthetic.main.fragment_detail.*
-
 /**
  *  created by xiaoqing.zhou
  *  on 2020/6/18
@@ -46,7 +43,7 @@ class DetailFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
     ): View? {
         bind = FragmentDetailBinding.inflate(inflater, container, false).apply {
             mRssItemInfo = arg.itemcontent
-            lifecycleOwner = this@DetailFragment
+            lifecycleOwner = viewLifecycleOwner
             info = mRssItemInfo
             bottomAppBar.setNavigationOnClickListener { findNavController().navigateUp() }
             bottomAppBar.setOnMenuItemClickListener {
@@ -76,7 +73,7 @@ class DetailFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
                 null
             )
             mViewModel.readed(mRssItemInfo!!)
-            mViewModel.collectResult.observe(this@DetailFragment, Observer {
+            mViewModel.collectResult.observe(viewLifecycleOwner, Observer {
                 if (it == 1) {
                     Toast.makeText(context, R.string.collectsuccess, Toast.LENGTH_SHORT).show()
                 } else {
@@ -121,19 +118,19 @@ class DetailFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
     }
 
     private fun initListener() {
-        tv_font_one.setOnClickListener {
+        bind?.includeReadsetting?.tvFontOne?.setOnClickListener {
             changeFontBg(0)
         }
-        tv_font_two.setOnClickListener {
+        bind?.includeReadsetting?.tvFontTwo?.setOnClickListener {
             changeFontBg(1)
         }
-        tv_font_three.setOnClickListener {
+        bind?.includeReadsetting?.tvFontThree?.setOnClickListener {
             changeFontBg(2)
         }
-        ll_title.setOnClickListener {
-            if (include_readsetting.visibility == View.VISIBLE) {
-                include_readsetting.visibility = View.GONE
-                include_readsetting.startAnimation(
+        bind?.llTitle?.setOnClickListener {
+            if (bind?.includeReadsetting?.root?.visibility == View.VISIBLE) {
+                bind?.includeReadsetting?.root?.visibility = View.GONE
+                bind?.includeReadsetting?.root?.startAnimation(
                     AnimationUtils.loadAnimation(
                         context,
                         R.anim.dialog_exit
@@ -141,40 +138,40 @@ class DetailFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
                 )
             }
         }
-        iv_italic.setOnClickListener {
+        bind?.includeReadsetting?.ivItalic?.setOnClickListener {
             isItalic = !isItalic
             isBold = false
             activity?.putSpValue("italic", if (isItalic) 1 else 0)
             activity?.putSpValue("bold", if (isBold) 1 else 0)
             initItalicBG()
-            iv_bold.setBackgroundResource(if (isBold) R.drawable.bg_selected else R.drawable.bg_tv_unselect)
+            bind?.includeReadsetting?.ivBold?.setBackgroundResource(if (isBold) R.drawable.bg_selected else R.drawable.bg_tv_unselect)
         }
 
-        iv_bold.setOnClickListener {
+        bind?.includeReadsetting?.ivBold?.setOnClickListener {
             isBold = !isBold
             isItalic = false
             activity?.putSpValue("italic", if (isItalic) 1 else 0)
             activity?.putSpValue("bold", if (isBold) 1 else 0)
             initBoldBG()
-            iv_italic.setBackgroundResource(if (isItalic) R.drawable.bg_selected else R.drawable.bg_tv_unselect)
+            bind?.includeReadsetting?.ivItalic?.setBackgroundResource(if (isItalic) R.drawable.bg_selected else R.drawable.bg_tv_unselect)
         }
 
-        sb_textspac.setOnSeekBarChangeListener(this)
-        sb_fontsize.setOnSeekBarChangeListener(this)
+        bind?.includeReadsetting?.sbTextspac?.setOnSeekBarChangeListener(this)
+        bind?.includeReadsetting?.sbFontsize?.setOnSeekBarChangeListener(this)
 
-        iv_font_reduce.setOnClickListener {
-            if (sb_fontsize.progress > 0) {
-                val s = sb_fontsize.progress - 1
+        bind?.includeReadsetting?.ivFontReduce?.setOnClickListener {
+            if (bind?.includeReadsetting?.sbFontsize!!.progress > 0) {
+                val s = bind?.includeReadsetting?.sbFontsize!!.progress - 1
                 activity?.putSpValue("readtextsize", s)
-                sb_fontsize.progress = s
+                bind?.includeReadsetting?.sbFontsize!!.progress = s
                 setTextSize(s)
             }
         }
-        iv_font_plus.setOnClickListener {
-            if (sb_fontsize.progress < 5) {
-                val s = sb_fontsize.progress + 1
+        bind?.includeReadsetting?.ivFontPlus?.setOnClickListener {
+            if (bind?.includeReadsetting?.sbFontsize!!.progress < 5) {
+                val s = bind?.includeReadsetting?.sbFontsize!!.progress + 1
                 activity?.putSpValue("readtextsize", s)
-                sb_fontsize.progress = s
+                bind?.includeReadsetting?.sbFontsize!!.progress = s
                 setTextSize(s)
             }
         }
@@ -194,8 +191,8 @@ class DetailFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
             2 -> 22
             else -> 12
         }
-        tv_spac.text = textSpac.toString()
-        tv_content.setLineSpacing(textSpac.toFloat(), 1.0f)
+        bind?.includeReadsetting?.tvSpac?.text = textSpac.toString()
+        bind?.tvContent?.setLineSpacing(textSpac.toFloat(), 1.0f)
     }
 
     override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -216,10 +213,21 @@ class DetailFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
     private var isItalic = false
     private var isBold = false
     private fun initView() {
-        tv_font_two.typeface = Typeface.createFromAsset(activity?.assets, "kaiti.ttf")
-        tv_font_three.typeface = Typeface.createFromAsset(activity?.assets, "yt.ttf")
-        bgFont = arrayOf(tv_font_one, tv_font_two, tv_font_three)
-        bgList = arrayOf(view_c_one, view_c_three, view_c_four, view_c_six)
+        bind?.includeReadsetting?.tvFontTwo?.typeface =
+            Typeface.createFromAsset(activity?.assets, "kaiti.ttf")
+        bind?.includeReadsetting?.tvFontThree?.typeface =
+            Typeface.createFromAsset(activity?.assets, "yt.ttf")
+        bgFont = arrayOf(
+            bind?.includeReadsetting?.tvFontOne!!,
+            bind!!.includeReadsetting?.tvFontTwo!!,
+            bind!!.includeReadsetting?.tvFontThree!!
+        )
+        bgList = arrayOf(
+            bind?.includeReadsetting?.viewCOne!!,
+            bind?.includeReadsetting?.viewCThree!!,
+            bind?.includeReadsetting?.viewCFour!!,
+            bind?.includeReadsetting?.viewCSix!!
+        )
         bgColor = arrayOf(
             R.drawable.bg_r_one, R.drawable.bg_r_three, R.drawable.bg_r_four, R.drawable.bg_r_six
         )
@@ -235,7 +243,7 @@ class DetailFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
 
         val textSize = activity?.getSpValue("readtextsize", 2) ?: 16
         setTextSize(textSize)
-        sb_fontsize.progress = textSize
+        bind?.includeReadsetting?.sbFontsize!!.progress = textSize
 
         isItalic = activity?.getSpValue("italic", 0) == 1
         isBold = activity?.getSpValue("bold", 0) == 1
@@ -262,17 +270,17 @@ class DetailFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
             bgList!![item].setOnClickListener {
                 bgList!![item].setBackgroundResource(bgColor!![item])
                 if (item == 3) {
-                    tv_content.setTextColor(context!!.getColor(R.color.blackbgtext))
-                    tv_title.setTextColor(context!!.getColor(R.color.blackbgtext))
-                    tv_author.setTextColor(context!!.getColor(R.color.blackbgtext))
+                    bind?.tvContent?.setTextColor(requireContext().getColor(R.color.blackbgtext))
+                    bind?.tvTitle?.setTextColor(requireContext().getColor(R.color.blackbgtext))
+                    bind?.tvAuthor?.setTextColor(requireContext().getColor(R.color.blackbgtext))
                 } else {
-                    tv_content.setTextColor(context!!.getColor(R.color.otherbgtext))
-                    tv_title.setTextColor(context!!.getColor(R.color.otherbgtext))
-                    tv_author.setTextColor(context!!.getColor(R.color.otherbgtext))
+                    bind?.tvContent?.setTextColor(requireContext().getColor(R.color.otherbgtext))
+                    bind?.tvTitle?.setTextColor(requireContext().getColor(R.color.otherbgtext))
+                    bind?.tvAuthor?.setTextColor(requireContext().getColor(R.color.otherbgtext))
                 }
                 RippleAnimation.create(bgList!![item]).setDuration(800).start()
-                appbarlayout.setBackgroundResource(bgReaderColor!![item])
-                ctl_root.setBackgroundResource(bgReaderColor!![item])
+                bind?.appbarlayout?.setBackgroundResource(bgReaderColor!![item])
+                bind?.ctlLayout?.setBackgroundResource(bgReaderColor!![item])
                 activity?.putSpValue("readbg", item)
                 for (i in bgList!!.indices) {
                     if (i != item) {
@@ -287,10 +295,10 @@ class DetailFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
     }
 
     private fun changeFontBg(i: Int) {
-        tv_content.typeface = when (i) {
+        bind?.tvContent?.typeface = when (i) {
             0 -> Typeface.create(Typeface.MONOSPACE, Typeface.NORMAL)
-            1 -> tv_font_two.typeface
-            2 -> tv_font_three.typeface
+            1 -> bind?.includeReadsetting?.tvFontTwo!!.typeface
+            2 -> bind?.includeReadsetting?.tvFontThree!!.typeface
             else -> Typeface.create(Typeface.MONOSPACE, Typeface.NORMAL)
         }
         activity?.putSpValue("font", i)
@@ -313,26 +321,26 @@ class DetailFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
             else -> 20
         }
 
-        tv_content.setTextSize(TypedValue.COMPLEX_UNIT_DIP, textSize.toFloat())
-        tv_title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, textSize.toFloat())
-        tv_author.setTextSize(TypedValue.COMPLEX_UNIT_DIP, textSize.toFloat())
+        bind?.tvContent?.setTextSize(TypedValue.COMPLEX_UNIT_DIP, textSize.toFloat())
+        bind?.tvTitle?.setTextSize(TypedValue.COMPLEX_UNIT_DIP, textSize.toFloat())
+        bind?.tvAuthor?.setTextSize(TypedValue.COMPLEX_UNIT_DIP, textSize.toFloat())
 
     }
 
     private fun initItalicBG() {
-        iv_italic.setBackgroundResource(if (isItalic) R.drawable.bg_selected else R.drawable.bg_tv_unselect)
-        tv_content.setTypeface(null, if (isItalic) Typeface.ITALIC else Typeface.NORMAL)
+        bind?.includeReadsetting?.ivItalic?.setBackgroundResource(if (isItalic) R.drawable.bg_selected else R.drawable.bg_tv_unselect)
+        bind?.tvContent?.setTypeface(null, if (isItalic) Typeface.ITALIC else Typeface.NORMAL)
     }
 
     private fun initBoldBG() {
-        iv_bold.setBackgroundResource(if (isBold) R.drawable.bg_selected else R.drawable.bg_tv_unselect)
-        tv_content.setTypeface(null, if (isBold) Typeface.BOLD else Typeface.NORMAL)
+        bind?.includeReadsetting?.ivBold?.setBackgroundResource(if (isBold) R.drawable.bg_selected else R.drawable.bg_tv_unselect)
+        bind?.tvContent?.setTypeface(null, if (isBold) Typeface.BOLD else Typeface.NORMAL)
     }
 
     private fun initBg(i: Int) {
         bgList!![i].setBackgroundResource(bgColor!![i])
-        ctl_root.setBackgroundResource(bgReaderColor!![i])
-        appbarlayout.setBackgroundResource(bgReaderColor!![i])
+        bind?.ctlRoot?.setBackgroundResource(bgReaderColor!![i])
+        bind?.appbarlayout?.setBackgroundResource(bgReaderColor!![i])
     }
 
     private fun share() {
@@ -344,8 +352,8 @@ class DetailFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
 
 
     private fun popReadSettinggDialog() {
-        include_readsetting.visibility = View.VISIBLE
-        include_readsetting.startAnimation(
+        bind?.includeReadsetting?.root?.visibility = View.VISIBLE
+        bind?.includeReadsetting?.root?.startAnimation(
             AnimationUtils.loadAnimation(
                 context,
                 R.anim.dialog_enter

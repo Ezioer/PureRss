@@ -1,6 +1,4 @@
 package com.zxq.purerss.ui.mainpage
-
-import android.content.ComponentName
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.transition.MaterialSharedAxis
 import com.zxq.purerss.R
 import com.zxq.purerss.data.entity.RssFeedInfo
 import com.zxq.purerss.data.entity.table.RSSFeedEntity
@@ -20,7 +17,6 @@ import com.zxq.purerss.data.entity.table.RSSItemEntity
 import com.zxq.purerss.databinding.FragmentNewsBinding
 import com.zxq.purerss.listener.FolderClickListener
 import com.zxq.purerss.listener.RssDiffCallback
-import com.zxq.purerss.ui.RssWidget
 import com.zxq.purerss.ui.dialog.EditFeedsDialog
 import com.zxq.purerss.ui.dialog.FolderDialog
 import com.zxq.purerss.ui.dialog.SearchFeedsDialog
@@ -29,7 +25,6 @@ import com.zxq.purerss.utils.InjectorUtil
 import com.zxq.purerss.utils.SpringAddItemAnimator
 import com.zxq.purerss.utils.getSpValue
 import com.zxq.purerss.utils.putSpValue
-import kotlinx.android.synthetic.main.fragment_news.*
 import java.util.concurrent.TimeUnit
 
 /**
@@ -56,8 +51,13 @@ class MainPageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentNewsBinding.inflate(inflater, container, false).apply {
-            if (arguments?.getLong("id") != null && context!!.getSpValue("fromshortcuts", 0) == 1) {
-                context!!.putSpValue("fromshortcuts", 0)
+            lifecycleOwner = viewLifecycleOwner
+            if (arguments?.getLong("id") != null && requireActivity().getSpValue(
+                    "fromshortcuts",
+                    0
+                ) == 1
+            ) {
+                requireActivity().putSpValue("fromshortcuts", 0)
                 val action = MainPageFragmentDirections.actionMainpageToList(
                     RssFeedInfo(
                         arguments?.getString("title")!!,
@@ -69,7 +69,7 @@ class MainPageFragment : Fragment() {
                 )
                 findNavController().navigate(action)
             }
-            context!!.putSpValue("isMainPage", 0)
+            requireActivity().putSpValue("isMainPage", 0)
             val onClick = object : MainPageAdapter.FeedClick {
                 override fun onClick(view: View, rss: RSSFeedEntity) {
                     mainViewModel.updateFeeds(rss.seeCount + 1, rss.feedId)
@@ -101,7 +101,7 @@ class MainPageFragment : Fragment() {
             }
             toolbar.setOnMenuItemClickListener {
                 if (it.itemId == R.id.addfeed) {
-                    findNavController().navigate(R.id.action_mainpage_to_circle)
+                    findNavController().navigate(R.id.action_mainpage_to_add)
                 }
                 true
             }
@@ -134,7 +134,7 @@ class MainPageFragment : Fragment() {
             recyclerview.adapter = adapter
             recyclerview.itemAnimator = SpringAddItemAnimator()
             adapter.setDiffCallback(RssDiffCallback())
-            mainViewModel.feedsList.observe(this@MainPageFragment, Observer {
+            mainViewModel.feedsList.observe(viewLifecycleOwner, Observer {
                 adapter.setDiffNewData(it)
             })
             val onFolderClick = object : FolderClickListener {
@@ -150,25 +150,25 @@ class MainPageFragment : Fragment() {
                 recyclerview.smoothScrollToPosition(0)
             }
 
-            mainViewModel.folders.observe(this@MainPageFragment, Observer {
+            mainViewModel.folders.observe(viewLifecycleOwner, Observer {
                 if (dialogType == 1) {
                     if (showDialog) {
                         showDialog = false
                         folderDialog =
-                            FolderDialog(context!!, it, onFolderClick, findNavController())
+                            FolderDialog(requireActivity(), it, onFolderClick, findNavController())
                         folderDialog?.show()
                     }
                 } else if (dialogType == 2) {
                     if (showDialog) {
                         showDialog = false
                         editDialog = EditFeedsDialog(
-                            context!!, it, rssItem!!, findNavController(), mainViewModel
+                            requireActivity(), it, rssItem!!, findNavController(), mainViewModel
                         )
                         editDialog?.show()
                     }
                 }
             })
-            mainViewModel.saveComplete.observe(this@MainPageFragment, Observer {
+            mainViewModel.saveComplete.observe(viewLifecycleOwner, Observer {
                 if (it == 1) {
                     mainViewModel.getFeedsList(typeId, sortId)
                 }
@@ -198,18 +198,19 @@ class MainPageFragment : Fragment() {
     }
 
     private fun initListener() {
-        tv_readed.setOnClickListener { onTypeClick(1) }
-        iv_readedmore.setOnClickListener { onTypeClick(1) }
-        tv_collect.setOnClickListener { onTypeClick(2) }
-        iv_collectmore.setOnClickListener { onTypeClick(2) }
-        tv_laterread.setOnClickListener { onTypeClick(3) }
-        iv_laterreadmore.setOnClickListener { onTypeClick(3) }
+        binding?.tvReaded?.setOnClickListener { onTypeClick(1) }
+        binding?.ivReadedmore?.setOnClickListener { onTypeClick(1) }
+        binding?.tvCollect?.setOnClickListener { onTypeClick(2) }
+        binding?.ivCollectmore?.setOnClickListener { onTypeClick(2) }
+        binding?.tvLaterread?.setOnClickListener { onTypeClick(3) }
+        binding?.ivLaterreadmore?.setOnClickListener { onTypeClick(3) }
     }
 
     private var mSearchDialog: SearchFeedsDialog? = null
     private fun popSearchDialog() {
         if (mSearchDialog == null) {
-            mSearchDialog = SearchFeedsDialog(context!!, mainViewModel, this@MainPageFragment)
+            mSearchDialog =
+                SearchFeedsDialog(requireActivity(), mainViewModel, this@MainPageFragment)
         }
         mSearchDialog?.show()
         mSearchDialog?.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
